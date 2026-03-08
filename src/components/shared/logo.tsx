@@ -1,14 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import { navConfig } from "@/config/nav-config";
 
-export default function Logo() {
+
+export function Logo() {
 	return (
-		<Link href="/" className="pl-6 py-4">
+		<Link href={navConfig.logo.href} className="pl-6 py-4">
 			<Image
-				src="/logo/logo.svg"
-				alt="Plant Shop Logo"
-				width={120}
-				height={60}
+				src={navConfig.logo.svg}
+				alt={navConfig.logo.alt}
+				width={navConfig.logo.width}
+				height={navConfig.logo.height}
+				priority
+				className="h-auto w-auto object-contain"
 			/>
 		</Link>
 	);

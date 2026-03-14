@@ -1,9 +1,9 @@
-import Navbar from "@/components/layout/navbar";
+import Header from "@/components/layout/header";
 
 export default function Page() {
 	return (
 		<div>
-			<Navbar />
+			<Header />
 			<h1>Welcome to MY gApp</h1>
 		</div>
 	);

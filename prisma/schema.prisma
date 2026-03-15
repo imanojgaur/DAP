@@ -96,32 +96,40 @@ model Address {
 // ==========================================
 
 model Plant {
-  id             String        @id @default(cuid(2))
-  name           String
-  description    String        @db.Text
-  price          Int           // Stored in Paise
-  stockQuantity  Int           @default(0) @map("stock_quantity")
-  careDifficulty CareLevel     @default(Beginner) @map("care_difficulty")
-  categoryId     String        @map("category_id")
+  id                String        @id @default(cuid(2))
+  name              String
+  description       String        @db.Text
+  price             Int           // Stored in Paise
+  stockQuantity     Int           @default(0) @map("stock_quantity")
+  careDifficulty    CareLevel     @default(Beginner) @map("care_difficulty")
+  subCategoryId     String        @map("sub_category_id")
   
-  createdAt      DateTime      @default(now()) @map("created_at")
-  updatedAt      DateTime      @updatedAt @map("updated_at")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
 
-  category      PlantCategory  @relation(fields: [categoryId], references: [id])
-  images        PlantImage[]
-  orderItems    OrderItem[]
-  cartItems     CartItem[]
-  healthTickets HealthTicket[]
+  plantSubCategory PlantSubCategory  @relation(fields: [subCategoryId], references: [id])
+  images           PlantImage[]
+  orderItems       OrderItem[]
+  cartItems        CartItem[]
+  healthTickets    HealthTicket[]
 
   @@map("plants")
 }
 
 model PlantCategory {
-  id     String  @id @default(cuid(2))
-  name   String  @unique
-  plants Plant[]
+  id               String  @id @default(cuid(2))
+  name             String  @unique
+  plantSubCategory PlantSubCategory[]          
 
   @@map("plant_categories")
+}
+
+model PlantSubCategory {
+  id            String         @id @default(cuid(2))
+  name          String
+  categoryId    String         @map("category_id")
+  category      PlantCategory  @relation(fields: [categoryId], references: [id] ) 
+  plants        Plant[]
 }
 
 model PlantImage {

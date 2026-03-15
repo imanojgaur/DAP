@@ -130,6 +130,8 @@ model PlantSubCategory {
   categoryId    String         @map("category_id")
   category      PlantCategory  @relation(fields: [categoryId], references: [id] ) 
   plants        Plant[]
+
+  @@map("plant_sub_categories")
 }
 
 model PlantImage {

@@ -10,14 +10,14 @@ const prisma = new PrismaClient({
     adapter,
 });
 
-// Helper function to turn "Zamia Green - ZZ Plant" into "zamia-green-zz-plant"
+// Helper function(regular expression: regx) to turn "Zamia Green - ZZ Plant" into "zamia-green-zz-plant" e.g "  Manoj's Super Plant!!!  "
 function generateSlug(title: string): string {
     return title
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9 -]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-');
+        .toLowerCase()  //lowercasing
+        .trim()         // crop invisible/accidental end/beginning spaces
+        .replace(/[^a-z0-9 -]/g, '') // (^ mean not) => If a character is NOT a lowercase letter (a-z), NOT a number (0-9), NOT a space ( ), and NOT a hyphen (-), absolutely destroy it. => "manojs super plant"
+        .replace(/\s+/g, '-')         // (\s => space, + => one or more, swap for hypn -)
+        .replace(/-+/g, '-');         // (any extra -)
 }
 
 type SeedPlant = {

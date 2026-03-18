@@ -23,6 +23,7 @@ const navConfig: NavItem[] = [
 		items: [
 			{
 				title: "By Plant Type",
+				href: ROUTES.CATEGORIES.ROOT,
 				items: [
 					{ title: "Succulents", href: ROUTES.CATEGORIES.SUCCULENTS },
 					{ title: "Cactus", href: ROUTES.CATEGORIES.CACTUS },
@@ -33,6 +34,7 @@ const navConfig: NavItem[] = [
 			},
 			{
 				title: "Size",
+				href: ROUTES.CATEGORIES.ROOT,
 				items: [
 					{ title: "S", href: ROUTES.CATEGORIES.SIZE_S },
 					{ title: "L", href: ROUTES.CATEGORIES.SIZE_L },
@@ -41,6 +43,7 @@ const navConfig: NavItem[] = [
 			},
 			{
 				title: "Indoor & Outdoor",
+				href: ROUTES.CATEGORIES.ROOT,
 				items: [
 					{ title: "Indoor", href: ROUTES.CATEGORIES.INDOOR },
 					{ title: "Outdoor", href: ROUTES.CATEGORIES.OUTDOOR },
@@ -73,10 +76,6 @@ const navConfig: NavItem[] = [
 				href: ROUTES.SERVICES.WARRENTY,
 			},
 		],
-	},
-	{
-		title: "About Us",
-		href: ROUTES.HOME,
 	},
 ];
 

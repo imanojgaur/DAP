@@ -24,32 +24,37 @@ export function Navbar() {
 							<>
 								<NavigationMenuTrigger>{navItem.title}</NavigationMenuTrigger>
 								<NavigationMenuContent>
-
 									<ul className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-3 lg:w-[800px]">
-									{navItem.items.map((subItem) => (
-										<li key={subItem.title} className="flex flex-col space-y-2">
-										{/* 2nd Level: The Category Heading (e.g., "By Plant Type") */}
-										<h4 className="text-sm font-bold leading-none text-foreground px-3 py-2">
-											{subItem.title}
-										</h4>
-										
-										{/* 3rd Level: The actual links (e.g., "Succulents", "Cactus") */}
-										{subItem.items ? (
-											<ul className="flex flex-col space-y-1">
-											{subItem.items.map((nestedItem) => (
-												<ListItem
-												key={nestedItem.title}
-												title={nestedItem.title}
-												href={nestedItem.href ?? "#"}
-												/>
-											))}
-											</ul>
-										) : (
-											/* Fallback: if there are no 3rd level items, render the 2nd level as a link */
-											<ListItem title={subItem.title} href={subItem.href ?? "#"} />
-										)}
-									    </li>
-									))}
+										{navItem.items.map((subItem) => (
+											<li
+												key={subItem.title}
+												className="flex flex-col space-y-2"
+											>
+												{/* 2nd Level: The Category Heading (e.g., "By Plant Type") */}
+												<h4 className="text-sm font-bold leading-none text-foreground px-3 py-2">
+													{subItem.title}
+												</h4>
+
+												{/* 3rd Level: The actual links (e.g., "Succulents", "Cactus") */}
+												{subItem.items ? (
+													<ul className="flex flex-col space-y-1">
+														{subItem.items.map((nestedItem) => (
+															<ListItem
+																key={nestedItem.title}
+																title={nestedItem.title}
+																href={nestedItem.href ?? "#"}
+															/>
+														))}
+													</ul>
+												) : (
+													/* Fallback: if there are no 3rd level items, render the 2nd level as a link */
+													<ListItem
+														title={subItem.title}
+														href={subItem.href ?? "#"}
+													/>
+												)}
+											</li>
+										))}
 									</ul>
 								</NavigationMenuContent>
 							</>
@@ -82,7 +87,7 @@ function ListItem({
 					className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
 				>
 					<div className="text-sm font-medium leading-none">{title}</div>
-			</Link>
+				</Link>
 			</NavigationMenuLink>
 		</li>
 	);

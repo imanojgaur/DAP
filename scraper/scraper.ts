@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { chromium } from 'playwright';
-import type { PlantCardData } from '@/types'; 
+import type { PlantCardData } from '@/types';
 
-// [BATCH UPGRADE 1]: The function now accepts an Array of strings (urls: string[])
+
 async function scrapeCollections(urls: string[]) {
   const browser = await chromium.launch({ headless: false, slowMo: 50 });
   const page = await browser.newPage();
@@ -11,21 +11,22 @@ async function scrapeCollections(urls: string[]) {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
   });
 
-  // [BATCH UPGRADE 2]: A master array to hold data from ALL websites combined
   const masterPlantList: PlantCardData[] = [];
   const baseUrl = "https://kyari.co";
 
-  // [BATCH UPGRADE 3]: The Batch Loop. It will process one URL completely before moving to the next.
   for (const url of urls) {
-    console.log(`\n🚚 Navigating to Catalog: ${url}...`);
+ 
+    const parsedUrl = new URL(url);
+    const pathSegments = parsedUrl.pathname.split('/').filter(Boolean);
+    const categorySlug = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : "home";
+
+    console.log(`\n🚚 Navigating to Catalog: [${categorySlug}]...`);
     
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-
-      console.log("⏳ Waiting for the product grid to load...");
       await page.waitForSelector('.product-item', { timeout: 15000 });
 
-      console.log("📜 Scrolling slowly to force Shopify to load all images...");
+      console.log("📜 Scrolling slowly to force image hydration...");
       await page.evaluate(async () => {
         await new Promise<void>((resolve) => {
           let totalHeight = 0;
@@ -45,9 +46,7 @@ async function scrapeCollections(urls: string[]) {
       
       await page.waitForTimeout(3000); 
 
-      console.log(`✂️ Extracting data from ${url}...`);
-
-      const pagePlants: PlantCardData[] = await page.evaluate((base) => {
+      const pagePlants: PlantCardData[] = await page.evaluate(({ base, currentCategory }) => {
         const productCards = document.querySelectorAll('.product-item');
         
         return Array.from(productCards).map(card => {
@@ -55,19 +54,25 @@ async function scrapeCollections(urls: string[]) {
           const name = nameEl ? nameEl.textContent?.trim() || "Unknown" : "Unknown";
 
           const idInput = card.querySelector('input[name="product-id"]');
-          const productId = idInput ? (idInput as HTMLInputElement).value : card.id.replace('product-item-', '');
+          const shopifyId = idInput ? (idInput as HTMLInputElement).value : card.id.replace('product-item-', '');
 
           const linkEl = card.querySelector('a.product-item__image');
           const route = linkEl ? linkEl.getAttribute('href') : "";
-          const sourceUrl = route ? base + route : base;
+          
+
+          const slugParts = route ? route.split('/').filter(Boolean) : [];
+          const plantSlug = slugParts.length > 0 ? slugParts[slugParts.length - 1] : name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+          const productUrl = route ? `${base}${route}` : "";
 
           const priceEl = card.querySelector('.product-price--original');
           const priceText = priceEl ? priceEl.textContent || "0" : "0";
-          const currentPrice = parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 0;
+         
+          const currentPrice = (parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 0) * 100;
 
           const cutPriceEl = card.querySelector('.product-price--compare'); 
           const cutPriceText = cutPriceEl ? cutPriceEl.textContent || "0" : "0";
-          const secondaryPrice = parseInt(cutPriceText.replace(/[^0-9]/g, ''), 10) || currentPrice;
+          const compareAtPrice = (parseInt(cutPriceText.replace(/[^0-9]/g, ''), 10) || (currentPrice / 100)) * 100;
 
           const soldOutBadge = card.querySelector('.badge--sold-out');
           const inStock = !soldOutBadge;
@@ -75,60 +80,78 @@ async function scrapeCollections(urls: string[]) {
           const imgNodes = card.querySelectorAll('.product-item__image-figure img.img');
           const images = Array.from(imgNodes)
             .map(img => {
-              let url = (img as HTMLImageElement).src || "";
-              if (!url || url.includes('data:image')) {
-                url = img.getAttribute('data-src') || "";
+              let imgUrl = (img as HTMLImageElement).src || "";
+              if (!imgUrl || imgUrl.includes('data:image')) {
+                imgUrl = img.getAttribute('data-src') || "";
               }
-              if (!url || url.includes('data:image')) {
+              if (!imgUrl || imgUrl.includes('data:image')) {
                 const srcset = img.getAttribute('srcset') || "";
                 if (srcset) {
-                  url = srcset.split(',')[0].trim().split(' ')[0];
+                  imgUrl = srcset.split(',')[0].trim().split(' ')[0];
                 }
               }
-              if (url.startsWith('//')) {
-                url = `https:${url}`;
+              if (imgUrl.startsWith('//')) {
+                imgUrl = `https:${imgUrl}`;
               }
-              return url;
+              return imgUrl;
             })
-            .filter(url => url.includes('cdn.shopify.com') || url.includes('kyari.co/cdn'))
+            .filter(imgUrl => imgUrl.includes('cdn.shopify.com') || imgUrl.includes('kyari.co/cdn'))
             .filter((value, index, self) => self.indexOf(value) === index); 
 
+          const description = "";
+
+          // Keys explicitly match the Prisma Schema!
           return {
-            sourceUrl,
-            productId,
+            shopifyId,
             name,
+            slug: plantSlug,
             price: currentPrice,
-            secondaryPrice,
+            compareAtPrice,
             inStock,
             images,
+            productUrl,
+            description,
+            categories: [currentCategory] 
           };
         }).filter(plant => plant.name !== "Unknown"); 
-      }, baseUrl);
+      }, { base: baseUrl, currentCategory: categorySlug });
 
-      // [BATCH UPGRADE 4]: Push the plants from this specific page into the master list
+      // rip off small batch(...)
       masterPlantList.push(...pagePlants);
-      console.log(`✔️ Grabbed ${pagePlants.length} plants from this page.`);
+      console.log(`✔️ Grabbed ${pagePlants.length} plants, tagged as [${categorySlug}].`);
 
     } catch (error) {
       console.error(`❌ Failed to scrape ${url}. Skipping to next. Error:`, error);
-      // We use try/catch inside the loop so if one link crashes, the others still run!
     }
   }
 
-  // [BATCH UPGRADE 5]: The Deduplicator. Removes duplicate plants from the master list using their unique productId.
-  console.log("\n🧹 Cleaning up duplicate plants...");
-  const uniquePlants = masterPlantList.filter((plant, index, self) =>
-    index === self.findIndex((target) => target.productId === plant.productId)
-  );
+  console.log("\n🧹 Merging categories for duplicate plants...");
+  
+  const plantDictionary = new Map<string, PlantCardData>();
 
-  // [BATCH UPGRADE 6]: Write the final, combined, deduplicated array to the hard drive
-  fs.writeFileSync('./scripts/collection_plants.json', JSON.stringify(uniquePlants, null, 2));
-  console.log(`\n✅ BATCH COMPLETE! Saved ${uniquePlants.length} unique plants to collection_plants.json`);
+  for (const plant of masterPlantList) {
+      const existingPlant = plantDictionary.get(plant.shopifyId);
+      // 2. TypeScript Type Narrowing: If it exists, it's definitely not undefined
+    if (existingPlant) {
+      const newCategory = plant.categories[0]; 
+      
+      if (!existingPlant.categories.includes(newCategory)) {
+        existingPlant.categories.push(newCategory);
+      }
+    } else {
+      // 3. If it returned undefined, it's new. Add it to the dictionary.
+      plantDictionary.set(plant.shopifyId, plant);
+    }
+  }
+
+  const finalSmartPlants = Array.from(plantDictionary.values());
+
+  fs.writeFileSync('./scraper/collection_plants.json', JSON.stringify(finalSmartPlants, null, 2));
+  console.log(`\n✅ BATCH COMPLETE! Saved ${finalSmartPlants.length} perfectly mapped plants to JSON.`);
 
   await browser.close();
 }
 
-// Pass all 5-6 of your links into this array
 const collectionUrls = [
   'https://kyari.co/',
   'https://kyari.co/collections/air-purifying-plants',
@@ -142,9 +165,7 @@ const collectionUrls = [
   'https://kyari.co/pages/deal-of-the-day',
   'https://kyari.co/collections/10-inch-pot',
   'https://kyari.co/collections/8-inch-pot',
-  'https://kyari.co/collections/aura-planter',
-  'https://kyari.co/collections/aura-planter',
-  // Add as many links here as you want
+  'https://kyari.co/collections/aura-planter'
 ];
 
-scrapeCollections(collectionUrls).catch(err => console.error("❌ Fatal Error:", err));
+scrapeCollections(collectionUrls).catch(err => console.error("❌ Fatal Error:", err));          

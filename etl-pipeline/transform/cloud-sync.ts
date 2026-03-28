@@ -1,8 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from 'node:url';
 import { v2 as cloudinary } from "cloudinary";
 import "dotenv/config";
 import type { ImageTypes, PlantCardData } from "@/types";
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUDE_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // A tiny helper function to pause the script so we don't get banned by Cloudinary for spamming API requests
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -11,6 +18,8 @@ async function runCloudinarySync() {
 	console.log("🚀 Booting up Cloudinary Transformation Pipeline...\n");
 
 	// 1. READ THE SACRED RAW DATA
+	const __filename = fileURLToPath(import.meta.url);
+	const __dirname = path.dirname(__filename);
 	const rawDataPath = path.join(__dirname, "../extract/collection_plants.json");
 
 	// No line run until check hard-drive: Sync
@@ -69,7 +78,7 @@ async function runCloudinarySync() {
 			enrichedPlants.push(transformedPlant);
 			successCount++;
 			console.log(
-				`   ✔️ Success! Uploaded ${enrichedPlants[successCount].images.length} image(s).`,
+				`   ✔️ Success! Uploaded ${optimizedImages.length} image(s).`,
 			);
 		} catch (error) {
 			// FAULT TOLERANCE: If one plant fails, log the error but DO NOT crash the script
@@ -94,7 +103,7 @@ async function runCloudinarySync() {
 
 	console.log(`\n✅ PIPELINE COMPLETE!`);
 	console.log(`📊 Stats: ${successCount} successful, ${failCount} failed.`);
-	console.log(`📁 File saved to: etl/transform/synced_plants.json`);
+	console.log(`📁 File saved to: etl-pipeline/transform/_plants.json`);
 }
 
 // Start the engine

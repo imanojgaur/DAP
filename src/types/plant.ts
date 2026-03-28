@@ -13,4 +13,11 @@ type PlantCardData = {
   categories: string[]; 
 }
 
-export type { PlantCardData }
+type ImageTypes = {
+  publicId?: string;
+  secureUrl?: string;
+  width?: number;
+  height?: number;
+}
+
+export type { PlantCardData, ImageTypes }

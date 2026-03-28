@@ -11,8 +11,18 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, "../../.env") });
 
+//USE IN CASE OF NO API KEY LOADING: DEBUGING
+//TEST 2
+// // This will print ONLY the names of the keys that have "CLOUDINARY" in them, 
+// // keeping your actual passwords safe!
+// console.log("FOUND THESE KEYS:", Object.keys(process.env).filter(key => key.includes("CLOUDINARY")));
+// process.exit(0);
+//TEST 1
+// console.log("TESTING ENV LOAD:", process.env.CLOUDINARY_CLOUD_NAME);
+// process.exit(0); // Stops the script immediately
+
 cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_CLOUDE_NAME, 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
   api_key: process.env.CLOUDINARY_API_KEY, 
   api_secret: process.env.CLOUDINARY_API_SECRET
 });

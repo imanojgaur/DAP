@@ -2,8 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from 'node:url';
 import { v2 as cloudinary } from "cloudinary";
-import "dotenv/config";
+import dotenv from "dotenv";
 import type { ImageTypes, PlantCardData } from "@/types";
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUDE_NAME, 
@@ -18,8 +24,6 @@ async function runCloudinarySync() {
 	console.log("🚀 Booting up Cloudinary Transformation Pipeline...\n");
 
 	// 1. READ THE SACRED RAW DATA
-	const __filename = fileURLToPath(import.meta.url);
-	const __dirname = path.dirname(__filename);
 	const rawDataPath = path.join(__dirname, "../extract/collection_plants.json");
 
 	// No line run until check hard-drive: Sync

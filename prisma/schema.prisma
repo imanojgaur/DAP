@@ -96,12 +96,12 @@ model Address {
 
 model Plant {
   id             String          @id @default(cuid(2))
-  shopifyId      String?         @unique // Critical for syncing scraper data!
+  shopifyId      String?         @unique 
   name           String
-  slug           String          @unique // e.g., "vastu-friendly-combo"
+  slug           String          @unique 
   description    String?         @db.Text
+
   
-  // Pricing (Stored in Paise to avoid floating-point math errors)
   price          Int             
   compareAtPrice Int?            @map("compare_at_price") 
   
@@ -111,10 +111,6 @@ model Plant {
   createdAt      DateTime        @default(now()) @map("created_at")
   updatedAt      DateTime        @updatedAt @map("updated_at")
 
-  // ---------------------------------------------------------
-  // THE MAGIC LINE: Implicit Many-to-Many relationship
-  // A single Plant can be in "Indoor", "Office", AND "Vastu"
-  // ---------------------------------------------------------
   categories     PlantCategory[]
 
   images         PlantImage[]
@@ -127,25 +123,24 @@ model Plant {
 
 model PlantCategory {
   id          String   @id @default(cuid(2))
-  name        String   @unique // e.g., "Air Purifying Plants"
-  slug        String   @unique // e.g., "air-purifying-plants"
-  description String?  @db.Text
+  name        String   @unique 
+  slug        String   @unique 
 
-  // ---------------------------------------------------------
-  //Implicit Many-to-Many relationship
-  // ---------------------------------------------------------
   plants      Plant[]
 
   @@map("plant_categories")
 }
 
 model PlantImage {
-  id        String   @id @default(cuid(2))
-  plantId   String   @map("plant_id")
-  url       String   @db.Text
-  isPrimary Boolean  @default(false) @map("is_primary")
+  id           String    @id @default(cuid(2))
+  publicId     String    @map("public_id")
+  secureUrl    String    @db.Text @map("secure_url")
+  width        Int
+  height       Int
+  isPrimary    Boolean   @default(false) @map("is_primary")
 
-  plant     Plant    @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  plantId      String    @map("plant_id")
+  plant        Plant     @relation(fields: [plantId], references: [id], onDelete: Cascade)
 
   @@map("plant_images")
 }

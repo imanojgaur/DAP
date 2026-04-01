@@ -7,7 +7,9 @@
 		"dev": "next dev",
 		"build": "prisma generate && next build",
 		"start": "next start",
-		"lint": "eslint"
+		"lint": "eslint",
+		"seed:plants": "tsx etl-pipeline/load/seed-plant.ts",
+		"seed:all": "pnpm seed:plants"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.4.2",

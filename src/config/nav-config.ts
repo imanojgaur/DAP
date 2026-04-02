@@ -31,7 +31,7 @@ const navConfig: NavItem[] = [
 				],
 			},
 			{
-				title: "By Size",
+				title: "By Plant Size",
 				href: ROUTES.CATEGORIES.ROOT,
 				items: [
 					{ title: "Small", href: ROUTES.CATEGORIES.SIZE_S },
@@ -40,7 +40,7 @@ const navConfig: NavItem[] = [
 				],
 			},
 			{
-				title: "By Space",
+				title: "By Plant Space",
 				href: ROUTES.CATEGORIES.ROOT,
 				items: [
 					{ title: "Indoor", href: ROUTES.CATEGORIES.INDOOR },

@@ -3,24 +3,28 @@ export const ROUTES = {
 
 	FOOD_AND_TOOLS: "/collections/food-and-tools",
 
+	DEAL_OF_THE_DAY: "/collections/deal-of-the-day",
+
+	BEST_SELLER: "/collections/plants-1",
+
 	CATEGORIES: {
 		ROOT: "/collections", // The "Shop All" fallback page
 
 		// Space Categories
-		INDOOR: "/collections/indoor",
-		OUTDOOR: "/collections/outdoor",
+		OFFICE: "/collections/Office-plants",
+		INDOOR: "/collections/indoor-plants",
+		LIVING_ROOM: "/collections/living-room-plants",
+		BALCONY: "/collections/balcony-plants",
 
 		// Size Categories
-		SIZE_S: "/collections/s",
-		SIZE_L: "/collections/l",
-		SIZE_XL: "/collections/xl",
+		SIZE_S: "/collections/aura-planter",
+		SIZE_L: "/collections/8-inch-pot",
+		SIZE_XL: "/collections/10-inch-pot",
 
 		// Plant Type Categories
-		SUCCULENTS: "/collections/succulents",
-		CACTUS: "/collections/cactus",
-		TROPICAL: "/collections/tropical",
-		AIR_PLANT: "/collections/air-plant",
-		FLOWERING: "/collections/flowering",
+		AIR_PURIFYING: "/collections/air-purifying-plants",
+		VASTU: "/collections/vastu-plants",
+		MOOD_BOOSTING: "/collections/mood-improving-plants"
 	},
 
 	SERVICES: {

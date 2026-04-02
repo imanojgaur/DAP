@@ -67,17 +67,25 @@ async function loadPlantsToDatabase() {
 
 					// Creates the images simultaneously
 					images: {
-						create: (plant.images).map((img) => ({
+						create: (plant.images).map((img, index: number) => ({
 							publicId: img.publicId,
 							secureUrl: img.secureUrl,
 							width: img.width,
 							height: img.height,
-							isPrimary: true, // First image becomes primary
+							isPrimary: index === 0, // First image becomes primary
 						})),
 					},
 					categories: {
     					connectOrCreate: plant.categories.map((scrapedSlug: string) => {
-       						const prettyName = scrapedSlug
+							// over-ride
+							const customCategoryNames: Record<string, string> = {
+                                "10-inch-pot": "Large Pot",
+                                "8-inch-pot": "Medium Pot",
+                                "aura-planter": "Small Pot",
+                                // You can easily add more overrides here in the future!
+                            };
+
+       						const prettyName = customCategoryNames[scrapedSlug] ||scrapedSlug
            					 	.split('-')
            						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
            						.join(' ');

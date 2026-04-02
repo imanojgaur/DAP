@@ -20,6 +20,9 @@ export async function getPlantsForCards(categorySlug?: string) {
                 
                 // Requirement 1: Fetch exactly the first 3 categories
                 categories: {
+                    where: {
+                        slug: { not: "home" }, 
+                    },
                     take: 3,
                     select: {
                         name: true,

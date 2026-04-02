@@ -82,6 +82,7 @@ async function loadPlantsToDatabase() {
                                 "10-inch-pot": "Large Pot",
                                 "8-inch-pot": "Medium Pot",
                                 "aura-planter": "Small Pot",
+								"plants-1": "BestSeller"
                                 // You can easily add more overrides here in the future!
                             };
 

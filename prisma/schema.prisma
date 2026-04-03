@@ -95,52 +95,52 @@ model Address {
 // ==========================================
 
 model Plant {
-  id             String    @id @default(cuid(2))
+  id             String          @id @default(cuid(2))
+  shopifyId      String?         @unique 
   name           String
-  slug           String    @unique
-  description    String    @db.Text
-  price          Int // Stored in Paise
-  stockQuantity  Int       @default(0) @map("stock_quantity")
-  careDifficulty CareLevel @default(Beginner) @map("care_difficulty")
-  subCategoryId  String    @map("sub_category_id")
+  slug           String          @unique 
+  description    String?         @db.Text
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  price          Int             
+  compareAtPrice Int?            @map("compare_at_price") 
+  
+  stockQuantity  Int             @default(0) @map("stock_quantity")
+  careDifficulty CareLevel       @default(Beginner) @map("care_difficulty")
 
-  plantSubCategory PlantSubCategory @relation(fields: [subCategoryId], references: [id])
-  images           PlantImage[]
-  orderItems       OrderItem[]
-  cartItems        CartItem[]
-  healthTickets    HealthTicket[]
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  categories     PlantCategory[]
+
+  images         PlantImage[]
+  orderItems     OrderItem[]
+  cartItems      CartItem[]
+  healthTickets  HealthTicket[]
 
   @@map("plants")
 }
 
 model PlantCategory {
-  id               String             @id @default(cuid(2))
-  name             String             @unique
-  plantSubCategory PlantSubCategory[]
+  id          String   @id @default(cuid(2))
+  name        String   @unique 
+  slug        String   @unique 
+
+  plants      Plant[]
 
   @@map("plant_categories")
 }
 
-model PlantSubCategory {
-  id         String        @id @default(cuid(2))
-  name       String
-  categoryId String        @map("category_id")
-  category   PlantCategory @relation(fields: [categoryId], references: [id])
-  plants     Plant[]
-
-  @@map("plant_sub_categories")
-}
-
 model PlantImage {
-  id        String  @id @default(cuid(2))
-  plantId   String  @map("plant_id")
-  url       String  @db.Text
-  isPrimary Boolean @default(false) @map("is_primary")
+  id           String    @id @default(cuid(2))
+  publicId     String    @map("public_id")
+  secureUrl    String    @db.Text @map("secure_url")
+  width        Int
+  height       Int
+  isPrimary    Boolean   @default(false) @map("is_primary")
 
-  plant Plant @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  plantId      String    @map("plant_id")
+  plant        Plant     @relation(fields: [plantId], references: [id], onDelete: Cascade)
 
   @@map("plant_images")
 }

@@ -18,7 +18,8 @@ const navConfig: NavItem[] = [
 		href: ROUTES.HOME,
 	},
 	{
-		title: "Categories",
+		title: "Shop",
+		//In future: I will be using custom Icon to show Shop.
 		href: ROUTES.CATEGORIES.ROOT,
 		items: [
 			{

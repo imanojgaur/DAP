@@ -1,0 +1,1 @@
+//fetch data from the server and render child components.

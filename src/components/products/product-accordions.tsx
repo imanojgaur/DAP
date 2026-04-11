@@ -1,0 +1,1 @@
+// Client Component): Manages the open/closed state of the FAQs and Care Guides.

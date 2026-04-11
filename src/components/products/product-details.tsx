@@ -1,0 +1,1 @@
+// ProductDetails.tsx: (Server Component): Renders the title, price, and badges.

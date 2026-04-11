@@ -1,0 +1,1 @@
+// (Client Component): Manages the state for which color/size the user has clicked.

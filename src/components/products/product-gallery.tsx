@@ -1,0 +1,1 @@
+//(Client Component): Handles the image slider, thumbnails, and zoom functionality.

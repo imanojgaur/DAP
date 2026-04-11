@@ -1,15 +1,15 @@
 "use client";
-import Link from "next/link"; // 1. Import Next.js Link
+import Link from "next/link"; 
 import { CldImage } from "next-cloudinary";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 import type { PlantCardData } from "@/types";
 import { formatPrice, calculateDiscountPercentage } from "@/lib";

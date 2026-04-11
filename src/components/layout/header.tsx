@@ -1,7 +1,7 @@
 import { Logo } from "../shared/logo";
 import { CartDrawer } from "./cart";
 import MobileNav from "./mobile-nav";
-import { Navbar } from "./navbar";
+import { Navbar } from "./desktop-nav";
 import { SearchBar } from "./search-bar";
 
 export function Header() {
@@ -19,12 +19,12 @@ export function Header() {
 				</div>
 
 				{/* Right: Actions (Search, Cart, Mobile Menu) */}
-				<div className="flex w-32 items-center justify-end gap-4">
-					<div className="hidden md:flex items-center gap-4">
+				<div className="flex w-auto items-center justify-end gap-2 sm:gap-4">
+					<div className=" items-center gap-4">
 						<SearchBar />
 					</div>
 					<CartDrawer />
-					<div className="md:hidden">
+					<div className="md:hidden flex items-center">
 						<MobileNav />
 					</div>
 				</div>

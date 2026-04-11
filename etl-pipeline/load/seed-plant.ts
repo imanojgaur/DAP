@@ -14,7 +14,6 @@ const prisma = new PrismaClient({
 	adapter,
 });
 
-
 // Replicate the path logic to find the enriched file
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,7 +30,9 @@ async function loadPlantsToDatabase() {
 		process.exit(1);
 	}
 
-	const rawPlants: EnrichedPlantData[] = JSON.parse(fs.readFileSync(enrichedDataPath, "utf-8"));
+	const rawPlants: EnrichedPlantData[] = JSON.parse(
+		fs.readFileSync(enrichedDataPath, "utf-8"),
+	);
 	console.log(`📦 Found ${rawPlants.length} plants to load.\n`);
 
 	let successCount = 0;
@@ -67,7 +68,7 @@ async function loadPlantsToDatabase() {
 
 					// Creates the images simultaneously
 					images: {
-						create: (plant.images).map((img, index: number) => ({
+						create: plant.images.map((img, index: number) => ({
 							publicId: img.publicId,
 							secureUrl: img.secureUrl,
 							width: img.width,
@@ -76,28 +77,30 @@ async function loadPlantsToDatabase() {
 						})),
 					},
 					categories: {
-    					connectOrCreate: plant.categories.map((scrapedSlug: string) => {
+						connectOrCreate: plant.categories.map((scrapedSlug: string) => {
 							// over-ride
 							const customCategoryNames: Record<string, string> = {
-                                "10-inch-pot": "Large Pot",
-                                "8-inch-pot": "Medium Pot",
-                                "aura-planter": "Small Pot",
-								"plants-1": "BestSeller"
-                                // You can easily add more overrides here in the future!
-                            };
+								"10-inch-pot": "Large Pot",
+								"8-inch-pot": "Medium Pot",
+								"aura-planter": "Small Pot",
+								"plants-1": "BestSeller",
+								// You can easily add more overrides here in the future!
+							};
 
-       						const prettyName = customCategoryNames[scrapedSlug] ||scrapedSlug
-           					 	.split('-')
-           						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-           						.join(' ');
-       						return {
-          						where: { slug: scrapedSlug }, 
-            					create: { 
-             				 	    name: prettyName, 
-                					slug: scrapedSlug 
-           						},
-       					    };
-  						}),
+							const prettyName =
+								customCategoryNames[scrapedSlug] ||
+								scrapedSlug
+									.split("-")
+									.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+									.join(" ");
+							return {
+								where: { slug: scrapedSlug },
+								create: {
+									name: prettyName,
+									slug: scrapedSlug,
+								},
+							};
+						}),
 					},
 				},
 			});

@@ -24,7 +24,7 @@ export const ROUTES = {
 		// Plant Type Categories
 		AIR_PURIFYING: "/collections/air-purifying-plants",
 		VASTU: "/collections/vastu-plants",
-		MOOD_BOOSTING: "/collections/mood-improving-plants"
+		MOOD_BOOSTING: "/collections/mood-improving-plants",
 	},
 
 	SERVICES: {

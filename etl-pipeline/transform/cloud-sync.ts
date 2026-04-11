@@ -1,10 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from "node:url";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 import type { ImageTypes, ScrapedPlantData } from "@/types";
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,7 +12,7 @@ dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 //USE IN CASE OF NO API KEY LOADING: DEBUGING
 //TEST 2
-// // This will print ONLY the names of the keys that have "CLOUDINARY" in them, 
+// // This will print ONLY the names of the keys that have "CLOUDINARY" in them,
 // // keeping your actual passwords safe!
 // console.log("FOUND THESE KEYS:", Object.keys(process.env).filter(key => key.includes("CLOUDINARY")));
 // process.exit(0);
@@ -21,10 +20,10 @@ dotenv.config({ path: path.join(__dirname, "../../.env") });
 // console.log("TESTING ENV LOAD:", process.env.CLOUDINARY_CLOUD_NAME);
 // process.exit(0); // Stops the script immediately
 
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-  api_key: process.env.CLOUDINARY_API_KEY, 
-  api_secret: process.env.CLOUDINARY_API_SECRET
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 // A tiny helper function to pause the script so we don't get banned by Cloudinary for spamming API requests
@@ -66,9 +65,9 @@ async function runCloudinarySync() {
 			// Loop through however many images this specific plant has
 			for (const kyariUrl of plant.images) {
 				// Tell Cloudinary to download the image from Kyari's URL
-				if (typeof kyariUrl !== 'string') {
-                    throw new Error("Expected a string URL, but got an object! ");
-                }
+				if (typeof kyariUrl !== "string") {
+					throw new Error("Expected a string URL, but got an object! ");
+				}
 				const uploadResult = await cloudinary.uploader.upload(kyariUrl, {
 					folder: "kyari_catalog", // Organizes all your images into one neat folder in Cloudinary
 					overwrite: true, // Prevents creating duplicates if you run the script twice
@@ -94,9 +93,7 @@ async function runCloudinarySync() {
 
 			enrichedPlants.push(transformedPlant);
 			successCount++;
-			console.log(
-				`   ✔️ Success! Uploaded ${optimizedImages.length} image(s).`,
-			);
+			console.log(`   ✔️ Success! Uploaded ${optimizedImages.length} image(s).`);
 		} catch (error) {
 			// FAULT TOLERANCE: If one plant fails, log the error but DO NOT crash the script
 			console.error(

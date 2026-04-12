@@ -26,9 +26,15 @@ const navConfig: NavItem[] = [
 				title: "By Plant Type",
 				href: ROUTES.CATEGORIES.ROOT,
 				items: [
-					{ title: "Air Purifying Plants", href: ROUTES.CATEGORIES.AIR_PURIFYING },
+					{
+						title: "Air Purifying Plants",
+						href: ROUTES.CATEGORIES.AIR_PURIFYING,
+					},
 					{ title: "Vastu Plants", href: ROUTES.CATEGORIES.VASTU },
-					{ title: "Mood Boosting Plants", href: ROUTES.CATEGORIES.MOOD_BOOSTING },
+					{
+						title: "Mood Boosting Plants",
+						href: ROUTES.CATEGORIES.MOOD_BOOSTING,
+					},
 				],
 			},
 			{
@@ -45,9 +51,9 @@ const navConfig: NavItem[] = [
 				href: ROUTES.CATEGORIES.ROOT,
 				items: [
 					{ title: "Indoor", href: ROUTES.CATEGORIES.INDOOR },
-					{ title: "Living Room Plants", href: ROUTES.CATEGORIES.LIVING_ROOM, },
+					{ title: "Living Room Plants", href: ROUTES.CATEGORIES.LIVING_ROOM },
 					{ title: "Place at Balcony", href: ROUTES.CATEGORIES.BALCONY },
-					{ title: "For Office", href: ROUTES.CATEGORIES.OFFICE}
+					{ title: "For Office", href: ROUTES.CATEGORIES.OFFICE },
 				],
 			},
 		],

@@ -1,4 +1,3 @@
-
 import { ProductCard } from "@/components/collections/product-card";
 import { getPlantsForCards } from "@/data";
 

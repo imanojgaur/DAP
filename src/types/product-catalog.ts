@@ -30,15 +30,6 @@ interface PlantData {
 	specifications?: Record<string, string[]>;
 }
 
-interface ScrapedPlantData extends PlantData {
-	images: string[];
-}
-
-interface EnrichedPlantData extends PlantData {
-	images: ImageTypes[];
-	reviews?: ReviewType[];
-}
-
 interface PlantCardData
 	extends Pick<PlantData, "name" | "slug" | "price" | "compareAtPrice"> {
 	id: string;
@@ -49,7 +40,6 @@ interface PlantCardData
 	}[];
 	images: ImageTypes[];
 }
-
 interface DescriptionSection {
 	title: string;
 	content: string[];
@@ -80,6 +70,15 @@ type FAQ = {
 	question: string;
 	answer: string;
 };
+
+interface ScrapedPlantData extends PlantData {
+	images: string[];
+}
+
+interface EnrichedPlantData extends PlantData {
+	images: ImageTypes[];
+	reviews?: ReviewType[];
+}
 
 export type {
 	PlantData,

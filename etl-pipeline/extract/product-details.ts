@@ -2,243 +2,317 @@ import fs from "node:fs/promises";
 import { chromium } from "playwright";
 
 type Variant = {
-    id: string;
-    title: string;
-    sku: string;
-    price: number;
-    compareAtPrice: number | null;
-    isAvailable: boolean;
-    swatchUrl?: string;
+	id: string;
+	title: string;
+	sku: string;
+	price: number;
+	compareAtPrice: number | null;
+	isAvailable: boolean;
+	swatchUrl?: string;
 };
 
 type Review = {
-    author: string;
-    rating: number;
-    title: string;
-    body: string;
-    date: string;
+	author: string;
+	rating: number;
+	title: string;
+	body: string;
+	date: string;
 };
 
 type FAQ = {
-    question: string;
-    answer: string;
+	question: string;
+	answer: string;
 };
 
 type DescriptionPanel = {
-    title: string;
-    content: string[];
+	title: string;
+	content: string[];
 };
 
 type ProductDetails = {
-    averageRating: number;
-    totalReviews: number;
-    isPetSafe: boolean;
-    variants: Variant[];
-    reviews: Review[];
-    descriptionInfo: DescriptionPanel[];
+	averageRating: number;
+	totalReviews: number;
+	isPetSafe: boolean;
+	variants: Variant[];
+	reviews: Review[];
+	descriptionInfo: DescriptionPanel[];
 };
 
 async function scrapeStructuredProductData() {
-    console.log("📦 Loading enriched.json...");
-    let catalog: any[] = [];
-    try {
-        const rawData = await fs.readFile("./etl-pipeline/transform/enriched_plants.json", "utf-8");
-        catalog = JSON.parse(rawData);
-        console.log(`✅ Loaded ${catalog.length} products.`);
-    } catch (err) {
-        console.error("❌ CRITICAL: Could not read enriched_plants.json.", err);
-        process.exit(1);
-    }
+	console.log("📦 Loading enriched.json...");
+	let catalog: any[] = [];
+	try {
+		const rawData = await fs.readFile(
+			"./etl-pipeline/transform/enriched_plants.json",
+			"utf-8",
+		);
+		catalog = JSON.parse(rawData);
+		console.log(`✅ Loaded ${catalog.length} products.`);
+	} catch (err) {
+		console.error("❌ CRITICAL: Could not read enriched_plants.json.", err);
+		process.exit(1);
+	}
 
-    const browser = await chromium.launch({ headless: false, slowMo: 50 });
-    const context = await browser.newContext({
-        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-    });
-    const page = await context.newPage();
+	const browser = await chromium.launch({ headless: false, slowMo: 50 });
+	const context = await browser.newContext({
+		userAgent:
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+	});
+	const page = await context.newPage();
 
-    const finalCatalog: any[] = [];
-    
-    // This will hold the redundant data (like refund policies) so it doesn't bloat your DB
-    const globalSharedData: Record<string, string[]> = {};
+	const finalCatalog: any[] = [];
 
-    // Change this loop back to catalog.length when ready
-    for (let i = 0; i < catalog.length; i++) {
-        const product = catalog[i];
-        console.log(`\n🚚 [${i + 1}/${catalog.length}] Extracting smart data: ${product.name}...`);
+	// This will hold the redundant data (like refund policies) so it doesn't bloat your DB
+	const globalSharedData: Record<string, string[]> = {};
 
-        if (!product.productUrl) {
-            console.log("⚠️ No productUrl found, skipping...");
-            finalCatalog.push(product);
-            continue;
-        }
+	// Change this loop back to catalog.length when ready
+	for (let i = 0; i < catalog.length; i++) {
+		const product = catalog[i];
+		console.log(
+			`\n🚚 [${i + 1}/${catalog.length}] Extracting smart data: ${product.name}...`,
+		);
 
-        try {
-            await page.goto(product.productUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
-            await page.waitForSelector(".product-text", { timeout: 15000 });
+		if (!product.productUrl) {
+			console.log("⚠️ No productUrl found, skipping...");
+			finalCatalog.push(product);
+			continue;
+		}
 
-            console.log("📜 Scrolling to hydrate elements...");
-            await page.evaluate(async () => {
-                await new Promise<void>((resolve) => {
-                    let totalHeight = 0;
-                    const distance = 400;
-                    const timer = setInterval(() => {
-                        const scrollHeight = document.body.scrollHeight;
-                        window.scrollBy(0, distance);
-                        totalHeight += distance;
-                        if (totalHeight >= scrollHeight) {
-                            clearInterval(timer);
-                            resolve();
-                        }
-                    }, 250);
-                });
-            });
+		try {
+			await page.goto(product.productUrl, {
+				waitUntil: "domcontentloaded",
+				timeout: 60000,
+			});
+			await page.waitForSelector(".product-text", { timeout: 15000 });
 
-            await page.waitForTimeout(2000);
+			console.log("📜 Scrolling to hydrate elements...");
+			await page.evaluate(async () => {
+				await new Promise<void>((resolve) => {
+					let totalHeight = 0;
+					const distance = 400;
+					const timer = setInterval(() => {
+						const scrollHeight = document.body.scrollHeight;
+						window.scrollBy(0, distance);
+						totalHeight += distance;
+						if (totalHeight >= scrollHeight) {
+							clearInterval(timer);
+							resolve();
+						}
+					}, 250);
+				});
+			});
 
-            const extractedDetails: ProductDetails = await page.evaluate(() => {
-                let averageRating = 0;
-                let totalReviews = 0;
-                const reviewBadge = document.querySelector(".jdgm-prev-badge");
-                if (reviewBadge) {
-                    averageRating = parseFloat(reviewBadge.getAttribute("data-average-rating") || "0");
-                    totalReviews = parseInt(reviewBadge.getAttribute("data-number-of-reviews") || "0", 10);
-                }
+			await page.waitForTimeout(2000);
 
-                const tagsContainer = document.querySelector(".tag-container");
-                const isPetSafe = tagsContainer ? tagsContainer.textContent?.includes("Pet Safe") || false : false;
+			const extractedDetails: ProductDetails = await page.evaluate(() => {
+				let averageRating = 0;
+				let totalReviews = 0;
+				const reviewBadge = document.querySelector(".jdgm-prev-badge");
+				if (reviewBadge) {
+					averageRating = parseFloat(
+						reviewBadge.getAttribute("data-average-rating") || "0",
+					);
+					totalReviews = parseInt(
+						reviewBadge.getAttribute("data-number-of-reviews") || "0",
+						10,
+					);
+				}
 
-                // REVIEWS
-                const reviews: Review[] = [];
-                document.querySelectorAll(".jdgm-rev").forEach((node) => {
-                    const author = node.querySelector(".jdgm-rev__author")?.textContent?.trim() || "Anonymous";
-                    const ratingScore = node.querySelector(".jdgm-rev__rating")?.getAttribute("data-score");
-                    const rating = parseInt(ratingScore || "0", 10);
-                    const title = node.querySelector(".jdgm-rev__title")?.textContent?.trim() || "";
-                    const body = node.querySelector(".jdgm-rev__body p")?.textContent?.trim() || "";
-                    const date = node.querySelector(".jdgm-rev__timestamp")?.textContent?.trim() || "";
+				const tagsContainer = document.querySelector(".tag-container");
+				const isPetSafe = tagsContainer
+					? tagsContainer.textContent?.includes("Pet Safe") || false
+					: false;
 
-                    if (author && rating > 0) reviews.push({ author, rating, title, body, date });
-                });
+				// REVIEWS
+				const reviews: Review[] = [];
+				document.querySelectorAll(".jdgm-rev").forEach((node) => {
+					const author =
+						node.querySelector(".jdgm-rev__author")?.textContent?.trim() ||
+						"Anonymous";
+					const ratingScore = node
+						.querySelector(".jdgm-rev__rating")
+						?.getAttribute("data-score");
+					const rating = parseInt(ratingScore || "0", 10);
+					const title =
+						node.querySelector(".jdgm-rev__title")?.textContent?.trim() || "";
+					const body =
+						node.querySelector(".jdgm-rev__body p")?.textContent?.trim() || "";
+					const date =
+						node.querySelector(".jdgm-rev__timestamp")?.textContent?.trim() ||
+						"";
 
-                // VARIANTS & COLORS
-                let variants: Variant[] = [];
-                const variantScript = document.querySelector('product-variants script[type="application/json"]');
-                if (variantScript) {
-                    try {
-                        const rawVariants = JSON.parse(variantScript.textContent || "[]");
-                        variants = rawVariants.map((v: any) => ({
-                            id: String(v.id),
-                            title: v.title,
-                            sku: v.sku,
-                            price: v.price, 
-                            compareAtPrice: v.compare_at_price,
-                            isAvailable: v.available
-                        }));
-                    } catch (e) {
-                        console.error("Variant JSON parse failed");
-                    }
-                }
+					if (author && rating > 0)
+						reviews.push({ author, rating, title, body, date });
+				});
 
-                document.querySelectorAll('.product-variant__item--color').forEach(el => {
-                    const input = el.querySelector('input') as HTMLInputElement;
-                    const img = el.querySelector('img');
-                    if (input && img) {
-                        const variantTitle = input.value;
-                        let src = img.getAttribute('src') || img.getAttribute('srcset')?.split(',')[0].split(' ')[0] || "";
-                        if (src.startsWith('//')) src = `https:${src}`;
-                        
-                        const targetVariant = variants.find(v => v.title === variantTitle);
-                        if (targetVariant && src) targetVariant.swatchUrl = src;
-                    }
-                });
+				// VARIANTS & COLORS
+				let variants: Variant[] = [];
+				const variantScript = document.querySelector(
+					'product-variants script[type="application/json"]',
+				);
+				if (variantScript) {
+					try {
+						const rawVariants = JSON.parse(variantScript.textContent || "[]");
+						variants = rawVariants.map((v: any) => ({
+							id: String(v.id),
+							title: v.title,
+							sku: v.sku,
+							price: v.price,
+							compareAtPrice: v.compare_at_price,
+							isAvailable: v.available,
+						}));
+					} catch (e) {
+						console.error("Variant JSON parse failed");
+					}
+				}
 
-                // THE SMART CLASSIFIER FOR PANELS
-                const descriptionInfo: DescriptionPanel[] = [];
-                const seenContent = new Set<string>(); // To track exact duplicates
-                
-                document.querySelectorAll(".custompanel").forEach((panel) => {
-                    const btn = panel.previousElementSibling;
-                    let title = btn && btn.classList.contains("customaccordion")
-                        ? btn.textContent?.replace("▼", "")?.replace("▲", "")?.trim() || "Details"
-                        : "Details";
+				document
+					.querySelectorAll(".product-variant__item--color")
+					.forEach((el) => {
+						const input = el.querySelector("input") as HTMLInputElement;
+						const img = el.querySelector("img");
+						if (input && img) {
+							const variantTitle = input.value;
+							let src =
+								img.getAttribute("src") ||
+								img.getAttribute("srcset")?.split(",")[0].split(" ")[0] ||
+								"";
+							if (src.startsWith("//")) src = `https:${src}`;
 
-                    const rawText = (panel as HTMLElement).innerText || "";
-                    const contentArray = rawText
-                        .split('\n')
-                        .map(line => line.trim())
-                        .filter(line => line.length > 0);
+							const targetVariant = variants.find(
+								(v) => v.title === variantTitle,
+							);
+							if (targetVariant && src) targetVariant.swatchUrl = src;
+						}
+					});
 
-                    if (contentArray.length === 0) return;
+				// THE SMART CLASSIFIER FOR PANELS
+				const descriptionInfo: DescriptionPanel[] = [];
+				const seenContent = new Set<string>(); // To track exact duplicates
 
-                    // Deduplication logic: Don't add if we just read this exact panel
-                    const joinedText = contentArray.join(" ");
-                    if (seenContent.has(joinedText)) return;
-                    seenContent.add(joinedText);
+				document.querySelectorAll(".custompanel").forEach((panel) => {
+					const btn = panel.previousElementSibling;
+					let title =
+						btn && btn.classList.contains("customaccordion")
+							? btn.textContent?.replace("▼", "")?.replace("▲", "")?.trim() ||
+								"Details"
+							: "Details";
 
-                    // INTELLIGENT RENAMING
-                    const lowerTitle = title.toLowerCase();
-                    if (lowerTitle === "details" || lowerTitle === "uses and benefits") {
-                        if (joinedText.includes("Water Schedule") || joinedText.includes("Common problems include")) {
-                            title = "Plant Care Guide";
-                        } else if (joinedText.includes("Preferred location") || joinedText.includes("Light settings")) {
-                            title = "Placement & Lighting";
-                        } else if (joinedText.includes("Coco Peat") || joinedText.includes("Recyclable box") || joinedText.includes("Self Watering Pot")) {
-                            title = "What's in the Box";
-                        } else if (joinedText.includes("Self-watering planters simplify care")) {
-                            title = "About Self-Watering";
-                        } else if (joinedText.includes("Plant Dimensions") || joinedText.includes("Direct Sunlight")) {
-                            title = "Specifications";
-                        } else if (joinedText.includes("Enjoy the beauty and air-purifying qualities")) {
-                            title = "Combo Overview";
-                        } else {
-                            title = "Overview";
-                        }
-                    }
+					const rawText = (panel as HTMLElement).innerText || "";
+					const contentArray = rawText
+						.split("\n")
+						.map((line) => line.trim())
+						.filter((line) => line.length > 0);
 
-                    descriptionInfo.push({ title, content: contentArray });
-                });
+					if (contentArray.length === 0) return;
 
-                return { averageRating, totalReviews, isPetSafe, variants, reviews, descriptionInfo };
-            });
+					// Deduplication logic: Don't add if we just read this exact panel
+					const joinedText = contentArray.join(" ");
+					if (seenContent.has(joinedText)) return;
+					seenContent.add(joinedText);
 
-            // GLOBAL EXTRACTOR
-            // We loop through the smart panels we just made. 
-            // If it's a global policy, we put it in the global object and REMOVE it from the plant.
-            const productSpecificInfo: DescriptionPanel[] = [];
-            
-            extractedDetails.descriptionInfo.forEach(panel => {
-                if (panel.title === "Replacement & Refund Policy" || panel.title === "About Self-Watering") {
-                    // Save globally if we haven't already
-                    if (!globalSharedData[panel.title]) {
-                        globalSharedData[panel.title] = panel.content;
-                    }
-                } else {
-                    // Keep plant-specific stuff attached to the plant
-                    productSpecificInfo.push(panel);
-                }
-            });
+					// INTELLIGENT RENAMING
+					const lowerTitle = title.toLowerCase();
+					if (lowerTitle === "details" || lowerTitle === "uses and benefits") {
+						if (
+							joinedText.includes("Water Schedule") ||
+							joinedText.includes("Common problems include")
+						) {
+							title = "Plant Care Guide";
+						} else if (
+							joinedText.includes("Preferred location") ||
+							joinedText.includes("Light settings")
+						) {
+							title = "Placement & Lighting";
+						} else if (
+							joinedText.includes("Coco Peat") ||
+							joinedText.includes("Recyclable box") ||
+							joinedText.includes("Self Watering Pot")
+						) {
+							title = "What's in the Box";
+						} else if (
+							joinedText.includes("Self-watering planters simplify care")
+						) {
+							title = "About Self-Watering";
+						} else if (
+							joinedText.includes("Plant Dimensions") ||
+							joinedText.includes("Direct Sunlight")
+						) {
+							title = "Specifications";
+						} else if (
+							joinedText.includes(
+								"Enjoy the beauty and air-purifying qualities",
+							)
+						) {
+							title = "Combo Overview";
+						} else {
+							title = "Overview";
+						}
+					}
 
-            extractedDetails.descriptionInfo = productSpecificInfo;
+					descriptionInfo.push({ title, content: contentArray });
+				});
 
-            finalCatalog.push({ ...product, ...extractedDetails });
-            
-            console.log(`✔️ Scraped! Panels Classified: ${productSpecificInfo.length} (Redundancies removed)`);
+				return {
+					averageRating,
+					totalReviews,
+					isPetSafe,
+					variants,
+					reviews,
+					descriptionInfo,
+				};
+			});
 
-        } catch (error) {
-            console.error(`❌ Failed to scrape ${product.productUrl}.`, error);
-            finalCatalog.push(product);
-        }
-    }
+			// GLOBAL EXTRACTOR
+			// We loop through the smart panels we just made.
+			// If it's a global policy, we put it in the global object and REMOVE it from the plant.
+			const productSpecificInfo: DescriptionPanel[] = [];
 
-    console.log("\n💾 Saving Global Shared Data (Policies, etc)...");
-    await fs.writeFile("./etl-pipeline/extract/global_shared_info.json", JSON.stringify(globalSharedData, null, 2), "utf-8");
+			extractedDetails.descriptionInfo.forEach((panel) => {
+				if (
+					panel.title === "Replacement & Refund Policy" ||
+					panel.title === "About Self-Watering"
+				) {
+					// Save globally if we haven't already
+					if (!globalSharedData[panel.title]) {
+						globalSharedData[panel.title] = panel.content;
+					}
+				} else {
+					// Keep plant-specific stuff attached to the plant
+					productSpecificInfo.push(panel);
+				}
+			});
 
-    console.log("💾 Saving Lean, Specific Plant Catalog...");
-    await fs.writeFile("./etl-pipeline/extract/final_structured_catalog.json", JSON.stringify(finalCatalog, null, 2), "utf-8");
-    
-    console.log(`✅ SCRAPE COMPLETE! You now have a hyper-clean DB schema.`);
+			extractedDetails.descriptionInfo = productSpecificInfo;
 
-    await browser.close();
+			finalCatalog.push({ ...product, ...extractedDetails });
+
+			console.log(
+				`✔️ Scraped! Panels Classified: ${productSpecificInfo.length} (Redundancies removed)`,
+			);
+		} catch (error) {
+			console.error(`❌ Failed to scrape ${product.productUrl}.`, error);
+			finalCatalog.push(product);
+		}
+	}
+
+	console.log("\n💾 Saving Global Shared Data (Policies, etc)...");
+	await fs.writeFile(
+		"./etl-pipeline/extract/global_shared_info.json",
+		JSON.stringify(globalSharedData, null, 2),
+		"utf-8",
+	);
+
+	console.log("💾 Saving Lean, Specific Plant Catalog...");
+	await fs.writeFile(
+		"./etl-pipeline/extract/final_structured_catalog.json",
+		JSON.stringify(finalCatalog, null, 2),
+		"utf-8",
+	);
+
+	console.log(`✅ SCRAPE COMPLETE! You now have a hyper-clean DB schema.`);
+
+	await browser.close();
 }
 
 scrapeStructuredProductData().catch(console.error);

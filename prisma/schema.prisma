@@ -93,56 +93,74 @@ model Address {
 // ==========================================
 // 2. PRODUCT CATALOG
 // ==========================================
-
-model Plant {
-  id             String          @id @default(cuid(2))
-  shopifyId      String?         @unique 
-  name           String
-  slug           String          @unique 
-  description    String?         @db.Text
-
+model Product {
+  id              String         @id @default(cuid(2))
+  shopifyId       String?        @unique 
+  name            String
+  slug            String         @unique 
+  description     String?        @db.Text
   
-  price          Int             
-  compareAtPrice Int?            @map("compare_at_price") 
+  price           Int             
+  compareAtPrice  Int?           @map("compare_at_price") 
+  stockQuantity   Int            @default(0) @map("stock_quantity")
   
-  stockQuantity  Int             @default(0) @map("stock_quantity")
-  careDifficulty CareLevel       @default(Beginner) @map("care_difficulty")
+  careDifficulty  CareLevel      @default(Beginner) @map("care_difficulty")
+  isPetSafe       Boolean        @default(false) @map("is_pet_safe")
+  averageRating   Float          @default(0.0) @map("average_rating")
+  totalReviews    Int            @default(0) @map("total_reviews")
 
-  createdAt      DateTime        @default(now()) @map("created_at")
-  updatedAt      DateTime        @updatedAt @map("updated_at")
+  specifications  Json?
 
-  categories     PlantCategory[]
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
 
-  images         PlantImage[]
-  orderItems     OrderItem[]
-  cartItems      CartItem[]
-  healthTickets  HealthTicket[]
+  categories      Category[]
+  images          ProductImage[]
+  reviews         Review[]
+  
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  healthTickets   HealthTicket[]
 
-  @@map("plants")
+  @@map("products")
 }
 
-model PlantCategory {
+model Category {
+  id        String    @id @default(cuid(2))
+  name      String    @unique 
+  slug      String    @unique 
+
+  products  Product[]
+
+  @@map("categories")
+}
+
+model ProductImage {
   id          String   @id @default(cuid(2))
-  name        String   @unique 
-  slug        String   @unique 
+  publicId    String   @map("public_id")
+  secureUrl   String   @db.Text @map("secure_url")
+  width       Int
+  height      Int
+  isPrimary   Boolean  @default(false) @map("is_primary")
 
-  plants      Plant[]
+  productId   String   @map("product_id")
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  @@map("plant_categories")
+  @@map("product_images")
 }
 
-model PlantImage {
-  id           String    @id @default(cuid(2))
-  publicId     String    @map("public_id")
-  secureUrl    String    @db.Text @map("secure_url")
-  width        Int
-  height       Int
-  isPrimary    Boolean   @default(false) @map("is_primary")
+model Review {
+  id          String   @id @default(cuid(2))
+  author      String
+  rating      Float
+  title       String?  
+  body        String   @db.Text
+  date        DateTime @default(now())
 
-  plantId      String    @map("plant_id")
-  plant        Plant     @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  productId   String   @map("product_id")
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  @@map("plant_images")
+  @@map("reviews")
 }
 
 // ==========================================
@@ -155,8 +173,8 @@ model CartItem {
   plantId  String @map("plant_id")
   quantity Int
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  plant Plant @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [plantId], references: [id], onDelete: Cascade)
 
   @@map("cart_items")
 }
@@ -187,9 +205,9 @@ model OrderItem {
   quantity        Int
   priceAtPurchase Int    @map("price_at_purchase")
 
-  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  plant   Plant    @relation(fields: [plantId], references: [id])
-  returns Return[]
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product    @relation(fields: [plantId], references: [id])
+  returns   Return[]
 
   @@map("order_items")
 }
@@ -255,8 +273,8 @@ model HealthTicket {
   status      TicketStatus @default(OPEN)
   createdAt   DateTime     @default(now()) @map("created_at")
 
-  user  User    @relation(fields: [userId], references: [id])
-  plant Plant   @relation(fields: [plantId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  product Product   @relation(fields: [plantId], references: [id])
   media Media[]
 
   @@map("health_tickets")

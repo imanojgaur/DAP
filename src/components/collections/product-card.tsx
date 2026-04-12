@@ -63,10 +63,11 @@ export function ProductCard({ plant }: { plant: PlantCardData }) {
                     <span className="text-lg font-bold text-green-700">
                         {currentPrice} {/* Assuming price is in paise */}
                     </span>
-                    
+                    { (plant.compareAtPrice ?? 0 )  > plant.price && (
                         <span className="text-sm text-muted-foreground line-through">
                             {lineOverPrice}
                         </span>
+                    )}
                 </div>
                 {/* 5. Keep the Add to Cart Button completely separate from the links */}
                 <Button size="sm" onClick={() => console.log(`Added ${plant.name} to cart`)}>

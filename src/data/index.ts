@@ -1,1 +1,1 @@
-export * from "./plant";
+export * from "./product-page";

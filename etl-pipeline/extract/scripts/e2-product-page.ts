@@ -1,46 +1,19 @@
+// This is to notify that this script is missing types to be specified.
+// for future refrence, Make their types settle first.
+
 import fs from "node:fs/promises";
 import { chromium } from "playwright";
-
-type Variant = {
-	id: string;
-	title: string;
-	sku: string;
-	price: number;
-	compareAtPrice: number | null;
-	isAvailable: boolean;
-	swatchUrl?: string;
-};
-
-type Review = {
-	author: string;
-	rating: number;
-	title: string;
-	body: string;
-	date: string;
-};
-
-type FAQ = {
-	question: string;
-	answer: string;
-};
-
-type DescriptionPanel = {
-	title: string;
-	content: string[];
-};
-
-type ProductDetails = {
-	averageRating: number;
-	totalReviews: number;
-	isPetSafe: boolean;
-	variants: Variant[];
-	reviews: Review[];
-	descriptionInfo: DescriptionPanel[];
-};
+import type {
+	DescriptionSection,
+	EnrichedPlantData,
+	ProductDetails,
+	ReviewType,
+	Variant,
+} from "@/types";
 
 async function scrapeStructuredProductData() {
 	console.log("📦 Loading enriched.json...");
-	let catalog: any[] = [];
+	let catalog: ProductDetails[] = [];
 	try {
 		const rawData = await fs.readFile(
 			"./etl-pipeline/transform/enriched_plants.json",

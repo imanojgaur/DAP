@@ -8,7 +8,7 @@
 		"build": "prisma generate && next build",
 		"start": "next start",
 		"lint": "eslint",
-		"seed:plants": "tsx etl-pipeline/load/seed-plant.ts",
+		"seed:plants": "tsx etl-pipeline/load/seed-plant-t1.ts",
 		"seed:all": "pnpm seed:plants"
 	},
 	"dependencies": {

@@ -1,2 +1,2 @@
 export * from "./nav";
-export * from "./product-catalog";
+export * from "./global";

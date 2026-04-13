@@ -1,7 +1,18 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { Product } from "@/types";
+
+
+interface DescriptionSection {
+	title: string;
+	content: string[];
+}
+
+interface Product {
+	descriptionInfo?: DescriptionSection[];
+	specifications?: Record<string, string[]>;
+	[key: string]: unknown; 
+}
 
 // The modern ESM equivalent of __dirname
 const __filepath = fileURLToPath(import.meta.url);

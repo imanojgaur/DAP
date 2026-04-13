@@ -1,7 +1,7 @@
 import { ProductCard } from "@/components/collections/product-card";
 import { getPlantsForCards } from "@/data";
 
-export default async function CategoryPage({
+export default async function Page({
 	params,
 }: {
 	params: Promise<{ slug: string }>;

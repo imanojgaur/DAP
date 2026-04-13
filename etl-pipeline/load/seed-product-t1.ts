@@ -4,7 +4,7 @@ import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { EnrichedPlantData } from "@/types";
+import type { EnrichedProductType } from "@/types";
 
 const adapter = new PrismaPg({
 	connectionString: process.env.DIRECT_URL,
@@ -29,7 +29,7 @@ async function loadProductsToDatabase() {
 		process.exit(1);
 	}
 
-	const rawProducts: EnrichedPlantData[] = JSON.parse(
+	const rawProducts: EnrichedProductType[] = JSON.parse(
 		fs.readFileSync(enrichedDataPath, "utf-8"),
 	);
 	console.log(`📦 Found ${rawProducts.length} products to load.\n`);

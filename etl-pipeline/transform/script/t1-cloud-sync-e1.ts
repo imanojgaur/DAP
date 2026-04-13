@@ -3,7 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
-import type { ImageTypes, ScrapedPlantData } from "@/types";
+import type { ImageType, EnrichedProductType } from "@/types";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,7 +45,7 @@ async function runCloudinarySync() {
 	}
 
 	const rawPlants = JSON.parse(fs.readFileSync(rawDataPath, "utf-8"));
-	const enrichedPlants = [];
+	const enrichedPlants: EnrichedProductType[] = [];
 
 	console.log(
 		`📦 Found ${rawPlants.length} plants to process. Starting the conveyor belt...\n`,
@@ -55,12 +56,12 @@ async function runCloudinarySync() {
 	let failCount = 0;
 
 	for (let i = 0; i < rawPlants.length; i++) {
-		const plant: ScrapedPlantData = rawPlants[i];
+		const plant: EnrichedProductType = rawPlants[i];
 		console.log(`⏳ Processing [${i + 1}/${rawPlants.length}]: ${plant.name}`);
 
 		try {
 			// THE WORK ZONE
-			const optimizedImages: ImageTypes[] = [];
+			const optimizedImages: ImageType[] = [];
 
 			// Loop through however many images this specific plant has
 			for (const kyariUrl of plant.images) {

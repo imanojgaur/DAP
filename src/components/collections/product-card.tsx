@@ -12,8 +12,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { calculateDiscountPercentage, formatPrice } from "@/lib";
-import type { PlantCardData } from "@/types";
-export function ProductCard({ plant }: { plant: PlantCardData }) {
+import type { ProductCardTypes } from "@/types";
+export function ProductCard({ plant }: { plant: ProductCardTypes }) {
 	const productUrl = `/products/${plant.slug}`;
 	const discountPercent = calculateDiscountPercentage(
 		plant.price,

@@ -5,7 +5,7 @@ export async function getPlantsForCards(
 	categorySlug?: string,
 ): Promise<PlantCardData[]> {
 	try {
-		const plants = await prisma.plant.findMany({
+		const plants = await prisma.product.findMany({
 			where: categorySlug
 				? {
 						categories: {

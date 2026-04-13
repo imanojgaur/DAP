@@ -30,8 +30,4 @@ interface ProductType {
 	specifications?: Record<string, string[]>;
 }
 
-export type {
-	ProductType,
-	ImageType,
-	ReviewType,
-};
+export type { ProductType, ImageType, ReviewType };

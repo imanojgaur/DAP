@@ -35,11 +35,11 @@ async function loadProductsToDatabase() {
 	console.log(`📦 Found ${rawProducts.length} products to load.\n`);
 
 	console.log("🧹 Clearing old reviews to prevent duplicates...");
-	
-	try{
+
+	try {
 		await prisma.review.deleteMany();
-	}catch(error){
-		console.error("It seems no review existed:", error );
+	} catch (error) {
+		console.error("It seems no review existed:", error);
 	}
 
 	let successCount = 0;

@@ -1,4 +1,4 @@
-import type { ProductTypes, ImageTypes } from "@/types"
+import type { ImageTypes, ProductTypes } from "@/types";
 
 interface ProductCardTypes
 	extends Pick<ProductTypes, "name" | "slug" | "price" | "compareAtPrice"> {
@@ -11,7 +11,4 @@ interface ProductCardTypes
 	images: ImageTypes[];
 }
 
-export type {
-    ProductCardTypes,
-
-}
+export type { ProductCardTypes };

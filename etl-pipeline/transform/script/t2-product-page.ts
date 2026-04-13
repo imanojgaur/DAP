@@ -2,7 +2,6 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-
 interface DescriptionSection {
 	title: string;
 	content: string[];
@@ -11,7 +10,7 @@ interface DescriptionSection {
 interface Product {
 	descriptionInfo?: DescriptionSection[];
 	specifications?: Record<string, string[]>;
-	[key: string]: unknown; 
+	[key: string]: unknown;
 }
 
 // The modern ESM equivalent of __dirname

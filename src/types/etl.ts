@@ -1,8 +1,4 @@
-import type { 
-    ProductType, 
-    ImageType, 
-    ReviewType 
-} from "@/types";
+import type { ImageType, ProductType, ReviewType } from "@/types";
 
 /** for  e1 Scraper Script */
 interface ScrapedProductType extends ProductType {
@@ -10,13 +6,9 @@ interface ScrapedProductType extends ProductType {
 }
 
 interface EnrichedProductType extends ProductType {
-    images: ImageType[];
-    reviews?: ReviewType[];
-    originalKyariImages?: ImageType[];
+	images: ImageType[];
+	reviews?: ReviewType[];
+	originalKyariImages?: ImageType[];
 }
 
-
-export type { 
-    ScrapedProductType,
-    EnrichedProductType,
-}
+export type { ScrapedProductType, EnrichedProductType };

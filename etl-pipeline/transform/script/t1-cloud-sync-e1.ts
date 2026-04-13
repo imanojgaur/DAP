@@ -3,8 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
-import type { ImageType, EnrichedProductType } from "@/types";
-
+import type { EnrichedProductType, ImageType } from "@/types";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

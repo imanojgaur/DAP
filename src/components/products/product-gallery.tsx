@@ -5,7 +5,8 @@
 import { CldImage } from "next-cloudinary";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { motion } from "framer-motion"; // 👈 Premium animations
+import { motion } from "framer-motion"; 
+import type { ProductImage } from "../../../generated/prisma/client";
 
 import {
 	Carousel,
@@ -14,13 +15,8 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "@/components/ui/carousel";
-import type { ImageTypes } from "@/types";
 
-interface ProductGalleryProps {
-	images: ImageTypes[];
-}
-
-export default function ProductGallery({ images }: ProductGalleryProps) {
+export function ProductGallery({ images }: {images:ProductImage[]}) {
 	if (!images || images.length === 0) {
 		return (
 			<div className="w-full aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">
@@ -51,7 +47,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
 			>
 				<CarouselContent>
 					{images.map((image, index) => (
-						<CarouselItem key={image.publicId || index}>
+						<CarouselItem key={image.id || index}>
 							{/* 2. Upgraded Tailwind: Softer shadows, smoother corners, better hover states */}
 							<div className="relative w-full overflow-hidden rounded-2xl bg-gray-50/50 aspect-square border border-black/5 shadow-sm transition-all duration-300 hover:shadow-md">
 								<Zoom zoomMargin={40}>
@@ -60,10 +56,12 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
 										alt={`Product Image ${index + 1}`}
 										width={image.width || 800}
 										height={image.height || 800}
+										crop="fill"
+										gravity="auto"
 										sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 										preload={true}
 										// 3. Image Scale Animation: Slight zoom effect when they hover over the plant
-										className="object-cover w-full h-full object-center transition-transform duration-500 hover:scale-[1.02]"
+										className="object-contain w-full h-full object-center transition-transform duration-500 hover:scale-[1.02]"
 									/>
 								</Zoom>
 							</div>

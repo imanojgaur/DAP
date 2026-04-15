@@ -1,7 +1,7 @@
-import { cleanPlantSlug } from "@/lib";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { getProductBySlug } from "@/data";
 import { notFound } from "next/navigation";
+import { ProductHeader } from "@/components/products/header";
 
 export default async function Page({
 	params,
@@ -10,17 +10,20 @@ export default async function Page({
 }) {
 
     const slug = (await params).slug;
-    const productName = cleanPlantSlug(slug);
-    const pageName = productName.replace(/[-]/g," ");
     const product = await getProductBySlug(slug)
 
     if (!product) notFound(); 
-    
 
     return (
-        <section> 
-            <h1 className="font-bold text-3l capitalize border-4 mx-8 my-4 p-2  rounded-full w-fit">{pageName}</h1>
-            <ProductGallery images={product.images}/> 
+        <section className="max-w-7xl mx-auto px-4 py-4 md:py-16 sm:px-6 lg:px-8"> 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+                <ProductHeader 
+                    name={product.name}
+                    price={product.price}
+                    compareAtPrice={product.compareAtPrice}
+                />
+                <ProductGallery images={product.images}/> 
+            </div>
         </section>
     )
 }

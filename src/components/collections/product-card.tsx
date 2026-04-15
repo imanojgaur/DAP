@@ -13,7 +13,13 @@ import {
 } from "@/components/ui/card";
 import { calculateDiscountPercentage, formatPrice } from "@/lib";
 import type { ProductCardTypes } from "@/types";
+import { useCounterStore } from "@/providers/counter-store-provider"; 
+
+
+
 export function ProductCard({ plant }: { plant: ProductCardTypes }) {
+
+
 	const productUrl = `/products/${plant.slug}`;
 	const discountPercent = calculateDiscountPercentage(
 		plant.price,
@@ -23,6 +29,9 @@ export function ProductCard({ plant }: { plant: ProductCardTypes }) {
 	const lineOverPrice = plant.compareAtPrice
 		? formatPrice(plant.compareAtPrice)
 		: null;
+
+	//for using zustand for product card logic.
+	const incrementCount = useCounterStore( (state) => state.incrementCount );
 
 	return (
 		<Card className="group w-full max-w-sm overflow-hidden transition-all hover:shadow-lg flex flex-col">
@@ -83,7 +92,7 @@ export function ProductCard({ plant }: { plant: ProductCardTypes }) {
 				{/* 5. Keep the Add to Cart Button completely separate from the links */}
 				<Button
 					size="sm"
-					onClick={() => console.log(`Added ${plant.name} to cart`)}
+					onClick={incrementCount}
 				>
 					Add to Cart
 				</Button>

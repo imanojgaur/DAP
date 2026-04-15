@@ -2,6 +2,7 @@
 
 
 import { ShoppingCart } from "lucide-react";
+import { useCounterStore } from "@/providers/counter-store-provider";
 
 import {
 	Sheet,
@@ -12,13 +13,16 @@ import {
 } from "@/components/ui/sheet";
 
 export function CartDrawer() {
+    
+    const count = useCounterStore( (state)=> state.count );
+
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
 				<button type="button" className="relative flex items-center p-2 text-muted-foreground hover:text-foreground">
 					<ShoppingCart className="h-5 w-5" />
 					<span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-						2
+						{count}
 					</span>
 				</button>
 			</SheetTrigger>

@@ -5,9 +5,7 @@
 import { CldImage } from "next-cloudinary";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { motion } from "framer-motion"; 
-import type { ProductImage } from "../../../generated/prisma/client";
-
+import { motion } from "framer-motion";
 import {
 	Carousel,
 	CarouselContent,
@@ -15,8 +13,9 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "@/components/ui/carousel";
+import type { ProductImage } from "../../../generated/prisma/client";
 
-export function ProductGallery({ images }: {images:ProductImage[]}) {
+export function ProductGallery({ images }: { images: ProductImage[] }) {
 	if (!images || images.length === 0) {
 		return (
 			<div className="w-full aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">

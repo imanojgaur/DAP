@@ -17,7 +17,7 @@ export  function HomePage() {
             </div>
             
             {/* 2. TAILWIND FIX: Add physical shapes, colors, and hover states to the buttons */}
-                <h1 className="text-xl">{`Untill this App Gets completed Play around with `} <span className="font-bold">Zustand</span> </h1>
+                <h1 className="text-xl">{`Untill this App Gets completed, play around with `} <span className="font-bold">Zustand</span> </h1>
             <div className="flex gap-4">
                 <button 
                     type="button" 

@@ -1,1 +1,2 @@
-export * from "./plant";
+export * from "./product-card";
+export * from "./product-page";

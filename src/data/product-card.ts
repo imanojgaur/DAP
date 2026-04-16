@@ -1,11 +1,11 @@
 import prisma from "@/lib/prisma";
-import type { PlantCardData } from "@/types";
+import type { ProductCardTypes } from "@/types";
 
 export async function getPlantsForCards(
 	categorySlug?: string,
-): Promise<PlantCardData[]> {
+): Promise<ProductCardTypes[]> {
 	try {
-		const plants = await prisma.plant.findMany({
+		const plants = await prisma.product.findMany({
 			where: categorySlug
 				? {
 						categories: {

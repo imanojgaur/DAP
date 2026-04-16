@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { chromium } from "playwright";
-import type { PlantData } from "@/types";
+import type { ScrapedProductType } from "@/types";
 
 async function scrapeCollections(urls: string[]) {
 	const browser = await chromium.launch({ headless: false, slowMo: 50 });
@@ -11,7 +11,7 @@ async function scrapeCollections(urls: string[]) {
 			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
 	});
 
-	const masterPlantList: PlantData[] = [];
+	const masterPlantList: ScrapedProductType[] = [];
 	const baseUrl = "https://kyari.co";
 
 	for (const url of urls) {
@@ -46,7 +46,7 @@ async function scrapeCollections(urls: string[]) {
 
 			await page.waitForTimeout(3000);
 
-			const pagePlants: PlantData[] = await page.evaluate(
+			const pagePlants: ScrapedProductType[] = await page.evaluate(
 				({ base, currentCategory }) => {
 					const productCards = document.querySelectorAll(".product-item");
 
@@ -153,7 +153,7 @@ async function scrapeCollections(urls: string[]) {
 
 	console.log("\n🧹 Merging categories for duplicate plants...");
 
-	const plantDictionary = new Map<string, PlantData>();
+	const plantDictionary = new Map<string, ScrapedProductType>();
 
 	for (const plant of masterPlantList) {
 		const existingPlant = plantDictionary.get(plant.shopifyId);

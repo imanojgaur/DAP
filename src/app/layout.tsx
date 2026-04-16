@@ -4,6 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 
+import { CounterStoreProvider } from '@/providers/counter-store-provider'
+
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -30,8 +33,10 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<Header />
-				<main>{children}</main>
+				<CounterStoreProvider>
+				    <Header />
+				    <main>{children}</main>
+				</CounterStoreProvider>
 				<Analytics />
 			</body>
 		</html>

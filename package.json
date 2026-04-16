@@ -8,19 +8,20 @@
 		"build": "prisma generate && next build",
 		"start": "next start",
 		"lint": "eslint",
-		"seed:plants": "tsx etl-pipeline/load/seed-plant.ts",
+		"seed:plants": "tsx etl-pipeline/load/seed-plant-t1.ts",
 		"seed:all": "pnpm seed:plants"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.4.2",
 		"@prisma/client": "^7.4.2",
 		"@vercel/analytics": "^1.6.1",
-		"cheerio": "^1.2.0",
 		"class-variance-authority": "^0.7.1",
 		"cloudinary": "^2.9.0",
 		"clsx": "^2.1.1",
 		"cmdk": "^1.1.1",
 		"dotenv": "^17.3.1",
+		"embla-carousel-react": "^8.6.0",
+		"framer-motion": "^12.38.0",
 		"lucide-react": "^0.577.0",
 		"next": "16.1.6",
 		"next-cloudinary": "^6.17.5",
@@ -29,12 +30,13 @@
 		"radix-ui": "^1.4.3",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
-		"tailwind-merge": "^3.5.0"
+		"react-medium-image-zoom": "^5.4.3",
+		"tailwind-merge": "^3.5.0",
+		"zustand": "^5.0.12"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.5",
 		"@tailwindcss/postcss": "^4",
-		"@types/cheerio": "^1.0.0",
 		"@types/node": "^20",
 		"@types/pg": "^8.18.0",
 		"@types/react": "^19",

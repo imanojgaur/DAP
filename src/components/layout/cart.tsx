@@ -1,4 +1,9 @@
+"use client"
+
+
 import { ShoppingCart } from "lucide-react";
+import { useCounterStore } from "@/providers/counter-store-provider";
+
 import {
 	Sheet,
 	SheetContent,
@@ -8,13 +13,16 @@ import {
 } from "@/components/ui/sheet";
 
 export function CartDrawer() {
+    
+    const count = useCounterStore( (state)=> state.count );
+
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<button className="relative flex items-center p-2 text-muted-foreground hover:text-foreground">
+				<button type="button" className="relative flex items-center p-2 text-muted-foreground hover:text-foreground">
 					<ShoppingCart className="h-5 w-5" />
 					<span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-						2
+						{count}
 					</span>
 				</button>
 			</SheetTrigger>
@@ -44,7 +52,7 @@ export function CartDrawer() {
 				</div>
 
 				<div className="absolute bottom-0 left-0 w-full border-t bg-background p-6">
-					<button className="w-full rounded-md bg-foreground py-4 text-background font-medium hover:bg-foreground/90 transition-colors">
+					<button type="button" className="w-full rounded-md bg-foreground py-4 text-background font-medium hover:bg-foreground/90 transition-colors">
 						Checkout • $70.00
 					</button>
 				</div>

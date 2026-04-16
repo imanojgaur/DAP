@@ -6,7 +6,7 @@ export async function getUnifiedSearchData() {
 	try {
 		// Parallel fetching for speed
 		const [plants, categories] = await Promise.all([
-			prisma.plant.findMany({
+			prisma.product.findMany({
 				select: {
 					id: true,
 					name: true,
@@ -19,7 +19,7 @@ export async function getUnifiedSearchData() {
 					},
 				},
 			}),
-			prisma.plantCategory.findMany({
+			prisma.category.findMany({
 				select: { id: true, name: true, slug: true },
 			}),
 		]);

@@ -82,6 +82,10 @@ const navConfig: NavItem[] = [
 				title: "Warranty",
 				href: ROUTES.SERVICES.WARRENTY,
 			},
+			{
+				title: "Crop Recommendation System",
+				href: ROUTES.SERVICES.CROP_RECOMMEND, 
+			}
 		],
 	},
 ];

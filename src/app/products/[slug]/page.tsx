@@ -5,6 +5,7 @@ import { ProductHeader } from "@/components/products/header";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { MobileCartBar } from "@/components/products/mobile-cart-bar";
 import { ProductDetails } from "@/components/products/product-details";
+import { DesktopCartActions } from "@/components/products/desktop-cart-actions";
 import { ProductAccordion } from "@/components/products/product-accordions";
 
 export default async function Page({
@@ -39,6 +40,15 @@ export default async function Page({
 						/>
 
 						{/* Desktop "Add to Cart" button would go here */}
+						<DesktopCartActions 
+							product={{
+								id: product.id,
+								name: product.name,
+								price: product.price,
+								slug: product.slug,
+								image: product.images[0]?.publicId || "", // Grabs the first image, or leaves it blank
+							}} 
+						/>
 
 						<ProductDetails 
 							careDifficulty={product.careDifficulty}
@@ -58,7 +68,16 @@ export default async function Page({
 			</section>
 
 			{/* FIXED MOBILE BAR: Kept completely outside the grid */}
-			<MobileCartBar name={product.name} price={product.price} />
+						
+			<MobileCartBar 
+				product={{
+					id: product.id,
+					name: product.name,
+					price: product.price,
+					slug: product.slug,
+					image: product.images[0]?.secureUrl || "", // Or publicId if you use that!
+				}} 
+			/>
 		</main>
 	);
 }

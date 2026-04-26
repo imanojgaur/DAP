@@ -1,48 +1,37 @@
-// (Client Component): Handles the quantity state and the submission to your cart API.
 "use client";
 
-import { useCounterStore } from "@/providers/counter-store-provider";
+import { useCartStore } from "@/providers/cart-store"; // 1. Updated import
 import { Button } from "@/components/ui/button"; 
 import { formatPrice } from "@/lib";
 
+// 2. Define the exact props we need
 interface MobileCartBarProps {
-    name: string;
-    price: number;
+    product: {
+        id: string;
+        name: string;
+        price: number;
+        slug: string;
+        image: string;
+    }
 }
 
-export function MobileCartBar({ name, price }: MobileCartBarProps) {
+export function MobileCartBar({ product }: MobileCartBarProps) {
+    // 3. Connect to Zustand
+    const addItem = useCartStore((state) => state.addItem);
 
-        const incrementCount = useCounterStore((state) => state.incrementCount);
-        const formatedPrice = formatPrice(price);
-        const productName = name.replace(/-/g, " ")
-
-        return (
-            // 1. THE POSITIONING: fixed to bottom, full width, high z-index to float over content
-            // 2. THE VISIBILITY: hidden on medium screens and up (md:hidden)
-            <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-black border-t border-gray-800 px-4 py-3 md:hidden">
-                
-                <div className="flex items-center justify-between gap-4">
-                    
-                    {/* Left Side: Gentle reminder of what they are buying and the price */}
-                    <div className="flex flex-col truncate">
-                        <span className="text-xs text-gray-400 truncate capitalize">
-                            {productName}
-                        </span>
-                        <span className="text-lg font-bold text-white">
-                            {formatedPrice}
-                        </span>
-                    </div>
-
-                    {/* Right Side: The Shadcn Button (Styled to pop against the black background) */}
-                    <Button 
-                        size="lg"
-                        className="bg-white text-black hover:bg-gray-200 font-bold rounded-full px-8 shrink-0"
-                        onClick={incrementCount}
-                    >
-                        Add to Cart
-                    </Button>
-                    
-                </div>
+    return (
+        <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:hidden">
+            <div className="flex flex-col max-w-[50%]">
+                <span className="text-sm font-medium text-gray-500 line-clamp-1">{product.name}</span>
+                <span className="text-lg font-extrabold text-gray-900">{formatPrice(product.price)}</span>
             </div>
-        );
+            
+            <Button 
+                onClick={() => addItem(product)} // 4. Add the actual product to cart!
+                className="h-12 px-8 text-base font-bold text-white transition-all bg-green-700 rounded-xl hover:bg-green-800 shadow-md"
+            >
+                Add to Cart
+            </Button>
+        </div>
+    );
 }

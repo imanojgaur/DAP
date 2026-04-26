@@ -40,7 +40,15 @@ export default async function Page({
 						/>
 
 						{/* Desktop "Add to Cart" button would go here */}
-                        <DesktopCartActions />
+						<DesktopCartActions 
+							product={{
+								id: product.id,
+								name: product.name,
+								price: product.price,
+								slug: product.slug,
+								image: product.images[0]?.publicId || "", // Grabs the first image, or leaves it blank
+							}} 
+						/>
 
 						<ProductDetails 
 							careDifficulty={product.careDifficulty}
@@ -60,7 +68,16 @@ export default async function Page({
 			</section>
 
 			{/* FIXED MOBILE BAR: Kept completely outside the grid */}
-			<MobileCartBar name={product.name} price={product.price} />
+						
+			<MobileCartBar 
+				product={{
+					id: product.id,
+					name: product.name,
+					price: product.price,
+					slug: product.slug,
+					image: product.images[0]?.secureUrl || "", // Or publicId if you use that!
+				}} 
+			/>
 		</main>
 	);
 }

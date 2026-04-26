@@ -5,6 +5,7 @@ import { ProductHeader } from "@/components/products/header";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { MobileCartBar } from "@/components/products/mobile-cart-bar";
 import { ProductDetails } from "@/components/products/product-details";
+import { DesktopCartActions } from "@/components/products/desktop-cart-actions";
 import { ProductAccordion } from "@/components/products/product-accordions";
 
 export default async function Page({
@@ -39,6 +40,7 @@ export default async function Page({
 						/>
 
 						{/* Desktop "Add to Cart" button would go here */}
+                        <DesktopCartActions />
 
 						<ProductDetails 
 							careDifficulty={product.careDifficulty}

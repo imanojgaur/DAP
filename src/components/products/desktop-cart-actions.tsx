@@ -26,7 +26,6 @@ export function DesktopCartActions({ product }: DesktopCartActionsProps) {
 
     const handleBuyNow = () => {
         addItem(product);
-        // In the future, you can import useRouter and do: router.push('/cart') here!
     };
 
     return (

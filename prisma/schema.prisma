@@ -10,21 +10,20 @@ datasource db {
 // ==========================================
 // 1. IDENTITY & AUTHENTICATION
 // ==========================================
-
 model User {
-  id          String  @id @default(cuid(2))
-  firstName   String  @map("first_name")
-  lastName    String  @map("last_name")
-  email       String  @unique
-  password    String
-  phoneNumber String  @map("phone_number")
-  role        Role    @default(USER)
-  hasPets     Boolean @map("has_pets")
-  isActive    Boolean @default(true) @map("is_active")
+  id            String    @id @default(cuid(2))
+  name          String?   
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified") 
+  image         String?  
+  
+  phoneNumber   String?   @map("phone_number")
+  role          Role      @default(USER)
+  hasPets       Boolean?  @map("has_pets")
+  isActive      Boolean   @default(true) @map("is_active")
 
-  verifiedAt DateTime? @map("verified_at") @db.Timestamptz
-  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz
 
   accounts      Account[]
   sessions      Session[]
@@ -175,6 +174,8 @@ model CartItem {
 
   user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [plantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, plantId])
 
   @@map("cart_items")
 }

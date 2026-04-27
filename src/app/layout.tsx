@@ -4,6 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 
+// 1. Import the new Auth Provider we just made
+import { AuthProvider } from "@/providers/session-provider";
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -27,9 +30,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                {/* No more provider needed here! Zustand works magically without it. */}
-                <Header />
-                <main>{children}</main>
+                
+                {/* Zustand works without a provider, but NextAuth needs this wrapper! */}
+                <AuthProvider>
+                    <Header />
+                    <main>{children}</main>
+                </AuthProvider>
+                
                 <Analytics />
             </body>
         </html>

@@ -35,6 +35,7 @@ export const ROUTES = {
 		CONSULT: "/services",
 		MAINTENANCE: "/services/maintenance",
 		WARRENTY: "/services/warrenty",
-		CROP_RECOMMEND: "/services/crop-recommend"
+		CROP_RECOMMEND: "/services/crop-recommend",
+		PLANT_RECOMMEND: "/services/plant-recommend",
 	},
 } as const;

@@ -16,65 +16,60 @@ import { navConfig } from "@/config/nav-config";
 export function Navbar() {
     return (
         <NavigationMenu>
-            <NavigationMenuList>
+            <NavigationMenuList className="gap-2 md:gap-4">
                 {navConfig.map((navItem) => (
                     <NavigationMenuItem key={navItem.title}>
                         {navItem.items ? (
                             <>
-                                <NavigationMenuTrigger>{navItem.title}</NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-3 lg:w-[800px]">
-                                        {navItem.items.map((subItem) => 
-                                            subItem.items ? (
-                                                <li key={subItem.title} className="flex flex-col space-y-2">
-                                                    <h4 className="text-sm font-bold leading-none text-foreground px-3 py-2">
-                                                        {subItem.title}
-                                                    </h4>
-                                                    <ul className="flex flex-col space-y-1">
-                                                        {subItem.items.map((nestedItem) => (
-                                                            <ListItem
-                                                                key={nestedItem.title}
-                                                                title={nestedItem.title}
-                                                                href={nestedItem.href ?? "#"}
-                                                            />
+                                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent data-[state=open]:bg-transparent font-medium text-sm">
+                                    {navItem.title}
+                                </NavigationMenuTrigger>
+                                
+                                {/* MEGA MENU CONTENT */}
+                                <NavigationMenuContent className="w-full bg-white border-t border-gray-100">
+                                    {/* THE FIX: Flex center wrapper for the whole sheet width */}
+                                    <div className="w-screen flex justify-center">
+                                        {/* THE FIX: flex & justify-center packs the columns tightly in the middle */}
+                                        <div className="flex justify-center gap-16 md:gap-24 px-8 py-12 w-full max-w-6xl mx-auto">
+                                            {navItem.items.map((subGroup) => (
+                                                <div key={subGroup.title} className="flex flex-col space-y-5 min-w-[160px]">
+                                                    <Link 
+                                                        href={subGroup.href ?? "#"}
+                                                        className="text-sm font-bold uppercase tracking-tight text-black hover:text-gray-500 transition-colors"
+                                                    >
+                                                        {subGroup.title}
+                                                    </Link>
+
+                                                    <ul className="flex flex-col space-y-3">
+                                                        {subGroup.items?.map((item) => (
+                                                            <li key={item.title}>
+                                                                <NavigationMenuLink asChild>
+                                                                    <Link
+                                                                        href={item.href ?? "#"}
+                                                                        className="text-sm font-medium text-gray-500 hover:text-black transition-colors block"
+                                                                    >
+                                                                        {item.title}
+                                                                    </Link>
+                                                                </NavigationMenuLink>
+                                                            </li>
                                                         ))}
                                                     </ul>
-                                                </li>
-                                            ) : (
-                                                /* FIX: Render ListItem directly so we don't nest <li> inside <li> */
-                                                <ListItem
-                                                    key={subItem.title}
-                                                    title={subItem.title}
-                                                    href={subItem.href ?? "#"}
-                                                />
-                                            )
-                                        )}
-                                    </ul>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </NavigationMenuContent>
                             </>
                         ) : (
                             <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                                <Link href={navItem.href ?? "#"}>{navItem.title}</Link>
+                                <Link href={navItem.href ?? "#"} className="bg-transparent font-medium">
+                                    {navItem.title}
+                                </Link>
                             </NavigationMenuLink>
                         )}
                     </NavigationMenuItem>
                 ))}
             </NavigationMenuList>
         </NavigationMenu>
-    );
-}
-
-function ListItem({ title, href, ...props }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-    return (
-        <li {...props}>
-            <NavigationMenuLink asChild>
-                <Link
-                    href={href}
-                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                    <div className="text-sm font-medium leading-none">{title}</div>
-                </Link>
-            </NavigationMenuLink>
-        </li>
     );
 }

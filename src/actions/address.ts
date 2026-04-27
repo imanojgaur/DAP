@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function getUserAddresses() {
     const session = await auth();
-    if (!session?.user?.id) return [];
+    if (!session?.user?.id) return {error: "Unauthorized"};
 
     return prisma.address.findMany({
         where: { userId: session.user.id },

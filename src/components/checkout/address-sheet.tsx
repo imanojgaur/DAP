@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { saveAddressAction } from "@/actions/address";
 
-export function AddressSheet({ user, autoOpen = false, label = "+ Add New Address" }: { user: any, autoOpen?: boolean, label?: string }) {
+export function AddressSheet({ user, autoOpen = false, label = "+ Add New Address" }: { user: any, autoOpen?: boolean, label?: React.ReactNode }) {
     const [isOpen, setIsOpen] = useState(autoOpen);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -17,11 +17,14 @@ export function AddressSheet({ user, autoOpen = false, label = "+ Add New Addres
         setIsLoading(true);
         const formData = new FormData(e.currentTarget);
         
-        // Note: The Switch component will send "on" if checked, or be null if unchecked.
-        await saveAddressAction(formData);
+        const result = await saveAddressAction(formData);
         
+        if (result?.error) {
+            alert(result.error); // This will tell you EXACTLY why Prisma is failing
+        } else {
+            setIsOpen(false);
+        }
         setIsLoading(false);
-        setIsOpen(false);
     }
 
     return (

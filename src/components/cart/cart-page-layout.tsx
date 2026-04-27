@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 interface CartPageLayoutProps {
   itemList: React.ReactNode;
@@ -11,7 +11,7 @@ export function CartPageLayout({ itemList, summary }: CartPageLayoutProps) {
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 min-h-screen">
       
       <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-10">
-        Your Cart
+       Checkout Cart
       </h1>
 
       {/* THE GRID:

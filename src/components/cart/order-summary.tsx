@@ -1,11 +1,13 @@
 "use client";
 
 import { useCartStore } from "@/providers/cart-store";
-import { formatPrice } from "@/lib";
+import { formatPrice } from "@/lib"; // Assuming you have this helper
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ShieldCheck } from "lucide-react";
+// 1. IMPORT LINK
+import Link from "next/link";
 
 export function OrderSummary() {
   const items = useCartStore((state) => state.items);
@@ -47,9 +49,13 @@ export function OrderSummary() {
       </CardContent>
 
       <CardFooter className="flex flex-col gap-4">
-        <Button className="w-full h-14 text-lg font-bold bg-green-700 hover:bg-green-800 text-white rounded-xl">
-          Proceed to Checkout
+        {/* 2. WRAP BUTTON IN LINK USING asChild */}
+        <Button asChild className="w-full h-14 text-lg font-bold bg-green-700 hover:bg-green-800 text-white rounded-xl">
+          <Link href="/checkout">
+            Proceed to Checkout
+          </Link>
         </Button>
+        
         <div className="flex items-center justify-center text-xs text-gray-500 w-full">
           <ShieldCheck className="w-4 h-4 mr-1 text-green-600" />
           Secure Encrypted Checkout

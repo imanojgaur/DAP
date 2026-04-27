@@ -16,6 +16,8 @@ interface CartState {
   addItem: (item: Omit<CartItem, 'quantity'>) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  // 1. ADDED THIS
+  clearCart: () => void; 
 }
 
 export const useCartStore = create<CartState>()(
@@ -26,14 +28,12 @@ export const useCartStore = create<CartState>()(
       addItem: (newItem) => set((state) => {
         const existingItem = state.items.find((item) => item.id === newItem.id);
         if (existingItem) {
-          // If it exists, just increase the quantity
           return {
             items: state.items.map((item) =>
               item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item
             ),
           };
         }
-        // If it's new, add it to the array with quantity 1
         return { items: [...state.items, { ...newItem, quantity: 1 }] };
       }),
 
@@ -46,10 +46,13 @@ export const useCartStore = create<CartState>()(
           item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
         ),
       })),
+
+      // 2. ADDED THIS
+      clearCart: () => set({ items: [] }),
       
     }),
     {
-      name: 'plant-cart-storage', // This is the key used in localStorage
+      name: 'plant-cart-storage',
     }
   )
 );

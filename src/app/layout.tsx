@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { CartNotification } from "@/components/cart/add-to-cart-popup";
-
+import { Footer } from "@/components/layout/footer";
 // 1. Import the new Auth Provider we just made
 import { AuthProvider } from "@/providers/session-provider";
 
@@ -35,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     <CartNotification />
                     
                 </AuthProvider>
+                <Footer />
                 <Analytics />
             </body>
         </html>

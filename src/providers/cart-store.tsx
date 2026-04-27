@@ -13,28 +13,40 @@ export interface CartItem {
 
 interface CartState {
   items: CartItem[];
+  lastAddedItem: CartItem | null;     // Tracks the item for the popup
+  showNotification: boolean;          // Tracks if the popup is open
   addItem: (item: Omit<CartItem, 'quantity'>) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  clearCart: () => void;
+  closeNotification: () => void;      // Allows manual/auto closing
 }
 
 export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       items: [],
+      lastAddedItem: null,
+      showNotification: false,
       
       addItem: (newItem) => set((state) => {
         const existingItem = state.items.find((item) => item.id === newItem.id);
+        
+        let newItems: any;
         if (existingItem) {
-          // If it exists, just increase the quantity
-          return {
-            items: state.items.map((item) =>
-              item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item
-            ),
-          };
+          newItems = state.items.map((item) =>
+            item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item
+          );
+        } else {
+          newItems = [...state.items, { ...newItem, quantity: 1 }];
         }
-        // If it's new, add it to the array with quantity 1
-        return { items: [...state.items, { ...newItem, quantity: 1 }] };
+
+        // Return updated items AND trigger the notification!
+        return { 
+            items: newItems,
+            lastAddedItem: { ...newItem, quantity: 1 }, 
+            showNotification: true 
+        };
       }),
 
       removeItem: (id) => set((state) => ({
@@ -46,10 +58,15 @@ export const useCartStore = create<CartState>()(
           item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
         ),
       })),
+
+      clearCart: () => set({ items: [] }),
       
+      closeNotification: () => set({ showNotification: false }),
     }),
     {
-      name: 'plant-cart-storage', // This is the key used in localStorage
+      name: 'plant-cart-storage',
+      // We don't want to persist the notification state on page refresh
+      partialize: (state) => ({ items: state.items }), 
     }
   )
 );

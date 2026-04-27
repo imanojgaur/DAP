@@ -12,7 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { calculateDiscountPercentage, formatPrice } from "@/lib";
-import type { ProductCardTypes } from "@/types";
+import type { ProductCardTypes } from "@/types";    
 // 1. UPDATED IMPORT
 import { useCartStore } from "@/providers/cart-store"; 
 

@@ -2,55 +2,69 @@
 
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function placeOrderAction(addressId: string) {
     const session = await auth();
-    if (!session?.user?.id) return { success: false, error: "Unauthorized" };
-    const userId = session.user.id;
+    if (!session?.user?.id) return { error: "Unauthorized" };
 
     try {
-        // 1. We use a Prisma Transaction. If any step fails, the whole thing rolls back.
-        const orderId = await prisma.$transaction(async (tx) => {
-            
-            // 2. Fetch the user's DB cart AND the live product prices
-            const cartItems = await tx.cartItem.findMany({
-                where: { userId },
-                include: { product: true }
-            });
-
-            if (cartItems.length === 0) throw new Error("Cart is empty");
-
-            // 3. Calculate the true, secure total from the DB
-            const total = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-
-            // 4. Create the main Order and all the OrderItems at the exact same time
-            const order = await tx.order.create({
-                data: {
-                    userId,
-                    addressId, // The missing link we just added!
-                    totalPrice: total,
-                    sourceLocation: "MAIN_WAREHOUSE", // Default warehouse
-                    items: {
-                        create: cartItems.map(item => ({
-                            plantId: item.plantId,
-                            quantity: item.quantity,
-                            priceAtPurchase: item.product.price // Lock in the price!
-                        }))
-                    }
-                }
-            });
-
-            // 5. Empty the user's cart now that the order is placed
-            await tx.cartItem.deleteMany({
-                where: { userId }
-            });
-
-            return order.id;
+        // 1. Get the current cart items from DB
+        const cartItems = await prisma.cartItem.findMany({
+            where: { userId: session.user.id },
+            include: { product: true }
         });
 
-        return { success: true, orderId };
-    } catch (error: any) {
-        console.error("Order failed:", error);
-        return { success: false, error: error.message };
+        if (cartItems.length === 0) return { error: "Cart is empty" };
+
+        // 2. Calculate total price
+        const totalPrice = cartItems.reduce((acc, item) => {
+            return acc + (item.product.price * item.quantity);
+        }, 0);
+
+        // Verify address exists before starting transaction
+        const addressExists = await prisma.address.findUnique({
+            where: { id: addressId }
+        });
+
+        if (!addressExists) return { error: "Invalid delivery address selected." };
+
+        // 3. Create the Order in a Transaction (all or nothing)
+        const order = await prisma.$transaction(async (tx) => {
+            // Create the main Order
+           const newOrder = await tx.order.create({
+                data: {
+                    userId: session.user.id!, 
+                    
+                    // USE THE RAW ID FIELD NAME HERE
+                    addressId: addressId, 
+                    
+                    totalPrice: totalPrice,
+                    status: "PENDING",
+                    sourceLocation: "Main Warehouse",
+                    items: {
+                        create: cartItems.map((item) => ({
+                            plantId: item.plantId,
+                            quantity: item.quantity,
+                            priceAtPurchase: item.product.price,
+                        })),
+                    },
+                },
+            });
+
+            // 4. Clear the database cart
+            await tx.cartItem.deleteMany({
+                where: { userId: session.user.id! }
+            });
+
+            return newOrder;
+        });
+
+        revalidatePath("/orders");
+        return { success: true, orderId: order.id };
+
+    } catch (error) {
+        console.error("Order Error:", error);
+        return { error: "Failed to place order. Please check your connection." };
     }
 }

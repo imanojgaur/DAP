@@ -7,7 +7,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl
 
   // 1. Define the routes you want to protect
-  const protectedRoutes = ["/checkout", "/profile", "/orders"]
+  const protectedRoutes = ["/checkout", "/profile", "/orders", "/addresses"]
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
 
   // 2. Define auth routes (pages logged-in users shouldn't see anymore)

@@ -2,12 +2,10 @@ import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import Nodemailer from "next-auth/providers/nodemailer"
 import Google from "next-auth/providers/google"
-import prisma from "@/lib/prisma" // Adjust this import based on where your PrismaClient is
+import prisma from "@/lib/prisma"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  
-  // Force JWT for lightning-fast Edge performance
   session: { strategy: "jwt" },
   
   providers: [
@@ -28,7 +26,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   
-  // Point NextAuth to our custom UI pages (we will build this next)
+  // ADD THIS CALLBACKS SECTION!
+  callbacks: {
+    async jwt({ token, user }) {
+      // 'user' is only passed the very first time you log in
+      if (user) {
+        token.sub = user.id; 
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Transfer the ID from the token to the session so your Server Actions can see it
+      if (session.user && token.sub) {
+        session.user.id = token.sub; 
+      }
+      return session;
+    }
+  },
+
   pages: {
     signIn: '/login', 
   }

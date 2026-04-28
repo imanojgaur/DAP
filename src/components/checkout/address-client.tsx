@@ -172,13 +172,13 @@ function DesktopAddressGrid({ user, addresses, selectedId, onSelect, onConfirm }
                         {isSelected && (
                             <div className="flex gap-3 mt-auto pt-2">
                                 {/* EDIT SHEET WIRE */}
-                                <div role="button" className="flex-1" onClick={(e) => e.stopPropagation()}>
+                                <button type="button" className="flex-1" onClick={(e) => e.stopPropagation()}>
                                     <AddressSheet 
                                         user={user} 
                                         address={addr} 
                                         label={<div className="py-1.5 border border-gray-300 rounded-full text-[10px] font-bold text-center bg-white hover:border-black transition-all">EDIT</div>} 
                                     />
-                                </div>
+                                </button>
 
                                 {/* DELIVER BUTTON - LEGAL NOW */}
                                 <button 

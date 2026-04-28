@@ -48,7 +48,7 @@ export function Header() {
                     </div>
 
                     <div className="flex w-auto items-center justify-end gap-3 sm:gap-5">
-                        <div className="items-center hidden sm:flex">
+                        <div className="items-center  sm:flex">
                             <SearchBar />
                         </div>
                         <CartDrawer />
@@ -61,3 +61,4 @@ export function Header() {
         </div>
     );
 }
+

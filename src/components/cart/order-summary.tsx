@@ -51,7 +51,7 @@ export function OrderSummary() {
       <CardFooter className="flex flex-col gap-4">
         {/* 2. WRAP BUTTON IN LINK USING asChild */}
         <Button asChild className="w-full h-14 text-lg font-bold bg-green-700 hover:bg-green-800 text-white rounded-xl">
-          <Link href="/checkout">
+          <Link href="/addresses">
             Proceed to Buy
           </Link>
         </Button>

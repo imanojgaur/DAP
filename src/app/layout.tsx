@@ -1,11 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { CartNotification } from "@/components/cart/add-to-cart-popup";
-import { Footer } from "@/components/layout/footer";
-// 1. Import the new Auth Provider we just made
+import "@/app/globals.css";
 import { AuthProvider } from "@/providers/session-provider";
 
 const geistSans = Geist({
@@ -28,14 +24,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <AuthProvider>
-                    <Header />
-                    <main>{children}</main>
-                    
-                    {/* 2. Add it here! */}
-                    <CartNotification />
-                    
+                    {children}
                 </AuthProvider>
-                <Footer />
                 <Analytics />
             </body>
         </html>

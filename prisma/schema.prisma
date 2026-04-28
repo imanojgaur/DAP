@@ -198,7 +198,7 @@ model Order {
   serviceBookings ServiceBooking[]
 
   addressId       String?     @map("address_id")
-  address         Address?    @relation(fields: [addressId], references: [id])
+  addresses         Address?    @relation(fields: [addressId], references: [id])
 
   @@map("orders")
 }

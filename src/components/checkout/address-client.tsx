@@ -139,53 +139,61 @@ function OrderDetailsAccordions({ items, total, isDesktop = false }: { items: an
 function DesktopAddressGrid({ user, addresses, selectedId, onSelect, onConfirm }: any) {
     return (
         <div className="hidden md:flex overflow-x-auto pb-6 gap-4 snap-x hide-scrollbar">
+            {/* Add New Address Card */}
             <div className="shrink-0 w-[300px] snap-start h-[180px]">
-                <AddressSheet user={user} label={<div className="flex flex-col items-center justify-center h-full gap-2 text-gray-500"><span className="text-3xl font-light">+</span><span className="text-sm">Add New Address</span></div>} />
+                <AddressSheet user={user} label={<div className="flex flex-col items-center justify-center h-full gap-2 text-gray-500 border-2 border-dashed rounded-2xl cursor-pointer hover:border-black transition-all"><span className="text-3xl font-light">+</span><span className="text-sm">Add New Address</span></div>} />
             </div>
 
+            {/* Saved Address Cards */}
             {addresses.map((addr: any, index: number) => {
                 const isSelected = selectedId === addr.id;
                 return (
-                    <button 
+                    <div // <--- CHANGED FROM button TO div
                         key={addr.id}
-                        type="button"
+                        role="button" // Accessibility: Tells screen readers this is clickable
+                        tabIndex={0}  // Accessibility: Makes it focusable with the Tab key
                         onClick={() => onSelect(addr.id)}
-                        className={`text-left relative shrink-0 w-[300px] h-[180px] p-5 rounded-2xl border transition-all snap-start flex flex-col ${isSelected ? "border-blue-200 bg-[#f4f8ff]" : "border-gray-200 bg-gray-50/50"}`}
+                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onSelect(addr.id); }}
+                        className={`text-left relative shrink-0 w-[300px] h-[180px] p-5 rounded-2xl border transition-all snap-start flex flex-col cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-black ${
+                            isSelected ? "border-blue-200 bg-[#f4f8ff]" : "border-gray-200 bg-gray-50/50"
+                        }`}
                     >
                         <div className="flex items-center gap-2 mb-2">
                             <h3 className="font-bold text-sm text-gray-900">{user.name?.split(" ")[0]}</h3>
                             {index === 0 && <span className="bg-blue-100 text-blue-700 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">Default</span>}
                         </div>
+                        
                         <div className="text-xs text-gray-600 space-y-0.5 flex-1">
                             <p className="line-clamp-1">{addr.street}</p>
                             <p>{addr.city}-{addr.zipCode}</p>
                             <p className="mt-2 font-medium">+91-{user.phoneNumber || "XXXXXXXXXX"}</p>
                         </div>
+
                         {isSelected && (
                             <div className="flex gap-3 mt-auto pt-2">
-                                {/* --- THE EDIT BUTTON WIRE --- */}
-                                <div className="flex-1">
+                                {/* EDIT SHEET WIRE */}
+                                <div role="button" className="flex-1" onClick={(e) => e.stopPropagation()}>
                                     <AddressSheet 
-                                        user={user}
-                                        address={addr} // We pass the specific address to the sheet here
-                                        label={
-                                            <div className="w-full py-1.5 border border-gray-300 rounded-full text-[10px] font-bold text-center hover:border-black transition-colors bg-white">
-                                                EDIT
-                                            </div>
-                                        }
+                                        user={user} 
+                                        address={addr} 
+                                        label={<div className="py-1.5 border border-gray-300 rounded-full text-[10px] font-bold text-center bg-white hover:border-black transition-all">EDIT</div>} 
                                     />
                                 </div>
 
+                                {/* DELIVER BUTTON - LEGAL NOW */}
                                 <button 
                                     type="button" 
-                                    onClick={(e) => { e.stopPropagation(); onConfirm(); }} 
-                                    className="flex-[2] py-1.5 bg-black text-white rounded-full text-[10px] font-bold text-center"
+                                    onClick={(e) => { 
+                                        e.stopPropagation(); // Prevents clicking the card again
+                                        onConfirm(); 
+                                    }} 
+                                    className="flex-[2] py-1.5 bg-black text-white rounded-full text-[10px] font-bold text-center hover:bg-gray-800 transition-all"
                                 >
                                     DELIVER HERE
                                 </button>
                             </div>
                         )}
-                    </button>
+                    </div>
                 );
             })}
         </div>

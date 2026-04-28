@@ -20,7 +20,7 @@ export default function HomePage() {
                         <p className="text-gray-500">Fresh greenery for your collection.</p>
                     </div>
                     <Link href="/products" className="font-medium underline underline-offset-4 hover:text-green-700">
-                        View All
+                        
                     </Link>
                 </div>
                 

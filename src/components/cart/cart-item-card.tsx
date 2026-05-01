@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { CartItem, useCartStore } from "@/providers/cart-store";
-import { formatPrice } from "@/lib";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { CldImage } from "next-cloudinary";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { formatPrice } from "@/lib";
+import { type CartItem, useCartStore } from "@/providers/cart-store";
 
 export function CartItemCard({ item }: { item: CartItem }) {
 	const updateQuantity = useCartStore((state) => state.updateQuantity);
@@ -35,7 +35,10 @@ export function CartItemCard({ item }: { item: CartItem }) {
 				{/* 2. Info & Controls */}
 				<div className="flex flex-1 flex-col justify-between self-stretch py-0.5">
 					<div className="flex justify-between items-start">
-						<Link href={`/product/${item.slug}`} className="line-clamp-1 text-sm font-bold text-gray-900 pr-2">
+						<Link
+							href={`/product/${item.slug}`}
+							className="line-clamp-1 text-sm font-bold text-gray-900 pr-2"
+						>
 							{item.name}
 						</Link>
 						<span className="text-sm font-black text-gray-900 shrink-0">
@@ -55,7 +58,9 @@ export function CartItemCard({ item }: { item: CartItem }) {
 							>
 								<Minus className="h-3 w-3" />
 							</Button>
-							<span className="w-6 text-center text-xs font-bold">{item.quantity}</span>
+							<span className="w-6 text-center text-xs font-bold">
+								{item.quantity}
+							</span>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -103,15 +108,26 @@ export function CartItemCard({ item }: { item: CartItem }) {
 				<div className="flex flex-1 flex-col justify-between">
 					<div className="flex justify-between items-start">
 						<div>
-							<Link href={`/product/${item.slug}`} className="hover:text-green-700 hover:underline">
-								<h3 className="text-lg font-bold text-gray-900 leading-tight line-clamp-1">{item.name}</h3>
+							<Link
+								href={`/product/${item.slug}`}
+								className="hover:text-green-700 hover:underline"
+							>
+								<h3 className="text-lg font-bold text-gray-900 leading-tight line-clamp-1">
+									{item.name}
+								</h3>
 							</Link>
-							<p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-semibold">Ready to Ship</p>
+							<p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-semibold">
+								Ready to Ship
+							</p>
 						</div>
 						<div className="text-right">
-							<p className="text-xl font-black text-gray-900">{formatPrice(item.price * item.quantity)}</p>
+							<p className="text-xl font-black text-gray-900">
+								{formatPrice(item.price * item.quantity)}
+							</p>
 							{item.quantity > 1 && (
-								<p className="text-xs text-gray-400">{formatPrice(item.price)} each</p>
+								<p className="text-xs text-gray-400">
+									{formatPrice(item.price)} each
+								</p>
 							)}
 						</div>
 					</div>
@@ -128,7 +144,9 @@ export function CartItemCard({ item }: { item: CartItem }) {
 							>
 								<Minus className="h-3.5 w-3.5" />
 							</Button>
-							<span className="w-6 text-center text-sm font-bold">{item.quantity}</span>
+							<span className="w-6 text-center text-sm font-bold">
+								{item.quantity}
+							</span>
 							<Button
 								variant="ghost"
 								size="icon"

@@ -13,7 +13,6 @@ const logoConfig: LogoConfig = {
 };
 
 const navConfig: NavItem[] = [
-
 	{
 		title: "Shop",
 		//In future: I will be using custom Icon to show Shop.
@@ -59,36 +58,39 @@ const navConfig: NavItem[] = [
 		title: "Services",
 		href: ROUTES.SERVICES.ROOT,
 		items: [
-				{
-					title: "Expert Care",
-					href: ROUTES.SERVICES.ROOT,
-					items: [
-						{ title: "Plant Clinic", href: ROUTES.SERVICES.CONSULT },
-						{ title: "Standard Aftercare", href: ROUTES.SERVICES.MAINTENANCE },
-						{ title: "Growth Guarantee", href: ROUTES.SERVICES.WARRENTY },
-					],
-				},
-				{
-					title: "Bespoke Solutions",
-					href: ROUTES.SERVICES.ROOT,
-					items: [
-						{ title: "Project Installation", href: ROUTES.SERVICES.BULK_INSTALLATION },
-					],
-				},
-			    {
-					title: "Precision Tools", 
-					href: ROUTES.SERVICES.ROOT,
-					items: [
-						{
-							title: "Harvest IQ", 
-							href: ROUTES.SERVICES.CROP_RECOMMEND, 
-						},
-						{
-							title: "Find Your Plant", 
-							href: ROUTES.SERVICES.PLANT_RECOMMEND,
-						},
-					],
-			    },
+			{
+				title: "Expert Care",
+				href: ROUTES.SERVICES.ROOT,
+				items: [
+					{ title: "Plant Clinic", href: ROUTES.SERVICES.CONSULT },
+					{ title: "Standard Aftercare", href: ROUTES.SERVICES.MAINTENANCE },
+					{ title: "Growth Guarantee", href: ROUTES.SERVICES.WARRENTY },
+				],
+			},
+			{
+				title: "Bespoke Solutions",
+				href: ROUTES.SERVICES.ROOT,
+				items: [
+					{
+						title: "Project Installation",
+						href: ROUTES.SERVICES.BULK_INSTALLATION,
+					},
+				],
+			},
+			{
+				title: "Precision Tools",
+				href: ROUTES.SERVICES.ROOT,
+				items: [
+					{
+						title: "Harvest IQ",
+						href: ROUTES.SERVICES.CROP_RECOMMEND,
+					},
+					{
+						title: "Find Your Plant",
+						href: ROUTES.SERVICES.PLANT_RECOMMEND,
+					},
+				],
+			},
 		],
 	},
 ];

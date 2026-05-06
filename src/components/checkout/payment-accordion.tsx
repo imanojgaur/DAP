@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useCartStore } from "@/providers/cart-store";
-import { placeOrderAction } from "@/actions/feed-orders";
+import { placeOrderAction } from "@/actions/feed-orders-db";
 import { CreditCard, Landmark, QrCode, Banknote } from "lucide-react";
 import { OrderSuccessPopup } from "./order-success-popup";
 

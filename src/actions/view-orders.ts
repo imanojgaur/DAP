@@ -11,7 +11,7 @@ export async function getCustomerOrders(userId: string) {
       where: { userId },
       include: {
         items: {
-          include: { product: true } // Fetch the plants inside the order
+          include: { product: true } 
         }
       },
       orderBy: { createdAt: "desc" },

@@ -17,7 +17,7 @@ export default async function MyOrdersPage() {
   const session = await auth();
 
   if(!session?.user?.id){
-    redirect("/api/auth/signin");
+    redirect("/login");
   }
 
   const userId = session.user.id;
@@ -36,7 +36,7 @@ export default async function MyOrdersPage() {
           <Card key={order.id}>
             <CardHeader>
               <CardTitle>Order #{order.id.slice(-6).toUpperCase()}</CardTitle>
-              <p className="text-sm text-gray-500">Total: ${order.totalPrice / 100}</p>
+              <p className="text-sm text-gray-500">Total: ₹ {order.totalPrice / 100}</p>
             </CardHeader>
             <CardContent>
               

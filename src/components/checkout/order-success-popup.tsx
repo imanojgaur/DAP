@@ -51,7 +51,7 @@ export function OrderSuccessPopup() {
 
                     <div className="flex flex-col gap-3 w-full">
                         <Button asChild className="w-full h-14 rounded-full bg-black text-white font-bold text-lg">
-                            <Link href="/orders">Track My Order</Link>
+                            <Link href="/my-orders">Track My Order</Link>
                         </Button>
                         <Button variant="ghost" asChild className="w-full h-12 text-gray-500 font-medium">
                             <Link href="/">Continue Shopping</Link>

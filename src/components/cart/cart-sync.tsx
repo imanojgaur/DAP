@@ -1,38 +1,38 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { getSession } from "next-auth/react";
-import { useCartStore } from "@/providers/cart-store";
+import { useEffect, useRef } from "react";
 import { syncCartAction } from "@/actions/cart";
+import { useCartStore } from "@/providers/cart-store";
 
 export function CartSync() {
-    // Grab the current items from our Zustand store
-    const items = useCartStore((state) => state.items);
-    
-    // Use a ref to ensure we only sync once per session to avoid spamming the database
-    const hasSynced = useRef(false);
+	// Grab the current items from our Zustand store
+	const items = useCartStore((state) => state.items);
 
-    useEffect(() => {
-        async function checkAndSync() {
-            // If the cart is empty or we already synced, do nothing
-            if (items.length === 0 || hasSynced.current) return;
+	// Use a ref to ensure we only sync once per session to avoid spamming the database
+	const hasSynced = useRef(false);
 
-            // Check if the user is currently logged in
-            const session = await getSession();
-            
-            if (session?.user) {
-                // User is logged in! Fire the server action
-                const result = await syncCartAction(items);
-                
-                if (result.success) {
-                    hasSynced.current = true;
-                    console.log("Cart successfully synced to database!");
-                }
-            }
-        }
+	useEffect(() => {
+		async function checkAndSync() {
+			// If the cart is empty or we already synced, do nothing
+			if (items.length === 0 || hasSynced.current) return;
 
-        checkAndSync();
-    }, [items]); // Re-run if items change (in case they log in, then add more stuff)
+			// Check if the user is currently logged in
+			const session = await getSession();
 
-    return null; // This component renders absolutely nothing to the screen
+			if (session?.user) {
+				// User is logged in! Fire the server action
+				const result = await syncCartAction(items);
+
+				if (result.success) {
+					hasSynced.current = true;
+					console.log("Cart successfully synced to database!");
+				}
+			}
+		}
+
+		checkAndSync();
+	}, [items]); // Re-run if items change (in case they log in, then add more stuff)
+
+	return null; // This component renders absolutely nothing to the screen
 }

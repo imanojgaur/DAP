@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { LogOut, Package, User as UserIcon } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // 1. Import useRouter
-import { Package, User as UserIcon, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { useState } from "react";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -12,17 +18,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog";
 import { ProfileForm } from "./profile-form";
 
 export function UserDropdown({ user }: { user: any }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const router = useRouter(); // 2. Initialize the router
+    const router = useRouter(); 
     
     // Safely handle if user is null/undefined before checking name
     const fallbackInitial = user?.name ? user.name.charAt(0).toLowerCase() : "u";
@@ -36,7 +36,13 @@ export function UserDropdown({ user }: { user: any }) {
                     </span>
                     <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-indigo-900 text-white text-sm font-medium transition-transform group-hover:scale-105">
                         {user?.image ? (
-                            <Image src={user.image} alt="User" width={28} height={28} className="h-full w-full object-cover" />
+                            <Image 
+                                src={user.image} 
+                                alt="User" 
+                                width={28} 
+                                height={28} 
+                                className="h-full w-full object-cover" 
+                            />
                         ) : (
                             fallbackInitial
                         )}
@@ -48,7 +54,6 @@ export function UserDropdown({ user }: { user: any }) {
                         <p className="text-sm font-medium">Hi {user?.name?.split(" ")[0] || "Guest"}</p>
                     </div>
                     
-                    {/* 3. Add the onClick handler with routing logic */}
                     <DropdownMenuItem 
                         onClick={() => {
                             if (user) {
@@ -77,6 +82,7 @@ export function UserDropdown({ user }: { user: any }) {
                         onClick={() => signOut()}
                         className="py-2.5 cursor-pointer rounded-full border border-gray-200 mt-2 focus:bg-gray-50 flex justify-center"
                     >
+                        <LogOut className="mr-2 h-4 w-4 text-gray-900" />
                         <span className="font-medium text-gray-900">Logout</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>

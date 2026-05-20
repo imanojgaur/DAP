@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export function OrderSuccessPopup() {
     const router = useRouter();
@@ -31,8 +31,9 @@ export function OrderSuccessPopup() {
         <>
             {/* Dark overlay to focus on the success message */}
             <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[150] animate-in fade-in duration-500" />
-            
-            <div className="fixed z-[200] w-full bg-white shadow-2xl transition-all duration-500 ease-out 
+
+            <div
+                className="fixed z-[200] w-full bg-white shadow-2xl transition-all duration-500 ease-out 
                 /* MOBILE: Center Card */
                 bottom-0 left-0 rounded-t-[40px] p-10 pb-12 animate-in slide-in-from-bottom-full
                 /* DESKTOP: Center Screen */
@@ -43,10 +44,15 @@ export function OrderSuccessPopup() {
                         <CheckCircle2 className="h-10 w-10 text-green-700" />
                     </div>
 
-                    <h2 className="text-5xl font-black italic mb-2 tracking-tighter text-gray-900">DAM!</h2>
-                    <p className="text-lg font-bold text-gray-800 mb-1">Order Placed Successfully</p>
+                    <h2 className="text-5xl font-black italic mb-2 tracking-tighter text-gray-900">
+                        DAM!
+                    </h2>
+                    <p className="text-lg font-bold text-gray-800 mb-1">
+                        Order Placed Successfully
+                    </p>
                     <p className="text-gray-500 text-sm mb-8">
-                        Taking you home in <span className="font-bold text-black">{countdown}s</span>...
+                        Taking you home in{" "}
+                        <span className="font-bold text-black">{countdown}s</span>...
                     </p>
 
                     <div className="flex flex-col gap-3 w-full">

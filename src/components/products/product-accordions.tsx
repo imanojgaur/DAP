@@ -2,13 +2,13 @@
 // src/components/products/product-accordion.tsx
 "use client";
 
+import { Star } from "lucide-react";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ReviewProps {
@@ -27,13 +27,19 @@ interface ProductAccordionProps {
 	totalReviews: number;
 }
 
-export function ProductAccordion({ description, specifications, reviews, totalReviews }: ProductAccordionProps) {
+export function ProductAccordion({
+	description,
+	specifications,
+	reviews,
+	totalReviews,
+}: ProductAccordionProps) {
 	return (
 		<Accordion type="single" collapsible className="w-full">
-			
 			{/* DESCRIPTION */}
 			<AccordionItem value="description">
-				<AccordionTrigger className="text-base font-bold md:text-lg">Description</AccordionTrigger>
+				<AccordionTrigger className="text-base font-bold md:text-lg">
+					Description
+				</AccordionTrigger>
 				<AccordionContent className="text-base leading-relaxed text-gray-600">
 					{description || "No description available."}
 				</AccordionContent>
@@ -42,13 +48,22 @@ export function ProductAccordion({ description, specifications, reviews, totalRe
 			{/* SPECIFICATIONS (Only render if specs exist) */}
 			{specifications && Object.keys(specifications).length > 0 && (
 				<AccordionItem value="specifications">
-					<AccordionTrigger className="text-base font-bold md:text-lg">Specifications</AccordionTrigger>
+					<AccordionTrigger className="text-base font-bold md:text-lg">
+						Specifications
+					</AccordionTrigger>
 					<AccordionContent>
 						<div className="flex flex-col gap-3">
 							{Object.entries(specifications).map(([key, value]) => (
-								<div key={key} className="flex justify-between py-2 border-b border-gray-100 last:border-0">
-									<span className="capitalize text-gray-500">{key.replace(/_/g, " ")}</span>
-									<span className="font-medium text-gray-900">{String(value)}</span>
+								<div
+									key={key}
+									className="flex justify-between py-2 border-b border-gray-100 last:border-0"
+								>
+									<span className="capitalize text-gray-500">
+										{key.replace(/_/g, " ")}
+									</span>
+									<span className="font-medium text-gray-900">
+										{String(value)}
+									</span>
 								</div>
 							))}
 						</div>
@@ -69,25 +84,34 @@ export function ProductAccordion({ description, specifications, reviews, totalRe
 							{reviews.map((review) => (
 								<div key={review.id} className="flex flex-col gap-2">
 									<div className="flex items-center justify-between">
-										<span className="font-bold text-gray-900">{review.author}</span>
+										<span className="font-bold text-gray-900">
+											{review.author}
+										</span>
 										<span className="text-xs text-gray-400">
 											{new Date(review.date).toLocaleDateString()}
 										</span>
 									</div>
 									<div className="flex text-yellow-400">
 										{[...Array(5)].map((_, i) => (
-											<Star key={review.id} className={`w-4 h-4 ${i < Math.floor(review.rating) ? "fill-current" : "text-gray-200"}`} />
+											<Star
+												key={review.id}
+												className={`w-4 h-4 ${i < Math.floor(review.rating) ? "fill-current" : "text-gray-200"}`}
+											/>
 										))}
 									</div>
-									{review.title && <h4 className="font-semibold text-gray-800">{review.title}</h4>}
+									{review.title && (
+										<h4 className="font-semibold text-gray-800">
+											{review.title}
+										</h4>
+									)}
 									<p className="text-sm text-gray-600">{review.body}</p>
 								</div>
 							))}
 
 							{/* PLACEHOLDER: If total reviews are more than what we fetched, show the button */}
 							{totalReviews > reviews.length && (
-								<Button 
-									variant="outline" 
+								<Button
+									variant="outline"
 									className="w-full mt-4"
 									onClick={() => console.log("TODO: Fetch remaining reviews")}
 								>
@@ -98,7 +122,6 @@ export function ProductAccordion({ description, specifications, reviews, totalRe
 					)}
 				</AccordionContent>
 			</AccordionItem>
-
 		</Accordion>
 	);
 }

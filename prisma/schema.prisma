@@ -315,6 +315,7 @@ model Return {
 enum Role {
   USER
   ADMIN
+  SUPER_ADMIN
 }
 
 enum StaffRole {

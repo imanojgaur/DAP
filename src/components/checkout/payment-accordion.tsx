@@ -2,7 +2,7 @@
 
 import { Banknote, CreditCard, Landmark, QrCode } from "lucide-react";
 import { useState } from "react";
-import { placeOrderAction } from "@/actions/order";
+import { placeOrderAction } from "@/actions/feed-orders-db";
 import {
     Accordion,
     AccordionContent,

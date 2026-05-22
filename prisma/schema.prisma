@@ -189,6 +189,10 @@ model Order {
   sourceLocation  String      @map("source_location")
   deliveryStaffId String?     @map("delivery_staff_id")
 
+  razorpayOrderId   String?   @unique @map("razorpay_order_id")
+  razorpayPaymentId String?   @unique @map("razorpay_payment_id")
+  isPaid            Boolean   @default(false) @map("is_paid")
+
   createdAt  DateTime  @default(now()) @map("created_at")
   deliveryAt DateTime? @map("delivery_at")
 

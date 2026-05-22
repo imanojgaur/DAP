@@ -13,17 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/providers/cart-store";
 import { OrderSuccessPopup } from "./order-success-popup";
+import { loadRazorpayScript } from "@/lib/razorpay";
 
-
-const loadRazorpayScript = () => {
-    return new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.onload = () => resolve(true);
-        script.onerror = () => resolve(false);
-        document.body.appendChild(script);
-    });
-};
 
 export function PaymentAccordion({ addressId }: { addressId: string }) {
     // Component State

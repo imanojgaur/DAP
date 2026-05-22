@@ -14,16 +14,16 @@ import { useCheckout } from "@/hooks/useRazorpayCheckout";
 
 export function PaymentAccordion({ addressId }: { addressId: string }) {
     
-    // The UI asks the hook for the logic!
-    const { 
-        total, 
+	const { 
+		total, 
         isLoading, 
         isPlaced, 
         handleOrderPlacement, 
         handleOnlinePayment 
     } = useCheckout(addressId);
-
-    // The Configuration Array
+	
+	const payTotal = total/ 100;
+    
     const paymentMethods = [
         {
             id: "upi",
@@ -33,7 +33,7 @@ export function PaymentAccordion({ addressId }: { addressId: string }) {
             iconColor: "text-gray-700",
             theme: "bg-gray-50/50",
             description: "You will be redirected to Razorpay to securely scan a QR code or enter your UPI ID.",
-            buttonText: `Pay ₹${total / 100}`,
+            buttonText: `Pay ₹${payTotal}`,
             buttonClass: "bg-[#111] hover:bg-black text-white",
             action: handleOnlinePayment,
         },
@@ -45,7 +45,7 @@ export function PaymentAccordion({ addressId }: { addressId: string }) {
             iconColor: "text-gray-700",
             theme: "bg-gray-50/50",
             description: "You will be redirected to Razorpay's secure gateway to enter your card details and OTP.",
-            buttonText: `Pay ₹${total / 100}`,
+            buttonText: `Pay ₹${payTotal}`,
             buttonClass: "bg-[#111] hover:bg-black text-white",
             action: handleOnlinePayment,
         },
@@ -57,7 +57,7 @@ export function PaymentAccordion({ addressId }: { addressId: string }) {
             iconColor: "text-green-700",
             theme: "bg-green-50/30",
             description: "Order now and pay when your plants arrive. Our delivery partner will accept Cash or UPI scanning.",
-            buttonText: `Confirm Order (₹${(total / 100).toLocaleString()})`,
+            buttonText: `Confirm Order (₹${(payTotal).toLocaleString()})`,
             buttonClass: "bg-green-700 hover:bg-green-800 text-white",
             action: handleOrderPlacement,
         },

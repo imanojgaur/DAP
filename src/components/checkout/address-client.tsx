@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronLeft, Info } from "lucide-react";
-import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
 import { AddressSheet } from "@/components/checkout/address-sheet";

@@ -1,9 +1,7 @@
+// src/components/checkout/payment-accordion.tsx
 "use client";
 
 import { Banknote, CreditCard, QrCode } from "lucide-react";
-import { useState } from "react";
-import { placeOrderAction } from "@/actions/order";
-import { createRazorpayOrder } from "@/actions/razorpay-orders";
 import {
     Accordion,
     AccordionContent,
@@ -11,80 +9,21 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/providers/cart-store";
 import { OrderSuccessPopup } from "./order-success-popup";
-import { loadRazorpayScript } from "@/lib/razorpay";
-
+import { useCheckout } from "@/hooks/useRazorpayCheckout";
 
 export function PaymentAccordion({ addressId }: { addressId: string }) {
-    // Component State
-    const [isPlaced, setIsPlaced] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    
+    // The UI asks the hook for the logic!
+    const { 
+        total, 
+        isLoading, 
+        isPlaced, 
+        handleOrderPlacement, 
+        handleOnlinePayment 
+    } = useCheckout(addressId);
 
-    // Zustand State
-    const items = useCartStore((state) => state.items);
-    const clearZustandCart = useCartStore((state) => state.clearCart);
-    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-    // --- ACTION 1: Cash on Delivery ---
-    const handleOrderPlacement = async () => {
-        setIsLoading(true);
-        const res = await placeOrderAction(addressId);
-        if (res.success) {
-            clearZustandCart();
-            setIsPlaced(true);
-        } else {
-            alert(`Order failed: ${res.error}`);
-            setIsLoading(false);
-        }
-    };
-
-    // --- ACTION 2: Razorpay Online Payment ---
-    // Moved INSIDE the component so it can access 'total' and 'setIsLoading'
-    const handleOnlinePayment = async () => {
-        setIsLoading(true);
-
-        const isLoaded = await loadRazorpayScript();
-        if (!isLoaded) {
-            alert("Failed to load Razorpay SDK. Please check your internet.");
-            setIsLoading(false);
-            return;
-        }
-
-        try {
-            const order = await createRazorpayOrder("dummy_user_id", total);
-
-            const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-                amount: order.amount,
-                currency: order.currency,
-                name: "DAP Systems",
-                description: "Complete your purchase",
-                order_id: order.id,
-                handler: async (response: any) => {
-                    console.log("Payment Success! Signature:", response.razorpay_signature);
-                    clearZustandCart();
-                    setIsPlaced(true);
-                },
-                theme: { color: "#111111" },
-            };
-
-            const paymentObject = new (window as any).Razorpay(options);
-
-            paymentObject.on("payment.failed", () =>  {
-                setIsLoading(false);
-                alert("Payment failed or was cancelled.");
-            });
-
-            paymentObject.open();
-        } catch (error) {
-            console.error(error);
-            alert("Could not initialize payment.");
-            setIsLoading(false);
-        }
-    };
-
-    // --- THE CONFIGURATION ARRAY ---
+    // The Configuration Array
     const paymentMethods = [
         {
             id: "upi",
@@ -128,7 +67,6 @@ export function PaymentAccordion({ addressId }: { addressId: string }) {
 
     return (
         <Accordion type="single" collapsible className="w-full space-y-4">
-            {/* The Magic: We map over the array so the UI is only written ONCE */}
             {paymentMethods.map((method) => {
                 const Icon = method.icon;
                 

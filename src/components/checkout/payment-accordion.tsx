@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { OrderSuccessPopup } from "./order-success-popup";
-import { useCheckout } from "@/hooks/useRazorpayCheckout";
+import { useCheckout } from "@/hooks/use-Razorpay-Checkout";
 
 export function PaymentAccordion({ addressId }: { addressId: string }) {
     

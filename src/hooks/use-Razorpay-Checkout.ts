@@ -3,6 +3,25 @@ import { placeOrderAction } from "@/actions/order";
 import { createRazorpayOrder } from "@/actions/razorpay-orders";
 import { loadRazorpayScript } from "@/lib/razorpay";
 import { useCartStore } from "@/providers/cart-store";
+import { z } from "zod";
+
+const RazorpayResponseSchema = z.object({
+    razorpay_payment_id: z.string(),
+    razorpay_order_id: z.string(),
+    razorpay_signature: z.string(),
+});
+
+export interface RazorpaySuccessResponse {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+}
+
+declare global {
+    interface Window {
+        Razorpay: any; 
+    }
+}
 
 export function useCheckout(addressId: string) {
     const [isPlaced, setIsPlaced] = useState(false);
@@ -45,8 +64,11 @@ export function useCheckout(addressId: string) {
                 name: "DAP Systems",
                 description: "Complete your purchase",
                 order_id: order.id,
-                handler: async (response: any) => {
-                    console.log("Payment Success! Signature:", response.razorpay_signature);
+                handler: async (response: RazorpaySuccessResponse) => {
+
+                    const safeResponse = RazorpayResponseSchema.parse(response);
+
+                    console.log("Payment Success! Signature:", safeResponse.razorpay_signature);
                     // Step 3 (Backend Verification) will go here soon!
                     clearZustandCart();
                     setIsPlaced(true);
@@ -54,7 +76,7 @@ export function useCheckout(addressId: string) {
                 theme: { color: "#111111" },
             };
 
-            const paymentObject = new (window as any).Razorpay(options);
+            const paymentObject = new window.Razorpay(options);
 
             paymentObject.on("payment.failed", () => {
                 setIsLoading(false);

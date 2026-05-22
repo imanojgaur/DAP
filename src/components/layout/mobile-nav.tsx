@@ -20,7 +20,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { navConfig, siteName } from "@/config/nav-config";
+import { navConfig } from "@/config/nav-config";
+import { siteName } from "@/config/site";
 import type { NavItem } from "@/types/nav";
 import { ProfileEditorSheet } from "./profile-editor-sheet";
 

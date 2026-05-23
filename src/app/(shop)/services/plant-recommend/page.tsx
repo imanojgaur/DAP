@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { getPlantRecommendations } from "@/actions";
-import { ProductCard } from "@/components/collections/product-card";
+import { ProductCard } from "@/components/shared/product-card";
 
 // Import our new extracted components
 import { OptionCard } from "@/components/services/recommend-plant/option-card";

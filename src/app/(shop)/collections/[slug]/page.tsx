@@ -1,5 +1,5 @@
 import { Leaf } from "lucide-react";
-import { ProductCard } from "@/components/collections/product-card";
+import { ProductCard } from "@/components/shared/product-card";
 import { getPlantsForCards } from "@/data";
 
 export default async function Page({

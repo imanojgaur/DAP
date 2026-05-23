@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { calculateDiscountPercentage, formatPrice } from "@/lib";
 // 1. UPDATED IMPORT
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 import type { ProductCardTypes } from "@/types";
 
 export function ProductCard({ plant }: { plant: ProductCardTypes }) {

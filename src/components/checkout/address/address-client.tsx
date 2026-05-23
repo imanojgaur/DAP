@@ -3,8 +3,8 @@
 import { ChevronLeft, Info } from "lucide-react";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
-import { AddressSheet } from "@/components/checkout/address-sheet";
-import { PaymentAccordion } from "@/components/checkout/payment-accordion";
+import { AddressSheet } from "@/components/checkout/address/address-sheet";
+import { PaymentAccordion } from "@/components/checkout/payment/payment-accordion";
 import {
 	Accordion,
 	AccordionContent,
@@ -12,7 +12,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { formatPrice } from "@/lib";
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 
 export function AddressClient({
 	user,

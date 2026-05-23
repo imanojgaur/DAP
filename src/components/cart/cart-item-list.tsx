@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 import { CartItemCard } from "./cart-item-card";
 import { EmptyCart } from "./empty-cart";
 

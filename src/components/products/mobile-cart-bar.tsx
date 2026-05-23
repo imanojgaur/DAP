@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib";
-import { useCartStore } from "@/providers/cart-store"; // 1. Updated import
+import { useCartStore } from "@/store/cart-store"; // 1. Updated import
 
 // 2. Define the exact props we need
 interface MobileCartBarProps {

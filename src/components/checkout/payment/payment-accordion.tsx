@@ -9,8 +9,8 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { OrderSuccessPopup } from "./order-success-popup";
-import { useCheckout } from "@/hooks/use-Razorpay-Checkout";
+import { OrderSuccessPopup } from "../order-success-popup";
+import { useCheckout } from "@/hooks/use-razorpay-checkout";
 
 export function PaymentAccordion({ addressId }: { addressId: string }) {
     

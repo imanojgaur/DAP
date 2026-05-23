@@ -2,7 +2,7 @@ import { useState } from "react";
 import { placeOrderAction } from "@/actions/order";
 import { createRazorpayOrder } from "@/actions/razorpay-orders";
 import { loadRazorpayScript } from "@/lib/razorpay";
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 import { z } from "zod";
 
 const RazorpayResponseSchema = z.object({

@@ -3,6 +3,7 @@ import { placeOrderAction } from "@/actions/order";
 import { createRazorpayOrder } from "@/actions/razorpay-orders";
 import { loadRazorpayScript } from "@/lib/razorpay";
 import { useCartStore } from "@/store/cart-store";
+import { verifyRazorpayPaymentAction } from "@/actions/payment-verify";
 import { z } from "zod";
 
 const RazorpayResponseSchema = z.object({
@@ -11,11 +12,7 @@ const RazorpayResponseSchema = z.object({
     razorpay_signature: z.string(),
 });
 
-export interface RazorpaySuccessResponse {
-    razorpay_payment_id: string;
-    razorpay_order_id: string;
-    razorpay_signature: string;
-}
+export type RazorpaySuccessResponse = z.infer<typeof RazorpayResponseSchema>;
 
 declare global {
     interface Window {
@@ -64,14 +61,26 @@ export function useCheckout(addressId: string) {
                 name: "DAP Systems",
                 description: "Complete your purchase",
                 order_id: order.id,
-                handler: async (response: RazorpaySuccessResponse) => {
-
+                
+                handler: async (response: unknown) => {
                     const safeResponse = RazorpayResponseSchema.parse(response);
 
-                    console.log("Payment Success! Signature:", safeResponse.razorpay_signature);
-                    // Step 3 (Backend Verification) will go here soon!
-                    clearZustandCart();
-                    setIsPlaced(true);
+                    console.log("Payment Success! Verifying signature...");
+
+                    const verification = await verifyRazorpayPaymentAction(
+                        safeResponse.razorpay_payment_id,
+                        safeResponse.razorpay_order_id,
+                        safeResponse.razorpay_signature
+                    );
+
+                    if (verification.success) {
+                        console.log("Payment officially verified on the server!");
+                        clearZustandCart();
+                        setIsPlaced(true);
+                    } else {
+                        alert("Security Alert: Payment verification failed.");
+                        setIsLoading(false);
+                    }
                 },
                 theme: { color: "#111111" },
             };

@@ -1,4 +1,3 @@
-// src/components/checkout/payment-accordion.tsx
 "use client";
 
 import { Banknote, CreditCard, QrCode } from "lucide-react";
@@ -33,7 +32,7 @@ export function PaymentAccordion({ addressId }: { addressId: string }) {
             iconColor: "text-gray-700",
             theme: "bg-gray-50/50",
             description: "You will be redirected to Razorpay to securely scan a QR code or enter your UPI ID.",
-            buttonText: `Pay ₹${payTotal}`,
+            buttonText: `Pay ₹${(payTotal).toLocaleString()}`,
             buttonClass: "bg-[#111] hover:bg-black text-white",
             action: handleOnlinePayment,
         },
@@ -45,7 +44,7 @@ export function PaymentAccordion({ addressId }: { addressId: string }) {
             iconColor: "text-gray-700",
             theme: "bg-gray-50/50",
             description: "You will be redirected to Razorpay's secure gateway to enter your card details and OTP.",
-            buttonText: `Pay ₹${payTotal}`,
+            buttonText: `Pay ₹${(payTotal).toLocaleString()}`,
             buttonClass: "bg-[#111] hover:bg-black text-white",
             action: handleOnlinePayment,
         },

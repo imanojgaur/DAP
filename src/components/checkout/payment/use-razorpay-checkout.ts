@@ -6,6 +6,7 @@ import { useCartStore } from "@/store/cart-store";
 import { verifyRazorpayPaymentAction } from "@/actions/payment-verify";
 import { z } from "zod";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const RazorpayResponseSchema = z.object({
     razorpay_payment_id: z.string(),
@@ -25,10 +26,15 @@ export function useCheckout(addressId: string) {
     const [isPlaced, setIsPlaced] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    //pull out data and rename it session.
+    const { data: session } = useSession();
+    const router = useRouter();
+    
     const items = useCartStore((state) => state.items);
     const clearZustandCart = useCartStore((state) => state.clearCart);
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+    
+    
     const handleOrderPlacement = async () => {
         setIsLoading(true);
         const res = await placeOrderAction(addressId);
@@ -41,19 +47,26 @@ export function useCheckout(addressId: string) {
             setIsLoading(false);
         }
     };
-
+    
     const handleOnlinePayment = async () => {
-        setIsLoading(true);
+        
+        if(!session?.user?.id){
+          router.push("/login");
+          return;
+        }
 
+        setIsLoading(true);
+        
         const isLoaded = await loadRazorpayScript();
         if (!isLoaded) {
             alert("Failed to load Razorpay SDK. Please check your internet.");
             setIsLoading(false);
-            return;
+            return; 
         }
-
+        
         try {
-            const order = await createRazorpayOrder("dummy_user_id", total);
+
+            const order = await createRazorpayOrder(session.user.id, total, addressId);
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,

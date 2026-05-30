@@ -4,7 +4,7 @@ import Razorpay from "razorpay";
 import prisma from "@/lib/prisma";
 
 // Renamed for clarity!
-export async function createRazorpayOrder(userId: string, totalAmountInPaise: number) {
+export async function createRazorpayOrder(userId: string, totalAmountInPaise: number, addressId: string) {
   try {
     const key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     const key_secret = process.env.RAZORPAY_KEY_SECRET;

@@ -6,9 +6,7 @@ export const metadata = {
 };
 
 export default async function AddressPage() {
-    const { user, addresses } = await getCheckoutAddresses();
+	const { user, addresses } = await getCheckoutAddresses();
 
-	return (
-		<AddressClient user={user} initialAddresses={addresses} />
-	);
+	return <AddressClient user={user} initialAddresses={addresses} />;
 }

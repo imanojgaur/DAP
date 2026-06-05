@@ -8,8 +8,7 @@
 		"build": "prisma generate && next build",
 		"start": "next start",
 		"lint": "eslint",
-		"seed:plants": "tsx etl-pipeline/load/seed-plant-t1.ts",
-		"seed:all": "pnpm seed:plants"
+		"biome": "biome check --write"
 	},
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.11.2",

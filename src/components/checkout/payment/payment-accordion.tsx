@@ -13,14 +13,14 @@ import { OrderSuccessPopup } from "../order-success-popup";
 
 export function PaymentAccordion({ addressId }: { addressId: string }) {
 	const {
-		total,
+		totalAmoutnt,
 		isLoading,
 		isPlaced,
 		handleOrderPlacement,
 		handleOnlinePayment,
 	} = useCheckout(addressId);
 
-	const payTotal = total / 100;
+	const payTotal = totalAmoutnt / 100;
 
 	const paymentMethods = [
 		{

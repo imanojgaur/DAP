@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ROUTES } from "@/lib/constants/routes";
+import { ROUTES } from "@/config/constants/routes";
 
 export function HomeHero() {
 	return (

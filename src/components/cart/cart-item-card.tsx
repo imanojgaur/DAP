@@ -6,7 +6,7 @@ import { CldImage } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { formatPrice } from "@/lib";
-import { type CartItem, useCartStore } from "@/providers/cart-store";
+import { type CartItem, useCartStore } from "@/store/cart-store";
 
 export function CartItemCard({ item }: { item: CartItem }) {
 	const updateQuantity = useCartStore((state) => state.updateQuantity);

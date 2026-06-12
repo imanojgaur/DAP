@@ -3,7 +3,7 @@
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/lib"; // Adjust if needed
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 
 export function CartDrawer() {
 	// Kept the name same so your Header doesn't break imports

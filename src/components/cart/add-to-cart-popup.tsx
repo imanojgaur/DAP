@@ -6,7 +6,7 @@ import { CldImage } from "next-cloudinary";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib";
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 
 export function CartNotification() {
 	const { items, lastAddedItem, showNotification, closeNotification } =

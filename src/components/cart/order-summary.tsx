@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib"; // Assuming you have this helper
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 
 export function OrderSummary() {
 	const items = useCartStore((state) => state.items);
@@ -69,7 +69,7 @@ export function OrderSummary() {
 					asChild
 					className="w-full h-14 text-lg font-bold bg-green-700 hover:bg-green-800 text-white rounded-xl"
 				>
-					<Link href="/addresses">Proceed to Buy</Link>
+					<Link href="/checkout">Proceed to Buy</Link>
 				</Button>
 
 				<div className="flex items-center justify-center text-xs text-gray-500 w-full">

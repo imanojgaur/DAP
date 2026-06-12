@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getFeaturedProducts } from "@/actions/home";
-import { ProductCard } from "@/components/collections/product-card";
-import { ROUTES } from "@/lib/constants/routes";
+import { ProductCard } from "@/components/shared/product-card";
+import { ROUTES } from "@/config/constants/routes";
 
 export async function FeaturedProducts() {
 	const products = await getFeaturedProducts();

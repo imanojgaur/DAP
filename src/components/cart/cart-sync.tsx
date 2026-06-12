@@ -3,7 +3,7 @@
 import { getSession } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import { syncCartAction } from "@/actions/cart";
-import { useCartStore } from "@/providers/cart-store";
+import { useCartStore } from "@/store/cart-store";
 
 export function CartSync() {
 	// Grab the current items from our Zustand store

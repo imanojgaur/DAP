@@ -1,7 +1,5 @@
-import { ROUTES } from "@/lib/constants/routes";
-import type { LogoConfig, NavItem, SiteName } from "@/types/nav";
-
-const siteName: SiteName = "DAP";
+import { ROUTES } from "@/config/constants/routes";
+import type { LogoConfig, NavItem } from "@/types/nav";
 
 const logoConfig: LogoConfig = {
 	title: "DAP",
@@ -95,4 +93,4 @@ const navConfig: NavItem[] = [
 	},
 ];
 
-export { siteName, navConfig, logoConfig };
+export { navConfig, logoConfig };

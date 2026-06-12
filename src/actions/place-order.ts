@@ -18,9 +18,10 @@ export async function placeOrderAction(addressId: string) {
 		if (cartItems.length === 0) return { error: "Cart is empty" };
 
 		// 2. Calculate total price
-		const totalPrice = cartItems.reduce((acc, item) => {
-			return acc + item.product.price * item.quantity;
-		}, 0);
+		const totalPrice = cartItems.reduce(
+			(acc, item) => acc + item.product.price * item.quantity,
+			0,
+		);
 
 		// Verify address exists before starting transaction
 		const addressExists = await prisma.address.findUnique({

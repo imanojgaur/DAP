@@ -1,6 +1,13 @@
 import { Leaf } from "lucide-react";
 import { ProductCard } from "@/components/shared/product-card";
 import { getPlantsForCards } from "@/data";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "DAP | Collections",
+	description:
+		"Modern plant e-commerce app with curated plants, pots, tools, and gardening services",
+};
 
 export default async function Page({
 	params,

@@ -1,17 +1,21 @@
-import { PrismaClient } from '@prisma/client';
-import { mockDeep, mockReset, DeepMockProxy } from 'jest-mock-extended';
-import prisma from '../prisma'; // Your actual prisma instance
+/// <reference types="jest" />
+import { mockDeep, mockReset } from 'jest-mock-extended';
+import type { DeepMockProxy } from 'jest-mock-extended';
 
-// 1. Hijack the real Prisma instance
+// 2. Import from your CUSTOM generated folder, NOT @prisma/client
+// (Adjust the relative path if your __mocks__ folder is deeper)
+import type { PrismaClient } from '../../../generated/prisma/client'; 
+
+// 3. Import your actual singleton instance
+import prisma from '../prisma'; 
+
 jest.mock('../prisma', () => ({
   __esModule: true,
   default: mockDeep<PrismaClient>(),
 }));
 
-// 2. Cast it to a mocked proxy so TypeScript knows we can track its calls
 export const prismaMock = prisma as unknown as DeepMockProxy<PrismaClient>;
 
-// 3. Reset the memory between every single test
 beforeEach(() => {
   mockReset(prismaMock);
 });

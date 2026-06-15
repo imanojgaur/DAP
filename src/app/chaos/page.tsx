@@ -25,6 +25,7 @@ export default function ChaosLaboratory() {
 
   // Fetch the data to prove what happened in the database
   useEffect(() => {
+    console.log("Input changed to:", text);
     getLogsAction().then(setLogs);
   }, [text]); // Re-fetch when you type to see the live damage
 
@@ -33,10 +34,11 @@ export default function ChaosLaboratory() {
       <h1 className="text-2xl font-bold mb-4">V8 vs React Reconciler</h1>
       
       <div className="mb-8">
-        <label className="block mb-2 text-red-500 font-bold">
+        <label htmlFor="chaos-input" className="block mb-2 text-red-500 font-bold">
           Type here to trigger re-renders:
         </label>
         <input 
+          id="chaos-input"
           type="text" 
           value={text}
           onChange={(e) => setText(e.target.value)}

@@ -1,4 +1,21 @@
-import prisma from "../src/lib/prisma";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../generated/prisma/client";
+
+
+if (!process.env.DIRECT_URL) {
+  throw new Error("CRITICAL: DIRECT_URL is undefined. Ensure your .env file exists and the path is correct.");
+}
+
+const adapter = new PrismaPg({
+	connectionString: process.env.DIRECT_URL,
+});
+
+const prisma = new PrismaClient({
+	adapter,
+});
 
 async function main() {
   console.log("🧹 Sweeping database...");

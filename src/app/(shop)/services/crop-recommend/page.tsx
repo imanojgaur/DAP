@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getCropPrediction } from "@/actions";
+import { getCropPrediction } from "@/actions/";
 
 export default function CropRecommendationForm() {
 	const [formData, setFormData] = useState({

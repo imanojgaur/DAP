@@ -15,5 +15,3 @@ export type NavItem = {
 	description?: string;
 	items?: NavItem[];
 };
-
-

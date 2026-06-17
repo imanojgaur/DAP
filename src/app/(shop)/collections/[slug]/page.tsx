@@ -1,7 +1,7 @@
 import { Leaf } from "lucide-react";
+import type { Metadata } from "next";
 import { ProductCard } from "@/components/shared/product-card";
 import { getPlantsForCards } from "@/data";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "DAP | Collections",

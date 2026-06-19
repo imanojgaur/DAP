@@ -14,7 +14,7 @@ export function OrderSuccessPopup() {
 		// 1. Timer to redirect to home after 5 seconds
 		const redirectTimer = setTimeout(() => {
 			router.push("/");
-		}, 5000);
+		}, 3000);
 
 		// 2. Visual countdown interval
 		const interval = setInterval(() => {

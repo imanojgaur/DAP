@@ -1,15 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DAP: High-Performance E-Commerce Engine
 
-## Getting Started
+A full-stack, data-driven e-commerce platform architected for SSR performance and secure transactions built with  decoupled microservices.
 
-First, run the development server:
+**Live Demo:** [Go Live](https://dap-plant-app.vercel.app/) | **Status:** Continuous Optimization
 
-```bash
-pnpm dev
+**Ml Backend:** [Click Me](https://github.com/imanojgaur/crop-ai-backend)
+
+**ETL:** [Click Me](https://github.com/imanojgaur/DAP/tree/main/etl) 
 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ⚡ Core Architecture & Integrations
+- **Frontend & UI:** Next.js (App Router), Zustand (Render-optimized cart), Tailwind CSS, Shadcn UI
+- **Backend & Data:** PostgreSQL, Prisma ORM, Supabase
+- **Security & Payments:** Auth.js (Google OAuth 2.0), Razorpay (Client-side tokenization)
+- **Pipelines & Services:** Playwright (Automated ETL seeding), Cloudinary API (Image CDN), Python ML Model (Deployed via Render)

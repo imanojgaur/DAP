@@ -1,8 +1,16 @@
-# DAP: Next.js High-Performance E-Commerce Engine
+# DAP: High-Performance E-Commerce Engine
 
-**Click:** [Live Demo Link](https://dap-plant-app.vercel.app/) | **Status:** Continuous Optimization
+A full-stack, data-driven e-commerce platform architected for SSR performance and secure transactions built with  decoupled microservices.
 
-- A scalable, data-driven e-commerce platform architected for maximum SSR performance and complex state management. 
-- Built to handle dynamic product inventories, secure transactions, and decoupled machine learning microservices.
+**Live Demo:** [Go Live](https://dap-plant-app.vercel.app/) | **Status:** Continuous Optimization
 
-**Core Stack:** **Next.js (App Router)** | **PostgreSQL** | **Prisma ORM** | **Zustand** | **Tailwind CSS**
+**Ml Backend:** [Click Me](https://github.com/imanojgaur/crop-ai-backend)
+
+**ETL:** [Click Me](https://github.com/imanojgaur/DAP/tree/main/etl) 
+
+
+### ⚡ Core Architecture & Integrations
+- **Frontend & UI:** Next.js (App Router), Zustand (Render-optimized cart), Tailwind CSS, Shadcn UI
+- **Backend & Data:** PostgreSQL, Prisma ORM, Supabase
+- **Security & Payments:** Auth.js (Google OAuth 2.0), Razorpay (Client-side tokenization)
+- **Pipelines & Services:** Playwright (Automated ETL seeding), Cloudinary API (Image CDN), Python ML Model (Deployed via Render)

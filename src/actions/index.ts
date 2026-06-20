@@ -1,4 +1,3 @@
-export { getCheckoutAddresses, saveAddressAction } from "./address";
 export { syncCartAction } from "./cart";
 export { getFeaturedProducts, getHomeCategories } from "./home";
 export { getLogsAction, writeLogAction } from "./logger";

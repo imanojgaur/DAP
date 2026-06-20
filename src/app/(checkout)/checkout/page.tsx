@@ -1,4 +1,4 @@
-import { getCheckoutAddresses } from "@/actions";
+import { getCheckoutAddresses } from "@/data/address";
 import { AddressClient } from "@/components/checkout/address/address-client";
 
 export const metadata = {

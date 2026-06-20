@@ -7,7 +7,6 @@
 
 A full-stack, data-driven e-commerce platform architected for SSR performance and secure transactions built with  decoupled microservices.
 
-
 ### ⚡ Core Architecture & Integrations
 - **Frontend & UI:** Next.js (App Router), Zustand (Render-optimized cart), Tailwind CSS, Shadcn UI
 - **Backend & Data:** PostgreSQL, Prisma ORM, Supabase

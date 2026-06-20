@@ -1,13 +1,11 @@
 # DAP: High-Performance E-Commerce Engine
 
+**[Live Demo](https://dap-plant-app.vercel.app/)** | 
+**[Ml Backend API](https://github.com/imanojgaur/crop-ai-backend)** |
+**[ETL Pipeline Repo](https://github.com/imanojgaur/DAP/tree/main/etl)** |
+**Status:** **Continuous Optimization**
+
 A full-stack, data-driven e-commerce platform architected for SSR performance and secure transactions built with  decoupled microservices.
-
-**Live Demo:** [Go Live](https://dap-plant-app.vercel.app/) | **Status:** Continuous Optimization
-
-**Ml Backend:** [Click Me](https://github.com/imanojgaur/crop-ai-backend)
-
-**ETL:** [Click Me](https://github.com/imanojgaur/DAP/tree/main/etl) 
-
 
 ### ⚡ Core Architecture & Integrations
 - **Frontend & UI:** Next.js (App Router), Zustand (Render-optimized cart), Tailwind CSS, Shadcn UI

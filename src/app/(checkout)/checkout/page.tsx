@@ -1,5 +1,5 @@
-import { getCheckoutAddresses } from "@/data/address";
 import { AddressClient } from "@/components/checkout/address/address-client";
+import { getCheckoutAddresses } from "@/data";
 
 export const metadata = {
 	title: "Select Address | DAP",

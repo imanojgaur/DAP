@@ -1,6 +1,5 @@
 "use server";
 
-// Adjust this import path if your Prisma client is located somewhere else (e.g., '@/db' or '@/prisma')
 import prisma from "@/lib/prisma";
 
 export async function getPlantRecommendations(preferences: {

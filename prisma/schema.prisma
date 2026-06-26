@@ -312,6 +312,13 @@ model Return {
   @@map("returns")
 }
 
+// a testing model. 
+model EventLog {
+  id        String   @id @default(cuid())
+  message   String
+  createdAt DateTime @default(now())
+}
+
 // ==========================================
 // 6. ENUMS
 // ==========================================

@@ -1,6 +1,6 @@
-type SiteName = string;
+export type SiteName = string;
 
-type LogoConfig = {
+export type LogoConfig = {
 	title: string;
 	href: string;
 	svg: string;
@@ -9,11 +9,9 @@ type LogoConfig = {
 	height: number;
 };
 
-type NavItem = {
+export type NavItem = {
 	title: string;
 	href?: string;
 	description?: string;
 	items?: NavItem[];
 };
-
-export type { SiteName, LogoConfig, NavItem };

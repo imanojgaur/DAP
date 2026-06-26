@@ -17,7 +17,7 @@ export function EmptyCart() {
 					Looks like you haven't added any plants to your cart yet. Let's find
 					something green for your space.
 				</p>
-				<Link href="/collections">
+				<Link href="/">
 					<Button
 						size="lg"
 						className="h-14 px-8 text-lg bg-green-700 hover:bg-green-800 text-white rounded-full"

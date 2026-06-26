@@ -2,6 +2,7 @@ import { Leaf } from "lucide-react";
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/shared/product-card";
 import { getPlantsForCards } from "@/data";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
 	title: "DAP | Collections",
@@ -14,10 +15,10 @@ export default async function Page({
 }: {
 	params: Promise<{ slug: string }>;
 }) {
-	// 1. Await params and format the title
-	const slug = (await params).slug;
+	
+	// 1. Await params, check if it exists, and format the title
+	const { slug } = await params;
 	const pageName = slug.split("-").join(" ");
-
 	// 2. Fetch the plants for this specific slug
 	const plants = await getPlantsForCards(slug);
 

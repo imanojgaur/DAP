@@ -4,7 +4,7 @@ export async function getCropPrediction(soilData: any) {
 	try {
 		// 1. Grab the URL and force TypeScript to treat it as a String
 		const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL as string;
-		const apiKey = process.env.CROP_BACKEND_SECRET_KEY as string;
+		const apiKey = process.env.CROP_AI_SECRET_KEY as string;
 
 		// 2. Double-check just in case  actually did forget it in the .env file
 		if (!apiUrl && !apiKey) {

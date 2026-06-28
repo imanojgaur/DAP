@@ -4,19 +4,23 @@ export async function getCropPrediction(soilData: any) {
 	try {
 		// 1. Grab the URL and force TypeScript to treat it as a String
 		const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL as string;
+		const apiKey = process.env.CROP_AI_SECRET_KEY as string;
 
 		// 2. Double-check just in case  actually did forget it in the .env file
-		if (!apiUrl) {
+		if (!apiUrl && !apiKey) {
 			return {
 				success: false,
-				error: "Server configuration error: Missing API URL.",
+				error: "Server configuration error: Missing API URL Or Key.",
 			};
 		}
 
 		// This fetch happens SERVER-SIDE, hitting your Python Island
 		const response = await fetch(apiUrl, {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: { 
+				"Content-Type": "application/json",
+				"x-api-key": apiKey  // <- secret handshake 
+			},
 			body: JSON.stringify(soilData),
 		});
 

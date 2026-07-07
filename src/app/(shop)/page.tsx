@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { CategoryGrid } from "@/components/home/category-grid";
-import { FeaturedProducts } from "@/components/home/featured-products";
+// import { CategoryGrid } from "@/components/home/category-grid";
+// import { FeaturedProducts } from "@/components/home/featured-products";
 import { HomeHero } from "@/components/home/hero";
 
 export default function HomePage() {
@@ -10,7 +10,7 @@ export default function HomePage() {
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			<CategoryGrid />
+			{/* <CategoryGrid /> */}
 
 			{/* 3. Product Discovery Section */}
 			<section className="max-w-7xl mx-auto px-4 py-20">
@@ -27,7 +27,7 @@ export default function HomePage() {
 					></Link>
 				</div>
 
-				<FeaturedProducts />
+				{/* <FeaturedProducts /> */}
 			</section>
 
 			{/* 4. Brand Trust / Editorial Section */}

@@ -6,9 +6,7 @@ import { ROUTES } from "@/lib"; // Adjust if needed
 import { useCartStore } from "@/store/cart-store";
 
 export function CartDrawer() {
-	// Kept the name same so your Header doesn't break imports
-	const items = useCartStore((state) => state.items);
-	const cartCount = items.reduce((total, item) => total + item.quantity, 0);
+
 
 	return (
 		<Link

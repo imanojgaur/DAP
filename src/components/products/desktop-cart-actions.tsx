@@ -4,29 +4,7 @@ import { ShoppingCart, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart-store"; // 1. Updated import
 
-// 2. Define the exact props we need to add a real item to the cart
-interface DesktopCartActionsProps {
-	product: {
-		id: string;
-		name: string;
-		price: number;
-		slug: string;
-		image: string;
-	};
-}
 
-export function DesktopCartActions({ product }: DesktopCartActionsProps) {
-	// 3. Connect to the real Zustand array
-	const addItem = useCartStore((state) => state.addItem);
-
-	// 4. Create handler functions
-	const handleAddToCart = () => {
-		addItem(product);
-	};
-
-	const handleBuyNow = () => {
-		addItem(product);
-	};
 
 	return (
 		<div className="hidden md:flex items-center gap-4 py-6 border-b border-gray-100">

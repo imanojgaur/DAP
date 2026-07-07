@@ -20,14 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ProfileForm } from "./profile-form";
 
-export function UserDropdown({ user }: { user: any }) {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const router = useRouter();
-
-	// Safely handle if user is null/undefined before checking name
-	const fallbackInitial = user?.name ? user.name.charAt(0).toLowerCase() : "u";
-
-	return (
+export function UserDropdown
 		<>
 			<DropdownMenu>
 				<DropdownMenuTrigger className="flex items-center gap-2 outline-none group">

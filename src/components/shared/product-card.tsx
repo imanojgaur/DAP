@@ -12,35 +12,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { calculateDiscountPercentage, formatPrice } from "@/lib";
-// 1. UPDATED IMPORT
-import { useCartStore } from "@/store/cart-store";
-import type { ProductCardTypes } from "@/types";
-
-export function ProductCard({ plant }: { plant: ProductCardTypes }) {
-	const productUrl = `/products/${plant.slug}`;
-	const discountPercent = calculateDiscountPercentage(
-		plant.price,
-		plant.compareAtPrice,
-	);
-	const currentPrice = formatPrice(plant.price);
-	const lineOverPrice = plant.compareAtPrice
-		? formatPrice(plant.compareAtPrice)
-		: null;
-
-	// 2. UPDATED STORE SELECTOR
-	const addItem = useCartStore((state) => state.addItem);
-
-	// 3. HANDLER FOR ADD TO CART
-	const handleAddToCart = (e: React.MouseEvent) => {
-		e.preventDefault(); // Prevents clicking the button from triggering the Card's Link
-		addItem({
-			id: plant.id,
-			name: plant.name,
-			price: plant.price,
-			slug: plant.slug,
-			image: plant.images[0]?.publicId || "", // We use publicId for CldImage compatibility
-		});
-	};
 
 	return (
 		<Card className="group w-full max-w-sm overflow-hidden transition-all hover:shadow-lg flex flex-col border-gray-200">

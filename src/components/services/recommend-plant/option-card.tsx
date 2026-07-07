@@ -6,19 +6,9 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-interface OptionCardProps {
-	title: React.ReactNode;
-	description: string;
-	isSelected: boolean;
-	onClick: () => void;
-}
 
-export function OptionCard({
-	title,
-	description,
-	isSelected,
-	onClick,
-}: OptionCardProps) {
+
+export function OptionCard
 	return (
 		<Card
 			className={`cursor-pointer transition-all hover:border-green-500 ${

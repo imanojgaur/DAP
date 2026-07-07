@@ -5,7 +5,7 @@ import { HomeHero } from "@/components/home/hero";
 
 export default function HomePage() {
 	return (
-		<main className="min-h-screen bg-white">
+		<div className="min-h-screen bg-white">
 			{/* 1. Impact Section */}
 			<HomeHero />
 
@@ -48,6 +48,6 @@ export default function HomePage() {
 					</button>
 				</div>
 			</section>
-		</main>
+		</div>
 	);
 }

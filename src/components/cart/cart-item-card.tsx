@@ -9,8 +9,7 @@ import { formatPrice } from "@/lib";
 import { type CartItem, useCartStore } from "@/store/cart-store";
 
 export function CartItemCard({ item }: { item: CartItem }) {
-	const updateQuantity = useCartStore((state) => state.updateQuantity);
-	const removeItem = useCartStore((state) => state.removeItem);
+
 
 	return (
 		<Card className="overflow-hidden border-gray-100 shadow-sm hover:shadow-md transition-all">

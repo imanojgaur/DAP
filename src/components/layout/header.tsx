@@ -11,8 +11,7 @@ import { SearchBar } from "./search-bar";
 import { UserDropdown } from "./user-dropdown";
 
 export function Header() {
-	const { data: session } = useSession();
-
+	
 	return (
 		<div className="sticky top-0 z-50 flex w-full flex-col bg-white">
 			{/* --- DESKTOP TOP STRIP (Minimal Nike Vibe) --- */}

@@ -28,28 +28,7 @@ import { ProfileEditorSheet } from "./profile-editor-sheet";
 type NavLevel = { title: string; items: NavItem[] };
 
 export default function MobileNav() {
-	const { data: session } = useSession();
-	const [menuStack, setMenuStack] = useState<NavLevel[]>([
-		{ title: siteName, items: navConfig },
-	]);
 
-	const currentView = menuStack[menuStack.length - 1];
-	const isRoot = menuStack.length === 1;
-
-	const handleForward = (item: NavItem) => {
-		if (item.items)
-			setMenuStack([...menuStack, { title: item.title, items: item.items }]);
-	};
-	const handleBack = () => {
-		if (menuStack.length > 1) setMenuStack(menuStack.slice(0, -1));
-	};
-	const handleOpenChange = (open: boolean) => {
-		if (!open)
-			setTimeout(
-				() => setMenuStack([{ title: siteName, items: navConfig }]),
-				300,
-			);
-	};
 
 	return (
 		<Sheet onOpenChange={handleOpenChange}>

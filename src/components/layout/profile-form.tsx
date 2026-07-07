@@ -12,14 +12,6 @@ import {
 } from "@/components/ui/select";
 
 export function ProfileForm({
-	user,
-	onSubmit,
-}: {
-	user: any;
-	onSubmit?: () => void;
-}) {
-	const [firstName, ...lastNameArr] = (user.name || "").split(" ");
-	const lastName = lastNameArr.join(" ");
 
 	return (
 		<div className="flex h-full flex-col">

@@ -1,34 +1,11 @@
 "use client";
 
 import { Leaf, Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
-	const [email, setEmail] = useState("");
-	const [isLoadingEmail, setIsLoadingEmail] = useState(false);
-	const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
-
-	// Handler for Email (OTP) Login
-	const handleEmailLogin = async (e: React.FormEvent) => {
-		e.preventDefault();
-		setIsLoadingEmail(true);
-
-		// This tells Auth.js to trigger the Nodemailer provider we set up
-		// 'callbackUrl' is where they go after clicking the link in their email
-		await signIn("nodemailer", { email, callbackUrl: "/" });
-
-		// Note: We don't set loading to false here because the page will redirect!
-	};
-
-	// Handler for Google Login
-	const handleGoogleLogin = async () => {
-		setIsLoadingGoogle(true);
-		await signIn("google", { callbackUrl: "/" });
-	};
 
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-50/50 px-4">

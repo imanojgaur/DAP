@@ -15,22 +15,6 @@ import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib"; // Assuming you have this helper
 import { useCartStore } from "@/store/cart-store";
 
-export function OrderSummary() {
-	const items = useCartStore((state) => state.items);
-
-	// Calculate Subtotal dynamically
-	const subtotal = items.reduce(
-		(total, item) => total + item.price * item.quantity,
-		0,
-	);
-
-	// Assume free shipping for now, or add logic here
-	const shipping = 0;
-	const total = subtotal + shipping;
-
-	// If cart is empty, don't render the summary
-	if (items.length === 0) return null;
-
 	return (
 		<Card className="w-full border-gray-200 shadow-sm sticky top-24">
 			<CardHeader>

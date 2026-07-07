@@ -9,22 +9,7 @@ import { formatPrice } from "@/lib";
 import { useCartStore } from "@/store/cart-store";
 
 export function CartNotification() {
-	const { items, lastAddedItem, showNotification, closeNotification } =
-		useCartStore();
 
-	// UX Standard: 6 seconds (6000ms) for notifications with action buttons
-	useEffect(() => {
-		if (showNotification) {
-			const timer = setTimeout(() => {
-				closeNotification();
-			}, 5000);
-			return () => clearTimeout(timer);
-		}
-	}, [showNotification, closeNotification]);
-
-	if (!showNotification || !lastAddedItem) return null;
-
-	const cartCount = items.reduce((total, item) => total + item.quantity, 0);
 
 	return (
 		<>

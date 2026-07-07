@@ -9,14 +9,7 @@ import { ProductGallery } from "@/components/products/product-gallery";
 import { getProductBySlug } from "@/data";
 
 export default async function Page({
-	params,
-}: {
-	params: Promise<{ slug: string }>;
-}) {
-	const slug = (await params).slug;
-	const product = await getProductBySlug(slug);
 
-	if (!product) notFound();
 
 	return (
 		// Added pb-24 so the MobileCartBar doesn't cover your lowest content

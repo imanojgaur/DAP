@@ -7,25 +7,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function OrderSuccessPopup() {
-	const router = useRouter();
-	const [countdown, setCountdown] = useState(5);
 
-	useEffect(() => {
-		// 1. Timer to redirect to home after 5 seconds
-		const redirectTimer = setTimeout(() => {
-			router.push("/");
-		}, 3000);
-
-		// 2. Visual countdown interval
-		const interval = setInterval(() => {
-			setCountdown((prev) => prev - 1);
-		}, 1000);
-
-		return () => {
-			clearTimeout(redirectTimer);
-			clearInterval(interval);
-		};
-	}, [router]);
 
 	return (
 		<>

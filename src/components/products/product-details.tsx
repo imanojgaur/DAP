@@ -1,18 +1,6 @@
-// ProductDetails.tsx: (Server Component): Renders the title, price, and badges.
-// src/components/products/product-details.tsx
-import { Leaf, ShieldAlert, ShieldCheck, Tag } from "lucide-react";
-
-interface ProductDetailsProps {
-	careDifficulty: string;
-	isPetSafe: boolean;
-	categories: { name: string; slug: string }[];
-}
 
 export function ProductDetails({
-	careDifficulty,
-	isPetSafe,
-	categories,
-}: ProductDetailsProps) {
+
 	return (
 		<div className="grid grid-cols-2 gap-4 py-6 my-6 border-y border-gray-100 md:grid-cols-3">
 			{/* Care Level */}

@@ -15,23 +15,6 @@ import { formatPrice } from "@/lib";
 import { useCartStore } from "@/store/cart-store";
 
 export function AddressClient({
-	user,
-	initialAddresses = [],
-}: {
-	user: any;
-	initialAddresses: any[];
-}) {
-	// 1. Manage Step State: "address" or "payment"
-	const [step, setStep] = useState<"address" | "payment">("address");
-	const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
-		initialAddresses.length > 0 ? initialAddresses[0].id : null,
-	);
-
-	const items = useCartStore((state) => state.items);
-	const total = items.reduce(
-		(sum, item) => sum + item.price * item.quantity,
-		0,
-	);
 
 	return (
 		<div className="pb-24 md:pb-12 text-gray-900">

@@ -1,5 +1,3 @@
-// Client Component): Manages the open/closed state of the FAQs and Care Guides.
-// src/components/products/product-accordion.tsx
 "use client";
 
 import { Star } from "lucide-react";
@@ -11,28 +9,9 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-interface ReviewProps {
-	id: string;
-	author: string;
-	rating: number;
-	title: string | null;
-	body: string;
-	date: Date;
-}
-
-interface ProductAccordionProps {
-	description: string | null;
-	specifications: any | null; // Prisma JSON type
-	reviews: ReviewProps[];
-	totalReviews: number;
-}
 
 export function ProductAccordion({
-	description,
-	specifications,
-	reviews,
-	totalReviews,
-}: ProductAccordionProps) {
+	
 	return (
 		<Accordion type="single" collapsible className="w-full">
 			{/* DESCRIPTION */}

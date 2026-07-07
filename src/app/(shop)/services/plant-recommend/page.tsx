@@ -17,42 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export default function PlantFinderPage() {
-	const [preferences, setPreferences] = useState({
-		sunlight: "",
-		needsPetSafe: null as boolean | null,
-		wateringHabit: "",
-	});
 
-	const [recommended, setRecommended] = useState<any[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [hasSearched, setHasSearched] = useState(false);
-
-	const updatePref = (key: keyof typeof preferences, value: any) => {
-		setPreferences((prev) => ({ ...prev, [key]: value }));
-	};
-
-	const handleSearch = async () => {
-		setLoading(true);
-		setHasSearched(true);
-
-		const response = await getPlantRecommendations({
-			sunlight: preferences.sunlight,
-			needsPetSafe: preferences.needsPetSafe ?? false,
-			wateringHabit: preferences.wateringHabit,
-		});
-
-		if (response.success) {
-			setRecommended(response.data || []);
-		} else {
-			console.error(response.error);
-		}
-		setLoading(false);
-	};
-
-	const isFormComplete =
-		preferences.sunlight &&
-		preferences.needsPetSafe !== null &&
-		preferences.wateringHabit;
 
 	return (
 		<div className="min-h-screen bg-gray-50/50 py-12 px-4 sm:px-6">

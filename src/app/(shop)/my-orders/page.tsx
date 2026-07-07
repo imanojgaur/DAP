@@ -14,16 +14,6 @@ const STATUS_STEPS = [
 ];
 
 export default async function MyOrdersPage() {
-	const session = await auth();
-
-	if (!session?.user?.id) {
-		redirect("/login");
-	}
-
-	const userId = session.user.id;
-	const { data: orders } = await getCustomerOrders(userId);
-
-	if (!orders || orders.length === 0) return <div>No orders found.</div>;
 
 	return (
 		<div className="max-w-3xl mx-auto p-6 space-y-6">

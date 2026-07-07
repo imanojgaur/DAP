@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function CheckoutHeader() {
-	const pathname = usePathname();
-	const isPayment = pathname.includes("/payment");
 
 	return (
 		<header className="hidden md:flex justify-between items-center px-8 h-[72px] border-b border-gray-200 bg-white sticky top-0 z-50">

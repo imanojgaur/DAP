@@ -4,20 +4,8 @@ import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib";
 import { useCartStore } from "@/store/cart-store"; // 1. Updated import
 
-// 2. Define the exact props we need
-interface MobileCartBarProps {
-	product: {
-		id: string;
-		name: string;
-		price: number;
-		slug: string;
-		image: string;
-	};
-}
 
-export function MobileCartBar({ product }: MobileCartBarProps) {
-	// 3. Connect to Zustand
-	const addItem = useCartStore((state) => state.addItem);
+export function MobileCartBar(
 
 	return (
 		<div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:hidden">

@@ -22,76 +22,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 
-// 1. Interfaces
-interface SearchPlant {
-	id: string;
-	name: string;
-	slug: string;
-	price: number;
-	images: {
-		publicId: string;
-		secureUrl: string;
-	}[];
-}
 
-interface SearchCategory {
-	id: string;
-	name: string;
-	slug: string;
-}
-
-interface SearchData {
-	plants: SearchPlant[];
-	categories: SearchCategory[];
-}
-
-export function SearchBar() {
-	const router = useRouter();
-	const [isOpen, setIsOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-
-	const [data, setData] = useState<SearchData>({
-		plants: [],
-		categories: [],
-	});
-
-	const [query, setQuery] = useState("");
-
-	// 2. Fetching Logic
-	useEffect(() => {
-		const fetchPlant = async () => {
-			if (isOpen && data.plants.length === 0) {
-				setIsLoading(true);
-				try {
-					const fetchedData = await getUnifiedSearchData();
-					setData(fetchedData as SearchData);
-				} catch (error) {
-					console.error("Error Fetching Data", error);
-				} finally {
-					setIsLoading(false);
-				}
-			}
-		};
-		fetchPlant();
-	}, [isOpen, data.plants.length]);
-
-	const handleNavigate = (slug: string, type: "product" | "category") => {
-		setIsOpen(false);
-		setQuery("");
-		const path =
-			type === "category" ? `/collections/${slug}` : `/products/${slug}`;
-		router.push(path);
-	};
-
-	// 3. Filter Logic
-
-	const filteredPlants = data.plants
-		.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
-		.slice(0, 6);
-
-	const filteredCats = data.categories
-		.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()))
-		.slice(0, 4);
 
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>

@@ -15,41 +15,6 @@ import {
 import { Switch } from "@/components/ui/switch";
 
 export function AddressSheet({
-	user,
-	autoOpen = false,
-	label = "+ Add New Address",
-	address, // <--- Added this prop
-}: {
-	address?: any;
-	user: any;
-	autoOpen?: boolean;
-	label?: React.ReactNode;
-}) {
-	const [isOpen, setIsOpen] = useState(autoOpen);
-	const [isLoading, setIsLoading] = useState(false);
-
-	// Split street into house and road for the form inputs
-	const streetParts = address?.street?.split(",") || [];
-	const houseValue = streetParts[0]?.trim() || "";
-	const roadValue = streetParts.slice(1).join(",").trim() || "";
-
-	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		setIsLoading(true);
-		const formData = new FormData(e.currentTarget);
-
-		// If we are editing, we manually append the ID so the Server Action knows to UPDATE
-		if (address?.id) formData.append("addressId", address.id);
-
-		const result = await saveAddressAction(formData);
-
-		if (result?.error) {
-			alert(result.error);
-		} else {
-			setIsOpen(false);
-		}
-		setIsLoading(false);
-	}
 
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>

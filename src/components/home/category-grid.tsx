@@ -3,20 +3,7 @@ import Link from "next/link";
 import { getHomeCategories } from "@/actions/home";
 
 export async function CategoryGrid() {
-	const categories = await getHomeCategories();
 
-	// Curated high-end lifestyle images for the categories
-	const categoryImages = [
-		"https://images.unsplash.com/photo-1700219704637-87977308a892?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Large: Modern Minimalist Interior
-		"https://images.unsplash.com/photo-1616791151653-a84311a1ae75?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGxhbnQlMjBkZWFsJTIwb2YlMjB0aGUlMjBkYXl8ZW58MHx8MHx8fDA%3D", // Small 1: Deep Green Macro Leaf
-		"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1000", // Small 2: Cozy Plant Corner
-	];
-
-	const styles = [
-		"md:col-span-2 md:row-span-2 min-h-[450px]",
-		"md:col-span-1 md:row-span-1 min-h-[250px]",
-		"md:col-span-1 md:row-span-1 min-h-[250px]",
-	];
 
 	return (
 		<section className="max-w-[1600px] mx-auto px-4 md:px-8 py-24">

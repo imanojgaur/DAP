@@ -6,25 +6,6 @@ import {
 	formatPrice,
 } from "@/lib";
 
-interface ProductHeaderProps {
-	name: string;
-	price: number;
-	compareAtPrice: number | null;
-}
-
-export function ProductHeader({
-	name,
-	price,
-	compareAtPrice,
-}: ProductHeaderProps) {
-	const propName = cleanPlantSlug(name);
-	const pageName = propName.replace(/-/g, " ");
-	const formattedPrice = formatPrice(price);
-	const formattedComparePrice = compareAtPrice
-		? formatPrice(compareAtPrice)
-		: null;
-	const discount = calculateDiscountPercentage(price, compareAtPrice);
-
 	return (
 		<div className="flex flex-col gap-2 py-4">
 			{/* Title */}

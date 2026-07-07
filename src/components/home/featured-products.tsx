@@ -4,9 +4,6 @@ import { ProductCard } from "@/components/shared/product-card";
 import { ROUTES } from "@/config/constants/routes";
 
 export async function FeaturedProducts() {
-	const products = await getFeaturedProducts();
-
-	if (!products || products.length === 0) return null;
 
 	return (
 		<section className="max-w-[1600px] mx-auto px-4 md:px-8 py-20">

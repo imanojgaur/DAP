@@ -12,7 +12,6 @@ import {
 import { ProfileForm } from "./profile-form";
 
 export function ProfileEditorSheet({ user }: { user: any }) {
-	const fallbackInitial = user.name ? user.name.charAt(0).toLowerCase() : "u";
 
 	return (
 		<Sheet>

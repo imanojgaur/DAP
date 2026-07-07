@@ -12,20 +12,6 @@ import {
 import type { OrderStatus } from "../../../../generated/prisma/client";
 
 export function StatusDropdown({
-	orderId,
-	currentStatus,
-}: {
-	orderId: string;
-	currentStatus: OrderStatus;
-}) {
-	const [isPending, startTransition] = useTransition();
-
-	const handleStatusChange = (newStatus: OrderStatus) => {
-		startTransition(async () => {
-			// Calls the Server Action we wrote in step 1
-			await updateOrderStatus(orderId, newStatus);
-		});
-	};
 
 	return (
 		<Select

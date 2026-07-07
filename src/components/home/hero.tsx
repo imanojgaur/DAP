@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image"; 
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/config/constants/routes";
+import { currentYear } from "@/lib";
 
 export function HomeHero() {
     return (
@@ -25,7 +26,7 @@ export function HomeHero() {
                 {/* Refactor 3: Merged the positioning wrapper and width constraint into one div */}
                 <div className="absolute inset-0 z-20 flex flex-col justify-end p-8 md:p-24 w-full max-w-4xl">
                     <span className="text-green-400 font-bold tracking-[0.4em] uppercase text-[10px] md:text-sm mb-6 block animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        Est. 2026 • Bring Greenery Home
+                        Est. {currentYear} • Bring Greenery Home
                     </span>
 
                     <h1 className="text-6xl md:text-[10rem] font-black text-white leading-[0.8] tracking-tighter italic mb-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">

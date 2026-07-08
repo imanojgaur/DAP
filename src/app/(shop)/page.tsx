@@ -1,16 +1,24 @@
-import Link from "next/link";
-// import { CategoryGrid } from "@/components/home/category-grid";
+import { CategorySectionWrapper } from "@/components/home/category-section";
+import { CategoryCard } from "@/components/home/category-card";
+import { getHomeCategories } from "@/data-sql"
 // import { FeaturedProducts } from "@/components/home/featured-products";
 import { HomeHero } from "@/components/home/hero";
 
 export default function HomePage() {
+	const categoriesData = getHomeCategories();
+
 	return (
 		<div className="min-h-screen bg-white">
 			{/* 1. Impact Section */}
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			{/* <CategoryGrid /> */}
+			<CategorySectionWrapper>
+				{categoriesData.map((cat)=>
+				<CategoryCard 
+				/>
+				)}
+				</CategorySectionWrapper>
 
 			{/* 3. Product Discovery Section */}
 			<section className="max-w-7xl mx-auto px-4 py-20">
@@ -21,10 +29,6 @@ export default function HomePage() {
 						</h2>
 						<p className="text-gray-500">Fresh greenery for your collection.</p>
 					</div>
-					<Link
-						href="/products"
-						className="font-medium underline underline-offset-4 hover:text-green-700"
-					></Link>
 				</div>
 
 				{/* <FeaturedProducts /> */}

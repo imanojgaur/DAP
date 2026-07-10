@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getFeaturedProducts } from "@/actions/home";
+import { getFeaturedProducts } from "@/data-sql";
 import { ProductCard } from "@/components/shared/product-card";
 import { ROUTES } from "@/config/constants/routes";
 

@@ -12,7 +12,7 @@ export default function HomePage() {
 			{/* 1. Impact Section */}
 			<HomeHero />
 
-			{/* 2. Navigation Section */}
+			{/* 2. Navigation Section: composition pattern: Pending: other things to show */}
 			<CategorySectionWrapper>
 				{categoriesData.map((cat)=>
 				<CategoryCard 

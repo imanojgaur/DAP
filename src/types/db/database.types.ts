@@ -182,7 +182,7 @@ export type Database = {
       reviews: {
         Row: {
           author: string
-          body: string | null
+          body: string
           created_at: string | null
           id: string
           product_id: string | null
@@ -191,7 +191,7 @@ export type Database = {
         }
         Insert: {
           author: string
-          body?: string | null
+          body: string
           created_at?: string | null
           id?: string
           product_id?: string | null
@@ -200,7 +200,7 @@ export type Database = {
         }
         Update: {
           author?: string
-          body?: string | null
+          body?: string
           created_at?: string | null
           id?: string
           product_id?: string | null

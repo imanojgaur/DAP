@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-interface CategoryCardProps {
+export interface CategoryCardProps {
     name: string;
     slug: string;
     productCount: number;

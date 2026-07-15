@@ -1,13 +1,19 @@
 import { CategorySectionWrapper } from "@/components/home/category-section";
-import { CategoryCard } from "@/components/home/category-card";
+import { CategoryCard, type CategoryCardProps } from "@/components/home/category-card";
 import { getHomeCategories } from "@/data-sql"
 // import { FeaturedProducts } from "@/components/home/featured-products";
 import { HomeHero } from "@/components/home/hero";
 
-export default function HomePage() {
-	const categories: string[] = ['Deal Of The Day', 'BestSeller', 'Vastu Plants']
+export default async function HomePage() {
+	// Fetch db
+	const categories: string[] = ['Deal Of The Day', 'BestSeller', 'Vastu Plants', 'Mood Improving Plants']
+	const categoriesdbData = await getHomeCategories(categories);
 
-	const categoriesData = getHomeCategories(categories);
+	//images
+	const images = ["/home/deal-of-the-day.webp", "/home/best-seller.avif", "/home/vastu.avif", '/home/mood-boosting.avif']
+
+	//data to map on category card
+	const categoriesData: CategoryCardProps[] = []
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -16,9 +22,15 @@ export default function HomePage() {
 
 			{/* 2. Navigation Section: composition pattern: Pending: other things to show */}
 			<CategorySectionWrapper>
-				{categoriesData.map((cat)=>
-				<CategoryCard 
-				/>
+				{categoriesData.map((cat) => 
+					<CategoryCard
+						key={cat.name}
+						name={cat.name}
+						slug={cat.slug}
+						productCount={cat.productCount}
+						className={cat.className}
+						imageSrc={cat.imageSrc}
+					/>
 				)}
 				</CategorySectionWrapper>
 

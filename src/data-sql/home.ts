@@ -1,9 +1,10 @@
 import prisma from "@/lib/prisma"
 import { Prisma } from "../../generated/prisma/client"
+// import { withPrismaQuery } from "@/lib/prisma-catch-error";
 
 export async function getHomeCategories(categories: string[]){
     try{
-        const data = await prisma.$queryRaw`
+        const data = prisma.$queryRaw`
         SELECT 
         c.slug, 
         c.name, 
@@ -14,6 +15,10 @@ export async function getHomeCategories(categories: string[]){
         `
         return data;
     } catch (e){
-     
+        console.error("Error fetching Home Categories", e)
+        return { message: "fetching Home Categories failed"}
     }
+
+    
+    
 }

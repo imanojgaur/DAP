@@ -5,7 +5,9 @@ import { getHomeCategories } from "@/data-sql"
 import { HomeHero } from "@/components/home/hero";
 
 export default function HomePage() {
-	const categoriesData = getHomeCategories();
+	const categories: string[] = ['Deal Of The Day', 'BestSeller', 'Vastu Plants']
+
+	const categoriesData = getHomeCategories(categories);
 
 	return (
 		<div className="min-h-screen bg-white">

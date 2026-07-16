@@ -11,7 +11,7 @@ export interface categoriesData {
 
 export async function getHomeCategories(categories: string[]){
     try{
-        const data = prisma.$queryRaw<categoriesData[]>`
+        const data = await prisma.$queryRaw<categoriesData[]>`
         SELECT 
         c.slug, 
         c.name, 

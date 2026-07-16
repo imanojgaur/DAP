@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image"; 
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/config/constants/routes";
-import { currentYear } from "@/lib/backend";
+import { currentYear } from "@/utilities/date";
 
 export function HomeHero() {
     return (

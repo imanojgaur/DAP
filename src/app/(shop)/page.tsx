@@ -1,9 +1,7 @@
 import { CategorySectionWrapper } from "@/components/home/category-section";
 import { CategoryCard } from "@/components/home/category-card";
-import { getHomeCategories } from "@/data-sql"
-// import { FeaturedProducts } from "@/components/home/featured-products";
 import { HomeHero } from "@/components/home/hero";
-import { notFound } from "next/navigation";
+import { getHomeCategories } from "@/data-sql"
 
 export interface CategoryCardData {
     name: string;
@@ -40,9 +38,7 @@ export default async function HomePage() {
 	} else {
 		return <div>{categoriesdbData.message}</div>
 		// notFound() // pending
-		
 	}
-	
 	
 	return (
 		<div className="min-h-screen bg-white">

@@ -22,7 +22,7 @@ export async function getHomeCategories(categories: string[]){
         `
         return data;
     } catch (e){
-        console.error("Error fetching Home Categories", e)
+        console.error("Error fetching Home Categories: ", e)
         return { message: "fetching Home Categories failed"}
     }
 }

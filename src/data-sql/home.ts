@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/backend/prisma"
 import { Prisma } from "../../generated/prisma/client"
 // import { withPrismaQuery } from "@/lib/prisma-catch-error";
 

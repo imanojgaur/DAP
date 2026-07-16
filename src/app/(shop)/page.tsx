@@ -1,30 +1,45 @@
 import { CategorySectionWrapper } from "@/components/home/category-section";
-import { CategoryCard, type CategoryCardProps } from "@/components/home/category-card";
+import { CategoryCard } from "@/components/home/category-card";
 import { getHomeCategories } from "@/data-sql"
 // import { FeaturedProducts } from "@/components/home/featured-products";
 import { HomeHero } from "@/components/home/hero";
 import { notFound } from "next/navigation";
 
+export interface CategoryCardData {
+    name: string;
+    slug?: string;
+    productCount?: number;
+    imageSrc: string;
+    className?: string; // Prop to adjust layout.
+}
+
 export default async function HomePage() {
+	
+	const categoriesCardConfig: CategoryCardData[] = [
+		{name: 'Deal of The Day', imageSrc: '/home/deal-of-the-day.webp', className: ''},
+		{name: 'BestSeller', imageSrc: '/home/best-seller.avif', className: ''},
+		{name: 'Vastu Plants', imageSrc: '/home/vastu.avif', className: ''},
+		{name: 'Mood Improving Plants', imageSrc: '/home/mood-boosting.avif'}
+	]
 
-	// Fetch db
-	const categories = ['Deal Of The Day', 'BestSeller', 'Vastu Plants', 'Mood Improving Plants']
-	const categoriesdbData = await getHomeCategories(categories);
-
-	//images
-	const imagesLocation = ["/home/deal-of-the-day.webp", "/home/best-seller.avif", "/home/vastu.avif", '/home/mood-boosting.avif']
-    
-	const categoriesCardData: CategoryCardProps[] = []
+	// Fetch db 
+	const categoriesdbData = await getHomeCategories([
+		categoriesCardConfig[0].name,
+		 categoriesCardConfig[1].name,
+		  categoriesCardConfig[2].name,
+		   categoriesCardConfig[3].name
+		]);
 
 	// type narrowing 
 	if(Array.isArray(categoriesdbData)){
-		for (let i = 0; i < imagesLocation.length; i++){
-			const object = categoriesdbData[i]
-			object.imageSrc = imagesLocation[i]  
+		for (let i = 0; i < categoriesCardConfig.length; i++){
+			const object = categoriesCardConfig[i]
+			object.productCount = categoriesdbData[i].product_count
+			object.slug = categoriesdbData[i].slug
 		}
 	} else {
 		return <div>{categoriesdbData.message}</div>
-		// notFound()
+		// notFound() // pending
 		
 	}
 	
@@ -36,12 +51,12 @@ export default async function HomePage() {
 
 			{/* 2. Navigation Section: composition pattern: Pending: other things to show */}
 			<CategorySectionWrapper>
-				{categoriesCardData.map((cat) => 
+				{categoriesCardConfig.map((cat) => 
 					<CategoryCard
 						key={cat.name}
 						name={cat.name}
-						slug={cat.slug}
-						productCount={cat.productCount}
+						slug={cat.slug as string}
+						productCount={cat.productCount as number}
 						className={cat.className}
 						imageSrc={cat.imageSrc}
 					/>

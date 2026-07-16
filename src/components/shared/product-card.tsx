@@ -11,7 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { calculateDiscountPercentage, formatPrice } from "@/lib";
+import { calculateDiscountPercentage, formatPrice } from "@/lib/backend";
 
 	return (
 		<Card className="group w-full max-w-sm overflow-hidden transition-all hover:shadow-lg flex flex-col border-gray-200">

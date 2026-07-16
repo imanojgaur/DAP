@@ -12,7 +12,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { formatPrice } from "@/lib"; // Assuming you have this helper
+import { formatPrice } from "@/lib/backend"; // Assuming you have this helper
 import { useCartStore } from "@/store/cart-store";
 
 	return (

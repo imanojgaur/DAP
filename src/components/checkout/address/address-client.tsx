@@ -11,7 +11,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { formatPrice } from "@/lib";
+import { formatPrice } from "@/lib/backend";
 import { useCartStore } from "@/store/cart-store";
 
 export function AddressClient({

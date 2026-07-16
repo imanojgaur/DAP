@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { formatPrice } from "@/lib";
+import { formatPrice } from "@/lib/backend";
 import { type CartItem, useCartStore } from "@/store/cart-store";
 
 export function CartItemCard({ item }: { item: CartItem }) {

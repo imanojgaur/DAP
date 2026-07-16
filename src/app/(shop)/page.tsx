@@ -3,18 +3,32 @@ import { CategoryCard, type CategoryCardProps } from "@/components/home/category
 import { getHomeCategories } from "@/data-sql"
 // import { FeaturedProducts } from "@/components/home/featured-products";
 import { HomeHero } from "@/components/home/hero";
+import { notFound } from "next/navigation";
 
 export default async function HomePage() {
+
 	// Fetch db
-	const categories: string[] = ['Deal Of The Day', 'BestSeller', 'Vastu Plants', 'Mood Improving Plants']
+	const categories = ['Deal Of The Day', 'BestSeller', 'Vastu Plants', 'Mood Improving Plants']
 	const categoriesdbData = await getHomeCategories(categories);
 
 	//images
-	const images = ["/home/deal-of-the-day.webp", "/home/best-seller.avif", "/home/vastu.avif", '/home/mood-boosting.avif']
+	const imagesLocation = ["/home/deal-of-the-day.webp", "/home/best-seller.avif", "/home/vastu.avif", '/home/mood-boosting.avif']
+    
+	const categoriesCardData: CategoryCardProps[] = []
 
-	//data to map on category card
-	const categoriesData: CategoryCardProps[] = []
-
+	// type narrowing 
+	if(Array.isArray(categoriesdbData)){
+		for (let i = 0; i < imagesLocation.length; i++){
+			const object = categoriesdbData[i]
+			object.imageSrc = imagesLocation[i]  
+		}
+	} else {
+		return <div>{categoriesdbData.message}</div>
+		// notFound()
+		
+	}
+	
+	
 	return (
 		<div className="min-h-screen bg-white">
 			{/* 1. Impact Section */}
@@ -22,7 +36,7 @@ export default async function HomePage() {
 
 			{/* 2. Navigation Section: composition pattern: Pending: other things to show */}
 			<CategorySectionWrapper>
-				{categoriesData.map((cat) => 
+				{categoriesCardData.map((cat) => 
 					<CategoryCard
 						key={cat.name}
 						name={cat.name}

@@ -1,1 +1,0 @@
-export { currentYear } from "./shared";

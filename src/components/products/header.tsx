@@ -4,7 +4,7 @@ import {
 	calculateDiscountPercentage,
 	cleanPlantSlug,
 	formatPrice,
-} from "@/lib";
+} from "@/lib/backend";
 
 	return (
 		<div className="flex flex-col gap-2 py-4">

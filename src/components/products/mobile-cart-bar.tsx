@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib";
+import { formatPrice } from "@/lib/backend";
 import { useCartStore } from "@/store/cart-store"; // 1. Updated import
 
 

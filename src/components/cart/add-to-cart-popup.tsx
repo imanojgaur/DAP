@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib";
+import { formatPrice } from "@/lib/backend";
 import { useCartStore } from "@/store/cart-store";
 
 export function CartNotification() {

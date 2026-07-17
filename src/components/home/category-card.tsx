@@ -7,13 +7,33 @@ export interface CategoryCardProps {
     productCount: number;
     imageSrc: string;
     className?: string; // Prop to adjust layout.
+
+    // change height randomly 
+    index: number 
+    isLastOdd: boolean
 }
 
-export function CategoryCard({ name, slug, productCount, imageSrc, className = "" }: CategoryCardProps) {
+export function CategoryCard({ 
+    name, 
+    slug, 
+    productCount, 
+    imageSrc, 
+    className = "" ,
+
+    index = 0,
+    isLastOdd = false
+
+}: CategoryCardProps) {
+
+    const organicHeights = [240, 340, 220, 360, 280, 310, 260];
+    const mobileHeight = organicHeights[index % organicHeights.length]
+
     return (
         <Link
             href={`/collections/${slug}`}
-            className={`group relative overflow-hidden rounded-[2.5rem] bg-gray-100 flex flex-col justify-end p-10 min-h-[300px] md:min-h-[400px] ${className}`}
+            // CSS Variable injected for dynamic height
+            style={{ '--mobile-h': `${mobileHeight}px` } as React.CSSProperties}
+            className={`group inline-block break-inside-avoid w-full mb-4 md:mb-0 md:flex-1 relative overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] bg-gray-100 flex flex-col justify-end p-6 md:p-10 min-h-[var(--mobile-h)] md:!min-h-[400px] ${isLastOdd ? '[column-span:all] mt-2' : ''} ${className}`}
         >
             {/* THE IMAGE LAYER */}
             <div className="absolute inset-0 z-0">

@@ -16,8 +16,13 @@ export default async function HomePage() {
 	const categoriesCardConfig: CategoryCardData[] = [
 		{name: 'Deal of The Day', imageSrc: '/home/deal-of-the-day.webp', className: ''},
 		{name: 'BestSeller', imageSrc: '/home/best-seller.avif', className: ''},
+        {name: 'Balcony Plants', imageSrc: '/home/balconey5.avif', className: ''},
 		{name: 'Vastu Plants', imageSrc: '/home/vastu.avif', className: ''},
-		{name: 'Mood Improving Plants', imageSrc: '/home/mood-boosting.avif'}
+		{name: 'Mood Improving Plants', imageSrc: '/home/mood-boosting.avif'},
+		{name: 'Air Purifying Plants', imageSrc: '/home/purify2.avif', className: ''},
+		{name: 'Indoor Plants', imageSrc: '/home/indoor-plants.avif', className: '',},
+		{name: 'Living Room Plants', imageSrc: '/home/living-room4.avif', className: ''},
+		{name: 'Office Plants', imageSrc: '/home/office-plants.avif', className: '',},
 	]
 
 	// Fetch db 
@@ -25,7 +30,12 @@ export default async function HomePage() {
 		categoriesCardConfig[0].name,
 		 categoriesCardConfig[1].name,
 		  categoriesCardConfig[2].name,
-		   categoriesCardConfig[3].name
+		   categoriesCardConfig[3].name,
+		   categoriesCardConfig[4].name,
+		   categoriesCardConfig[5].name,
+		   categoriesCardConfig[6].name,
+		   categoriesCardConfig[7].name,
+		   categoriesCardConfig[8].name,
 		]);
 
 	// type narrowing 
@@ -45,9 +55,13 @@ export default async function HomePage() {
 			{/* 1. Impact Section */}
 			<HomeHero />
 
-			{/* 2. Navigation Section: composition pattern: Pending: other things to show */}
-			<CategorySectionWrapper>
-				{categoriesCardConfig.map((cat) => 
+			{/* 2. Navigation Section */}
+			
+			<CategorySectionWrapper 
+			layoutPattern={[4, 3]} // {/* cards in a row = value at index, total rows = array length(exception total cat > total val) */}
+			desktopLimit={7}       // no. of cards desktop display
+			>
+				{categoriesCardConfig.map((cat) => (
 					<CategoryCard
 						key={cat.name}
 						name={cat.name}
@@ -56,7 +70,7 @@ export default async function HomePage() {
 						className={cat.className}
 						imageSrc={cat.imageSrc}
 					/>
-				)}
+				))}
 				</CategorySectionWrapper>
 
 			{/* 3. Product Discovery Section */}

@@ -1,4 +1,5 @@
 import React from "react";
+import type { CategoryCardProps } from "./category-card";
 
 interface WrapperProps{
     children: React.ReactNode,
@@ -12,7 +13,19 @@ export function CategorySectionWrapper({
      desktopLimit = 6
     }: WrapperProps) {
 
-    const cards = React.Children.toArray(children); // convert children as array [remove immutablity of child]
+    const rawCards = React.Children.toArray(children); // convert children as array [remove immutablity of child]
+
+    // to remove "latkapan: pending englis" of last card
+    const cards = rawCards.map((child, idx) => {
+        if(React.isValidElement(child)){ // narrow type
+
+            const isLastOdd = idx === rawCards.length && idx % 2 !== 0
+            React.cloneElement(child as React.ReactElement<CategoryCardProps>, {index: idx, isLastOdd, }) 
+        }
+        return child;
+    });    
+
+
     const rows = []
 
     let cardIndex = 0 
@@ -24,7 +37,7 @@ export function CategorySectionWrapper({
 
         const rowCards = cards.slice(cardIndex, cardIndex + count)
 
-        const isPastIndex = cardIndex >= desktopLimit //
+        const isPastIndex = cardIndex >= desktopLimit 
         rows.push(
             <div
             key ={cardIndex} 

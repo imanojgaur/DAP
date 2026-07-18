@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 export interface CategoryCardProps {
     name: string;
@@ -9,8 +10,8 @@ export interface CategoryCardProps {
     className?: string; // Prop to adjust layout.
 
     // change height randomly 
-    index: number 
-    isLastOdd: boolean
+    index?: number 
+    isLastOdd?: boolean
 }
 
 export function CategoryCard({ 
@@ -19,12 +20,12 @@ export function CategoryCard({
     productCount, 
     imageSrc, 
     className = "" ,
-
     index = 0,
     isLastOdd = false
 
 }: CategoryCardProps) {
-
+    
+    // set size randomly with array : Math.random => Hydration Error: server random num don't match with client/browser vdm. 
     const organicHeights = [240, 340, 220, 360, 280, 310, 260];
     const mobileHeight = organicHeights[index % organicHeights.length]
 
@@ -32,7 +33,8 @@ export function CategoryCard({
         <Link
             href={`/collections/${slug}`}
             // CSS Variable injected for dynamic height
-            style={{ '--mobile-h': `${mobileHeight}px` } as React.CSSProperties}
+            // style={{ '--mobile-h': `${mobileHeight}px` } as React.CSSProperties} // why as seperate style and why 
+            // style={{'--mobile-h': '50px'} as }
             className={`group inline-block break-inside-avoid w-full mb-4 md:mb-0 md:flex-1 relative overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] bg-gray-100 flex flex-col justify-end p-6 md:p-10 min-h-[var(--mobile-h)] md:!min-h-[400px] ${isLastOdd ? '[column-span:all] mt-2' : ''} ${className}`}
         >
             {/* THE IMAGE LAYER */}

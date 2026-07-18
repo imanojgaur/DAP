@@ -6,7 +6,7 @@ import { getHomeCategories } from "@/data-sql"
 export interface CategoryCardData {
     name: string;
     slug?: string;
-    productCount?: number;
+    productCount?: number | null;
     imageSrc: string;
     className?: string; // Prop to adjust layout.
 }
@@ -42,13 +42,14 @@ export default async function HomePage() {
 	if(Array.isArray(categoriesdbData)){
 		for (let i = 0; i < categoriesCardConfig.length; i++){ // map cause new array.[no need]
 			const object = categoriesCardConfig[i]
-			object.productCount = categoriesdbData[i].product_count
+			object.productCount = categoriesdbData[i].product_count 
 			object.slug = categoriesdbData[i].slug
 		}
-	} else {
-		return <div>{categoriesdbData.message}</div>
-		// notFound() // pending
 	}
+	// } else {
+		// return <div>{categoriesdbData.message}</div>
+		// notFound() // pending
+	// }
 	
 	return (
 		<div className="min-h-screen bg-white">
@@ -65,8 +66,8 @@ export default async function HomePage() {
 					<CategoryCard
 						key={cat.name}
 						name={cat.name}
-						slug={cat.slug as string}
-						productCount={cat.productCount as number}
+						slug={cat.slug as string || "#"}
+						productCount={cat.productCount || null}
 						className={cat.className}
 						imageSrc={cat.imageSrc}
 					/>

@@ -4,7 +4,7 @@ import Link from "next/link";
 export interface CategoryCardProps {
     name: string;
     slug: string;
-    productCount: number;
+    productCount: number | null;
     imageSrc: string;
     className?: string; // Prop to adjust layout.
 

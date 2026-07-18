@@ -12,7 +12,7 @@ export function CategorySectionWrapper({
      desktopLimit = 6
     }: WrapperProps) {
 
-    const cards = React.Children.toArray(children);
+    const cards = React.Children.toArray(children); // convert children as array [remove immutablity of child]
     const rows = []
 
     let cardIndex = 0 

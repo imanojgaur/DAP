@@ -40,7 +40,7 @@ export default async function HomePage() {
 
 	// type narrowing 
 	if(Array.isArray(categoriesdbData)){
-		for (let i = 0; i < categoriesCardConfig.length; i++){
+		for (let i = 0; i < categoriesCardConfig.length; i++){ // map cause new array.[no need]
 			const object = categoriesCardConfig[i]
 			object.productCount = categoriesdbData[i].product_count
 			object.slug = categoriesdbData[i].slug

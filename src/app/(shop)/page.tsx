@@ -6,7 +6,7 @@ import { getHomeCategories } from "@/data-sql"
 
 export default async function HomePage() {
 	
-	const categoryNames = [
+	const categoryNames = [ // always looup with sluges: removes typo problem.
 	'Deal Of The Day',
 	'BestSeller',
 	'Balcony Plants',

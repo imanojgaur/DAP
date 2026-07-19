@@ -1,9 +1,10 @@
 import type { CategoryCardProps } from "@/components/home/category-card";
 import { CategorySectionWrapper } from "@/components/home/category-section";
+import { BrandTrustSection } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
 import { generateCardLayout } from "@/components/home/layout-generator";
 import { getHomeCategories } from "@/data-sql"
-
+import { currentYear } from "@/utilities";
 export default async function HomePage() {
 	
 	// 1. Unified Configuration
@@ -43,9 +44,9 @@ export default async function HomePage() {
 	//Nevigation Of Category Layout. 
 	const desktopLayoutPattern = [4, 3]
 	// Left Col sum = 840px | Right Col sum = 840px | Completely unique sizes
-    const mobileRandomImageHeight = [250, 310, 280, 320, 290, 230, 220];
+    const mobileRandomImageHeight = [290, 250, 340, 240, 350, 290, 220];
 	const cardsOnDesktop = 7
-	const cardsOnMobile = 5
+	const cardsOnMobile = 6
 	
 
 	const layout = generateCardLayout(
@@ -55,14 +56,23 @@ export default async function HomePage() {
 		cardsOnDesktop,
 		cardsOnMobile
 	);
-	
+
+	const wrapperProps = {
+		issue: "Issue 01",
+		title: "The Collections",
+		description: "Curated greenery for every lifestyle",
+		publishedYear: `${currentYear}`,
+		location: "DAP Greenhouse HQ",
+		readTime: "1 Min"
+	};
+
 	return (
 		<div className="min-h-screen bg-white">
 			{/* 1. Impact Section */}
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			{categoryCardConfig.length > 0 && ( <CategorySectionWrapper>{layout}</CategorySectionWrapper>
+			{categoryCardConfig.length > 0 && ( <CategorySectionWrapper headerData={wrapperProps}>{layout}</CategorySectionWrapper>
 			)}
 
 			{/* 3. Product Discovery Section */}
@@ -78,23 +88,7 @@ export default async function HomePage() {
 			</section>
 
 			{/* 4. Brand Trust / Editorial Section */}
-			<section className="px-4 pb-20 md:px-8">
-				<div className="bg-black rounded-[2.5rem] p-12 md:p-24 flex flex-col items-center text-center">
-					<h2 className="text-white text-4xl md:text-6xl font-black italic tracking-tighter mb-6 leading-none">
-						FARM TO DOOR. <br /> NO MIDDLEMAN.
-					</h2>
-					<p className="text-gray-400 max-w-xl mb-10 text-lg">
-						We ship our plants directly from our greenhouse to your doorstep. No
-						retail markups, just healthy plants at fair prices.
-					</p>
-					<button
-						type="button"
-						className="bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-gray-200 transition-colors"
-					>
-						Learn Our Process
-					</button>
-				</div>
-			</section>
+             <BrandTrustSection />
 		</div>
 	);
 }

@@ -29,18 +29,18 @@ export function generateCardLayout(
                     const imageHeight = mobileRandomImageHeight[globalIndex % mobileRandomImageHeight.length];
 
                     //handle dangling last card on mobile
-                    const isLastVisibleCard = globalIndex === maxCardOnMobile
-                    const isLastOdd = globalIndex % 2 !== 0
-                    const spanFullColumnOnMobile = isLastVisibleCard && isLastOdd
+                    const isLastVisibleCard = globalIndex === maxCardOnMobile - 1
+                    const isTotalMobileCardOdd = maxCardOnMobile % 2 !== 0
+                    const spanFullColumnOnMobile = isLastVisibleCard && isTotalMobileCardOdd
 
                     // resolve visiblity: desktop and mobile max limits
-                    const ishideOnMobile = globalIndex >= maxCardOnMobile
-                    const ishideOnDesktop = globalIndex >= maxCardOnDesktop
+                    const ishideOnMobile = globalIndex >= maxCardOnMobile 
+                    const ishideOnDesktop = globalIndex >= maxCardOnDesktop 
 
                     let visibilityClasses = "flex";
                     if(ishideOnDesktop && ishideOnMobile) return null; // no render
-                    if(ishideOnDesktop) visibilityClasses = "flex md: hidden"; //  show on mobile
-                    if(ishideOnMobile) visibilityClasses = "hidden md: flex" // show on desktop 
+                    if(ishideOnDesktop) visibilityClasses = "flex md:hidden"; //  show on mobile // never make space in tailwind class "haha"
+                    if(ishideOnMobile) visibilityClasses = "hidden md:flex" // show on desktop 
                     return(
                         <CategoryCard
                         key={data.title}

@@ -43,7 +43,7 @@ export function generateCardLayout(
                     if(ishideOnMobile) visibilityClasses = "hidden md:flex" // show on desktop 
                     return(
                         <CategoryCard
-                        key={data.title}
+                        key={data.slug}
                         title={data.title}
                         subtitle={data.subtitle}
                         callToActionText={data.callToActionText}

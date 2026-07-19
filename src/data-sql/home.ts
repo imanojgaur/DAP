@@ -9,7 +9,7 @@ export interface categoriesData {
     product_count: number
 }
 
-export async function getHomeCategories(categories: string[]){
+export async function getHomeCategories(sluges: string[]){
     try{
         const data = await prisma.$queryRaw<categoriesData[]>`
         SELECT 
@@ -18,7 +18,7 @@ export async function getHomeCategories(categories: string[]){
         CAST(COUNT(jcp."B") AS INTEGER) AS product_count
         FROM categories c
         LEFT JOIN "_CategoryToProduct" jcp ON c.id = jcp."A"
-        WHERE c.name IN (${Prisma.join(categories)})  -- create secure parameter: ($1, $2, $3)
+        WHERE c.slug IN (${Prisma.join(sluges)})  -- create secure parameter: ($1, $2, $3)
         GROUP BY c.id, c.name, c.slug;`;
         console.log(data);
         return data;

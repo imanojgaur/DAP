@@ -6,43 +6,36 @@ import { getHomeCategories } from "@/data-sql"
 
 export default async function HomePage() {
 	
-	const categoryNames = [ // always looup with sluges: removes typo problem.
-	'Deal Of The Day',
-	'BestSeller',
-	'Balcony Plants',
-	'Vastu Plants',
-	'Mood Improving Plants',
-	'Air Purifying Plants',
-	'Indoor Plants'
-	];
-    const categoryImages = [
-	'/home/deal-of-the-day.webp',
-	'/home/best-seller.avif',
-	'/home/balconey5.avif',
-	'/home/vastu.avif',
-	'/home/mood-boosting.avif',
-	'/home/purify2.avif',
-	'/home/indoor-plants.avif'
-	];
+	// 1. Unified Configuration
+    const baseCategoryConfig = [
+        { slug: 'deal-of-the-day', imageSrc: '/home/deal-of-the-day.webp' },
+        { slug: 'plants-1', imageSrc: '/home/best-seller.avif' }, // Tumhara DB slug 'plants-1' hai
+        { slug: 'balcony-plants', imageSrc: '/home/balconey5.avif' },
+        { slug: 'vastu-plants', imageSrc: '/home/vastu.avif' },
+        { slug: 'mood-improving-plants', imageSrc: '/home/mood-boosting.avif' },
+        { slug: 'air-purifying-plants', imageSrc: '/home/purify2.avif' },
+        { slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
+    ];
 
 	// Fetch db 
-	const categoriesdbData = await getHomeCategories(categoryNames);
+	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug)
+	const categoriesdbData = await getHomeCategories(categorySluges);
 
     //create config Object. 
-	const categoryCardConfig: CategoryCardProps[] = categoryNames.map((title, index) => {
+	const categoryCardConfig: CategoryCardProps[] = baseCategoryConfig.map((baseConfigObj) => {
 
 		const matchDBResult  = Array.isArray(categoriesdbData) === true 
-		? categoriesdbData.find((dbPassedObject) => dbPassedObject.name === title)
+		? categoriesdbData.find((dbPassedObject) => dbPassedObject.slug === baseConfigObj.slug)
 		: null;
 
 		return 	{
-			title: title,
+			title: matchDBResult?.name || "Premium Product",
 			subtitle: matchDBResult?.product_count ? 
 			`Explore ${matchDBResult.product_count} Varities`
 			: `Explore Collections`,
 			callToActionText: 'Shop Now',
 			slug: matchDBResult?.slug? matchDBResult.slug: '#',
-			imageSrc: categoryImages[index],
+			imageSrc: baseConfigObj.imageSrc,
 			className: ""//for dynamic card: make another array..
 		}
 	});

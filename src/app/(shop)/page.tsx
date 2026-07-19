@@ -7,7 +7,7 @@ import { getHomeCategories } from "@/data-sql"
 export default async function HomePage() {
 	
 	const categoryNames = [
-	'Deal of The Day',
+	'Deal Of The Day',
 	'BestSeller',
 	'Balcony Plants',
 	'Vastu Plants',

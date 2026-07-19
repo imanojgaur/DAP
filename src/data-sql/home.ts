@@ -4,6 +4,7 @@ import { Prisma } from "../../generated/prisma/client"
 
 //cooling down <T = unknown> 
 export interface categoriesData {
+    name: string
     slug: string
     product_count: number
 }
@@ -12,6 +13,7 @@ export async function getHomeCategories(categories: string[]){
     try{
         const data = await prisma.$queryRaw<categoriesData[]>`
         SELECT 
+        c.name,
         c.slug, 
         CAST(COUNT(jcp."B") AS INTEGER) AS product_count
         FROM categories c

@@ -31,15 +31,17 @@ export default async function HomePage() {
     //create config Object. 
 	const categoryCardConfig: CategoryCardProps[] = categoryNames.map((title, index) => {
 
-		const dbItem = Array.isArray(categoriesdbData) === true ? categoriesdbData[index] : null;
+		const matchDBResult  = Array.isArray(categoriesdbData) === true 
+		? categoriesdbData.find((dbPassedObject) => dbPassedObject.name === title)
+		: null;
 
 		return 	{
 			title: title,
-			subtitle: dbItem?.product_count ? 
-			`Explore ${dbItem.product_count} Varities`
+			subtitle: matchDBResult?.product_count ? 
+			`Explore ${matchDBResult.product_count} Varities`
 			: `Explore Collections`,
 			callToActionText: 'Shop Now',
-			slug: dbItem?.slug? dbItem.slug: '#',
+			slug: matchDBResult?.slug? matchDBResult.slug: '#',
 			imageSrc: categoryImages[index],
 			className: ""//for dynamic card: make another array..
 		}

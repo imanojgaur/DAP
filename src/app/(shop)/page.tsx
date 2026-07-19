@@ -45,8 +45,10 @@ export default async function HomePage() {
 		}
 	});
 	
+	//Nevigation Of Category Layout. 
 	const desktopLayoutPattern = [4, 3]
-	const mobileRandomImageHeight = [290, 300, 249, 300, 600, 200, 300]
+	// Left Col sum = 840px | Right Col sum = 840px | Completely unique sizes
+    const mobileRandomImageHeight = [250, 310, 280, 320, 290, 230, 220];
 	const cardsOnDesktop = 7
 	const cardsOnMobile = 5
 	

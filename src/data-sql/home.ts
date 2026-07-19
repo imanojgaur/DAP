@@ -14,7 +14,6 @@ export async function getHomeCategories(categories: string[]){
         const data = await prisma.$queryRaw<categoriesData[]>`
         SELECT 
         c.slug, 
-        c.name, 
         COUNT(jcp."A") OVER(PARTITION BY c.slug) AS product_count
         FROM categories c
         INNER JOIN "_CategoryToProduct" jcp ON c.id = jcp."A"

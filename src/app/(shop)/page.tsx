@@ -1,55 +1,63 @@
+import type { CategoryCardProps } from "@/components/home/category-card";
 import { CategorySectionWrapper } from "@/components/home/category-section";
-import { CategoryCard } from "@/components/home/category-card";
 import { HomeHero } from "@/components/home/hero";
+import { generateCardLayout } from "@/components/home/layout-generator";
 import { getHomeCategories } from "@/data-sql"
-
-export interface CategoryCardData {
-    name: string;
-    slug?: string;
-    productCount?: number | null;
-    imageSrc: string;
-    className?: string; // Prop to adjust layout.
-}
 
 export default async function HomePage() {
 	
-	const categoriesCardConfig: CategoryCardData[] = [
-		{name: 'Deal of The Day', imageSrc: '/home/deal-of-the-day.webp', className: ''},
-		{name: 'BestSeller', imageSrc: '/home/best-seller.avif', className: ''},
-        {name: 'Balcony Plants', imageSrc: '/home/balconey5.avif', className: ''},
-		{name: 'Vastu Plants', imageSrc: '/home/vastu.avif', className: ''},
-		{name: 'Mood Improving Plants', imageSrc: '/home/mood-boosting.avif'},
-		{name: 'Air Purifying Plants', imageSrc: '/home/purify2.avif', className: ''},
-		{name: 'Indoor Plants', imageSrc: '/home/indoor-plants.avif', className: '',},
-		{name: 'Living Room Plants', imageSrc: '/home/living-room4.avif', className: ''},
-		{name: 'Office Plants', imageSrc: '/home/office-plants.avif', className: '',},
-	]
+	const categoryNames = [
+	'Deal of The Day',
+	'BestSeller',
+	'Balcony Plants',
+	'Vastu Plants',
+	'Mood Improving Plants',
+	'Air Purifying Plants',
+	'Indoor Plants'
+	];
+    const categoryImages = [
+	'/home/deal-of-the-day.webp',
+	'/home/best-seller.avif',
+	'/home/balconey5.avif',
+	'/home/vastu.avif',
+	'/home/mood-boosting.avif',
+	'/home/purify2.avif',
+	'/home/indoor-plants.avif'
+	];
 
 	// Fetch db 
-	const categoriesdbData = await getHomeCategories([
-		categoriesCardConfig[0].name,
-		 categoriesCardConfig[1].name,
-		  categoriesCardConfig[2].name,
-		   categoriesCardConfig[3].name,
-		   categoriesCardConfig[4].name,
-		   categoriesCardConfig[5].name,
-		   categoriesCardConfig[6].name,
-		   categoriesCardConfig[7].name,
-		   categoriesCardConfig[8].name,
-		]);
+	const categoriesdbData = await getHomeCategories(categoryNames);
 
-	// type narrowing 
-	if(Array.isArray(categoriesdbData)){
-		for (let i = 0; i < categoriesCardConfig.length; i++){ // map cause new array.[no need]
-			const object = categoriesCardConfig[i]
-			object.productCount = categoriesdbData[i].product_count 
-			object.slug = categoriesdbData[i].slug
+    //create config Object. 
+	const categoryCardConfig: CategoryCardProps[] = categoryNames.map((title, index) => {
+
+		const dbItem = Array.isArray(categoriesdbData) === true ? categoriesdbData[index] : null;
+
+		return 	{
+			title: title,
+			subtitle: dbItem?.product_count ? 
+			`Explore ${dbItem.product_count} Varities`
+			: `Explore Collections`,
+			callToActionText: 'Shop Now',
+			slug: dbItem?.slug? dbItem.slug: '#',
+			imageSrc: categoryImages[index],
+			className: ""//for dynamic card: make another array..
 		}
-	}
-	// } else {
-		// return <div>{categoriesdbData.message}</div>
-		// notFound() // pending
-	// }
+	});
+	
+	const desktopLayoutPattern = [4, 3]
+	const mobileRandomImageHeight = [290, 300, 249, 300, 600, 200, 300]
+	const cardsOnDesktop = 7
+	const cardsOnMobile = 5
+	
+
+	const layout = generateCardLayout(
+		categoryCardConfig,
+		desktopLayoutPattern,
+		mobileRandomImageHeight,
+		cardsOnDesktop,
+		cardsOnMobile
+	);
 	
 	return (
 		<div className="min-h-screen bg-white">
@@ -57,22 +65,8 @@ export default async function HomePage() {
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			
-			<CategorySectionWrapper 
-			layoutPattern={[4, 3]} // {/* cards in a row = value at index, total rows = array length(exception total cat > total val) */}
-			desktopLimit={7}       // no. of cards desktop display
-			>
-				{categoriesCardConfig.map((cat) => (
-					<CategoryCard
-						key={cat.name}
-						name={cat.name}
-						slug={cat.slug as string || "#"}
-						productCount={cat.productCount || null}
-						className={cat.className}
-						imageSrc={cat.imageSrc}
-					/>
-				))}
-				</CategorySectionWrapper>
+			{categoryCardConfig.length > 0 && ( <CategorySectionWrapper>{layout}</CategorySectionWrapper>
+			)}
 
 			{/* 3. Product Discovery Section */}
 			<section className="max-w-7xl mx-auto px-4 py-20">
@@ -84,8 +78,6 @@ export default async function HomePage() {
 						<p className="text-gray-500">Fresh greenery for your collection.</p>
 					</div>
 				</div>
-
-				{/* <FeaturedProducts /> */}
 			</section>
 
 			{/* 4. Brand Trust / Editorial Section */}

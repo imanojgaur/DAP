@@ -1,10 +1,10 @@
 // engine 1: Can generate layout pattern. 
 // Give the props
 
-import { CategoryCard, type CategoryCardProps } from "./category-card";
+import { GlobalRoundEdgeCard, type GlobalRoundEdgeCardProps } from "./global-round-edge-card";
 
 export function generateCardLayout(
-    categorydataArray: CategoryCardProps[], 
+    categorydataArray: GlobalRoundEdgeCardProps[], 
     cardPerRowPattern: number[],
     mobileRandomImageHeight: number[], 
     maxCardOnDesktop: number,
@@ -42,7 +42,7 @@ export function generateCardLayout(
                     if(ishideOnDesktop) visibilityClasses = "flex md:hidden"; //  show on mobile // never make space in tailwind class "haha"
                     if(ishideOnMobile) visibilityClasses = "hidden md:flex" // show on desktop 
                     return(
-                        <CategoryCard
+                        <GlobalRoundEdgeCard
                         key={data.slug}
                         title={data.title}
                         subtitle={data.subtitle}

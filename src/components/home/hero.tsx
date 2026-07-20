@@ -16,7 +16,7 @@ const HERO_SLIDES = [
     { src: "/home/hero/hero-5.2.avif", category: "Golden Sunlight" }
 ];
 
-const TIMER_DURATION = 2500;
+const TIMER_DURATION = 2000;
 
 export function HomeHero() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -42,7 +42,7 @@ export function HomeHero() {
                         fill
                         priority={index === 0}
                         className={`
-                            object-cover transition-all duration-[1500ms] ease-in-out z-0
+                            object-cover transition-all duration-[1250ms] ease-in-out z-0
                             ${index === currentImageIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"}
                         `}
                     />

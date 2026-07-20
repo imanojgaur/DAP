@@ -60,6 +60,7 @@ export default async function HomePage() {
 		title: "The Collections",
 		description: "Curated greenery for every lifestyle",
 		subtitle: "Rare & Handpicked Botanicals",
+		hideSubtitleOnMobile: true,
     };
 
 	return (

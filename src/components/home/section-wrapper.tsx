@@ -20,7 +20,7 @@ export interface HeaderData {
 export function SectionWrapper({ 
     children, 
     headerData,
-    metaData = [] 
+    metaData = []
 }: { 
     children: React.ReactNode;
     headerData?: HeaderData; 
@@ -28,10 +28,18 @@ export function SectionWrapper({
 }) { 
     const hasMetaData = metaData && metaData.length > 0;
 
-    let subtitleVisClass = "flex items-center gap-2 bg-emerald-50/50 border border-emerald-100 w-fit px-3 py-1.5 rounded-full";
-    if (headerData?.hideSubtitleOnMobile) subtitleVisClass += " hidden md:flex";
-    else if (headerData?.hideSubtitleOnDesktop) subtitleVisClass += " flex md:hidden";
-    else subtitleVisClass += " flex"; 
+    // BUG FIX 1: Properly handling when BOTH mobile and desktop are hidden
+    let subtitleVisClass = "items-center gap-2 bg-emerald-50/50 border border-emerald-100 w-fit px-3 py-1.5 rounded-full";
+    
+    if (headerData?.hideSubtitleOnMobile && headerData?.hideSubtitleOnDesktop) {
+        subtitleVisClass += " hidden"; // Completely hide everywhere
+    } else if (headerData?.hideSubtitleOnMobile) {
+        subtitleVisClass += " hidden md:flex";
+    } else if (headerData?.hideSubtitleOnDesktop) {
+        subtitleVisClass += " flex md:hidden";
+    } else {
+        subtitleVisClass += " flex"; 
+    }
 
     const SubtitleBadge = () => (
         <div className={subtitleVisClass}>
@@ -46,14 +54,14 @@ export function SectionWrapper({
     );
 
     return (
-      
-        <section className="relative w-full max-w-[1600px] mx-auto px-4 md:px-8 pt-8 pb-12 overflow-hidden">
+        <section className="relative w-full max-w-[1600px] mx-auto px-4 md:px-8 pt-6 pb-0 overflow-hidden">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-3xl opacity-50 -z-10 pointer-events-none" />
 
-            <div className="group flex flex-col md:flex-row md:items-end justify-between mb-5 border-b border-gray-200 pb-4 cursor-default">
+            <div className="group flex flex-col md:flex-row md:items-end justify-between mb-3 border-b border-gray-200 pb-4 cursor-default">
                 
                 <div className="flex flex-col max-w-2xl">
                     
+                    {/* BUG FIX 2: Removed '!', it should only render on LEFT if hasMetaData is TRUE */}
                     {headerData?.subtitle && hasMetaData && (
                         <div className="mb-3">
                             <SubtitleBadge />
@@ -77,20 +85,26 @@ export function SectionWrapper({
                     )}
                 </div>
                 
-                <div className="flex flex-col items-start md:items-end text-left md:text-right mt-4 md:mt-0 gap-1.5 transition-transform duration-1000 delay-300 ease-out group-hover:delay-0 group-hover:duration-500 group-hover:-translate-x-2">
+                <div className={`
+                    flex transition-transform duration-1000 delay-300 ease-out group-hover:delay-0 group-hover:duration-500 group-hover:-translate-x-2
+                    ${hasMetaData 
+                        ? 'flex-row justify-between w-full mt-2 pt-2  border-gray-200 md:flex-col md:items-end md:w-auto md:mt-0 md:pt-0 md:border-none gap-2 md:gap-1.5' 
+                        : 'flex-col items-start md:items-end mt-4 md:mt-0 gap-1.5'}
+                `}>
                     
                     {hasMetaData ? (
-                        metaData.map((item, index) => {
+                        metaData.map((item) => {
                             if (item.hideOnMobile && item.hideOnDesktop) return null;
 
-                            let rowVisClass = "flex items-center gap-2";
+                            let rowVisClass = "flex flex-col items-start md:flex-row md:items-center gap-0.5 md:gap-2";
                             if (item.hideOnMobile) rowVisClass += " hidden md:flex";
                             if (item.hideOnDesktop) rowVisClass += " flex md:hidden";
 
                             return (
                                 <div key={item.label} className={rowVisClass}>
                                     <span className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest">
-                                        {item.label}:
+                                        {item.label}
+                                        <span className="hidden md:inline">:</span>
                                     </span>
                                     
                                     <span className={`text-[10px] md:text-xs font-bold uppercase tracking-widest flex items-center ${item.effect === 'emerald-text' || item.effect === 'emerald-badge' ? 'text-emerald-600' : 'text-gray-600'}`}>
@@ -105,12 +119,13 @@ export function SectionWrapper({
                             );
                         })
                     ) : (
+                        // If there is no MetaData, Subtitle automatically takes this Right spot!
                         headerData?.subtitle && <SubtitleBadge />
                     )}
                 </div>
             </div>
 
-            <div className="columns-2 gap-3 md:columns-1 md:flex md:flex-col md:gap-5 w-full relative z-10">
+            <div className="flex flex-row overflow md:columns-1 md:flex md:flex-col md:gap-5 w-full relative z-10">
                 {children}
             </div>
         </section>

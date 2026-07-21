@@ -30,7 +30,7 @@ export function HomeHero() {
     }, []);
 
     return (
-        <section className="px-4 pt-4 md:px-8 md:pt-8">
+        <section className="px-4 pt-4 md:px-8 md:pt-8 pb-6">
             <div className="relative w-full h-[85vh] md:h-[90vh] rounded-[2rem] md:rounded-[3rem] overflow-hidden group bg-black">
                 
                 {/* 1. CINEMATIC CROSSFADE BACKGROUNDS */}

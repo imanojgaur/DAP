@@ -32,7 +32,7 @@ export function GlobalRoundEdgeCard({
                 /* 
                   SHARP EDGE FIX: 
                   z-10 aur hover:z-50 se card hamesha baaki cards ke upar aayega 
-                  transform-gpu ensure karega ki border-radius render break na ho.
+                  transform-gpu ensure no breaking of border radious. 
                 */
                 group relative z-10 hover:z-50 transform-gpu overflow-hidden break-inside-avoid w-full 
                 bg-gray-900 flex-col justify-end p-5 md:p-8 

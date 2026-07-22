@@ -121,11 +121,14 @@ export default async function HomePage() {
 			{/* 3. Product Discovery Section */}
 
 			{/* 4. Brand Trust / Editorial Section */}
-            <EditorialLayout 
-			EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA}
+			<SectionWrapper 			
 			headerData={headerData}
-			headerMetaData={metaData}
-			 />
+			metaData={metaData}
+		    >
+				<EditorialLayout 
+				EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA}
+				/>
+			</SectionWrapper>
 		</div>
 	);
 }

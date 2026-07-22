@@ -1,4 +1,3 @@
-import { type MetaDataItem, type HeaderData, SectionWrapper} from "@/components/home/section-wrapper";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -33,61 +32,55 @@ export type EDITORIAL_CARDS_PROPS = EditorialHeroProps | MinimalistProps | Guara
 
 export function EditorialLayout({
     EDITORIAL_CARDS_DATA, 
-    headerData, 
-    headerMetaData = []
 }:{
     EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[],
-    headerData: HeaderData,
-    headerMetaData: MetaDataItem[]
 }
 ) {
     return (
-        <SectionWrapper headerData={headerData} metaData={headerMetaData}>
 
-            <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory md:auto-rows-[250px] pb-6 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                
-                {EDITORIAL_CARDS_DATA.map((card) => {
-                    if (card.type === "hero") {
-                        return (
-                            <EditorialHero 
-                            key={card.type}
-                            id={card.id}
-                            title={card.title}
-                            subtitle={card.subtitle}
-                            description={card.description}
-                            linkHref={card.linkHref}
-                            linkText={card.linkText}
-                            layoutClasses={card.layoutClasses}
-                            />
-                        );
-                    }
-                    
-                    if (card.type === "minimalist") {
-                        return (
-                            <Minimalist
-                            key={card.type}
-                            id={card.id}
-                            title={card.title}
-                            subtitle={card.subtitle}
-                            description={card.subtitle}
-                            layoutClasses={card.layoutClasses}
-                            />
-                        );
-                    }
-                    
+        <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory md:auto-rows-[250px] pb-6 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            
+            {EDITORIAL_CARDS_DATA.map((card) => {
+                if (card.type === "hero") {
                     return (
-                        <GuaranteeCard
+                        <EditorialHero 
                         key={card.type}
                         id={card.id}
                         title={card.title}
-                        description={card.description}
                         subtitle={card.subtitle}
+                        description={card.description}
+                        linkHref={card.linkHref}
+                        linkText={card.linkText}
                         layoutClasses={card.layoutClasses}
                         />
                     );
-                })}
-            </div>
-    </SectionWrapper>
+                }
+                
+                if (card.type === "minimalist") {
+                    return (
+                        <Minimalist
+                        key={card.type}
+                        id={card.id}
+                        title={card.title}
+                        subtitle={card.subtitle}
+                        description={card.subtitle}
+                        layoutClasses={card.layoutClasses}
+                        />
+                    );
+                }
+                
+                return (
+                    <GuaranteeCard
+                    key={card.type}
+                    id={card.id}
+                    title={card.title}
+                    description={card.description}
+                    subtitle={card.subtitle}
+                    layoutClasses={card.layoutClasses}
+                    />
+                );
+            })}
+        </div>
     );
 }
 

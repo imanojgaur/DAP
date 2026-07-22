@@ -34,6 +34,7 @@ export function GlobalRoundEdgeCard({
                   z-10 aur hover:z-50 se card hamesha baaki cards ke upar aayega 
                   transform-gpu ensure no breaking of border radious. 
                 */
+                shrink-0 snap-center min-w-[75vw] md:min-w-[400px]
                 group relative z-10 hover:z-50 transform-gpu overflow-hidden break-inside-avoid w-full 
                 bg-gray-900 flex-col justify-end p-5 md:p-8 
                 mb-3 md:mb-0 rounded-[1.5rem] md:rounded-[2.5rem] 

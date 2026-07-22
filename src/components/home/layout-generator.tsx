@@ -1,32 +1,39 @@
-// engine 1: Can generate layout pattern. 
-// Give the props
-
+// engine 1: Generate Desirable rows and no.of card each row
 import { GlobalRoundEdgeCard, type GlobalRoundEdgeCardProps } from "./global-round-edge-card";
 
-export function generateCardLayout(
-    categorydataArray: GlobalRoundEdgeCardProps[], 
-    cardPerRowPattern: number[],
-    mobileRandomImageHeight: number[], 
+interface GenerateCardLayoutProps{
+    categoryDataArray: GlobalRoundEdgeCardProps[], 
     maxCardOnDesktop: number,
-    maxCardOnMobile: number
-){
+    maxCardOnMobile: number,
+    desktopLayoutPattern: number[],
+    mobileRandomImageHeight?: number[]
+}
+
+
+export function generateCardLayout({
+    categoryDataArray,
+    maxCardOnDesktop,
+    maxCardOnMobile,
+    desktopLayoutPattern,
+    mobileRandomImageHeight,
+}: GenerateCardLayoutProps){
     
     const generateMaxCard = Math.max(maxCardOnDesktop, maxCardOnMobile);
-    const maxCardData = categorydataArray.slice(0, generateMaxCard);
+    const maxCardData = categoryDataArray.slice(0, generateMaxCard);
     
     let renderIndexStart = 0
-    return cardPerRowPattern.map((cardInThisRow, rowIndex) => {
+    return desktopLayoutPattern.map((cardInThisRow, rowIndex) => {
         const renderCardsInThisRow = maxCardData.slice(renderIndexStart, cardInThisRow + renderIndexStart);
         if (renderCardsInThisRow.length === 0) return null;     
         const renderRows = (
             <div 
                 key={`desktop-row-${cardInThisRow}`} 
                 // 'contents' allows mobile masonry to ignore this wrapper div.
-                className="contents md:flex md:flex-row md:gap-6 w-full"
+                className="flex flex-row md:flex md:flex-row md:gap-6 w-full"
             >
                 {renderCardsInThisRow.map((data, index) =>{
                     const globalIndex = renderIndexStart + index;
-                    const imageHeight = mobileRandomImageHeight[globalIndex % mobileRandomImageHeight.length];
+                    const imageHeight = mobileRandomImageHeight? mobileRandomImageHeight[globalIndex % mobileRandomImageHeight.length]: undefined;
 
                     //handle dangling last card on mobile
                     const isLastVisibleCard = globalIndex === maxCardOnMobile - 1

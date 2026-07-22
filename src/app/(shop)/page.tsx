@@ -8,7 +8,7 @@ import { currentYear } from "@/utilities";
 
 export default async function HomePage() {
 	
-	// 1. Unified Configuration
+	// 1. Category Base Configuration
     const baseCategoryConfig = [
         { slug: 'deal-of-the-day', imageSrc: '/home/deal-of-the-day.webp' },
         { slug: 'plants-1', imageSrc: '/home/best-seller.avif' }, 
@@ -19,11 +19,11 @@ export default async function HomePage() {
         { slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
     ];
 
-	// Fetch db 
+	// Fetch db for Categories
 	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug)
 	const categoriesdbData = await getHomeCategories(categorySluges);
 
-    //create config Object. 
+    //create category config Object. 
 	const categoryCardConfig: GlobalRoundEdgeCardProps[] = baseCategoryConfig.map((baseConfigObj) => {
 
 		const matchDBResult  = Array.isArray(categoriesdbData) === true 
@@ -42,20 +42,14 @@ export default async function HomePage() {
 		}
 	});
 	
-	//Nevigation Of Category Layout. 
-	const desktopLayoutPattern = [4,3]
-    const mobileRandomImageHeight = [290, 250, 340, 240, 350, 290, 220]; // Left Col sum = 840px | Right Col sum = 840px | Completely unique sizes
-	const cardsOnDesktop = 7
-	const cardsOnMobile = 6
-	
-
-	const layout = generateCardLayout(
-		categoryCardConfig,
-		desktopLayoutPattern,
-		mobileRandomImageHeight,
-		cardsOnDesktop,
-		cardsOnMobile
-	);
+	//category layout nevigation 
+	const layout = generateCardLayout({
+		categoryDataArray: categoryCardConfig,
+		desktopLayoutPattern: [7],
+    	mobileRandomImageHeight: [290, 250, 340, 240, 350, 290, 220], // Left Col sum = 840px | Right Col sum = 840px | Completely unique sizes | masory pattern
+		maxCardOnDesktop: 7,
+		maxCardOnMobile: 7
+	});
 
 	const categoryHeaderData: HeaderData = {
 		title: "The Collections",
@@ -65,6 +59,16 @@ export default async function HomePage() {
 		hideSubtitleOnDesktop: true,
     };
 
+	//Editorial Config
+	const headerData: HeaderData = {
+		title: 'The Promise'	
+	}
+	const metaData: MetaDataItem[] = [
+			{label: 'Location', badgeText: 'DAP', value: 'GreenHouse HQ'},
+			{label: 'Year', value: `${currentYear}`},
+			{label: 'Read Time', value: '1 Min'}
+		]
+	
 	const EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[] = [
 		{
 			id: "manifesto",
@@ -93,17 +97,6 @@ export default async function HomePage() {
 			description: "Hand-inspected before shipping. Doesn't arrive happy? We replace it instantly. No questions asked."
 		}
 	];
-	
-	
-	const headerData: HeaderData = {
-			title: 'The Promise'	
-		}
-	const metaData: MetaDataItem[] = [
-			{label: 'Location', badgeText: 'DAP', value: 'GreenHouse HQ'},
-			{label: 'Year', value: `${currentYear}`},
-			{label: 'Read Time', value: '1 Min'}
-		]
-	
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -113,7 +106,7 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			{categoryCardConfig.length > 0 && 
 			( <SectionWrapper headerData={categoryHeaderData}>
-				<div className="flex md:flex-col gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-6 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+				<div>
                    {layout}
                 </div>
 			 </SectionWrapper>)}
@@ -125,9 +118,9 @@ export default async function HomePage() {
 			headerData={headerData}
 			metaData={metaData}
 		    >
-				<EditorialLayout 
-				EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA}
-				/>
+			<EditorialLayout 
+			EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA}
+			/>
 			</SectionWrapper>
 		</div>
 	);

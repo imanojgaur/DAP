@@ -38,7 +38,7 @@ export function EditorialLayout({
 ) {
     return (
 
-        <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory md:auto-rows-[250px] pb-6 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div >
             
             {EDITORIAL_CARDS_DATA.map((card) => {
                 if (card.type === "hero") {

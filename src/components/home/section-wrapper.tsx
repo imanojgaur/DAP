@@ -1,3 +1,4 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
 export type MetaDataEffect = 'default' | 'emerald-text' | 'emerald-badge';
 
 export interface MetaDataItem {
@@ -22,7 +23,7 @@ export function SectionWrapper({
     headerData,
     metaData = []
 }: { 
-    children: React.ReactNode;
+    children?: React.ReactNode;
     headerData?: HeaderData; 
     metaData?: MetaDataItem[];
 }) { 
@@ -124,9 +125,11 @@ export function SectionWrapper({
                     )}
                 </div>
             </div>
-
-            <div className="flex flex-row overflow md:columns-1 md:flex md:flex-col md:gap-5 w-full relative z-10">
+            
+            <div className="flex flex-row overflow-x-auto snap-x snap-mendatory no-scrollbar">
+            <ChevronLeft className="flex"/>
                 {children}
+            <ChevronRight className="flex bg-blue rounded"/>
             </div>
         </section>
     );

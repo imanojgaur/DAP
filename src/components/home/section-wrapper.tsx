@@ -16,6 +16,8 @@ export interface HeaderData {
     subtitle?: string;
     hideSubtitleOnMobile?: boolean;
     hideSubtitleOnDesktop?: boolean;
+    headerLayoutClass?: string;
+    bodyLayoutClass?: string;
 }
 
 export function SectionWrapper({ 
@@ -55,10 +57,10 @@ export function SectionWrapper({
     );
 
     return (
-        <section className="relative w-full max-w-[1600px] mx-auto px-4 md:px-8 pt-6 pb-0 overflow-hidden">
+        <section className={`relative w-full max-w-[1600px] ${headerData?.bodyLayoutClass} foverflow-hidden`}>
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-3xl opacity-50 -z-10 pointer-events-none" />
 
-            <div className="group flex flex-col md:flex-row md:items-end justify-between mb-3 border-b border-gray-200 pb-4 cursor-default">
+            <div className={`group flex flex-col md:flex-row md:items-end justify-between mb-3 border-b border-gray-200 pb-4 cursor-default ${headerData?.headerLayoutClass}`}>
                 
                 <div className="flex flex-col max-w-2xl">
                     
@@ -126,10 +128,8 @@ export function SectionWrapper({
                 </div>
             </div>
             
-            <div className="flex flex-row overflow-x-auto snap-x snap-mendatory no-scrollbar">
-            <ChevronLeft className="flex"/>
+            <div>
                 {children}
-            <ChevronRight className="flex bg-blue rounded"/>
             </div>
         </section>
     );

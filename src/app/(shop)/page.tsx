@@ -57,14 +57,15 @@ export default async function HomePage() {
 		subtitle: "Rare & Handpicked Botanicals",
 		hideSubtitleOnMobile: true,
 		hideSubtitleOnDesktop: true,
-		bodyLayoutClass: 'mt-6',
-		headerLayoutClass: 'md:px-8 md:pt-6'
+		bodyLayoutClass: 'mb-5 md:mb-0 mt-6',
+		headerLayoutClass: 'px-5 md:px-8 md:pt-6'
     };
 
 	//Editorial Config
 	const headerData: HeaderData = {
 		title: 'The Promise',	
-		bodyLayoutClass: 'md:pt-7 md:px-10 md:pb-11',
+		bodyLayoutClass: 'mt-8 md:mt-0 pt-4 md:pt-7 md:px-7 md:pb-11',
+		headerLayoutClass: 'px-5 md:px-0'
 	}
 	const metaData: MetaDataItem[] = [
 			{label: 'Location', badgeText: 'DAP', value: 'GreenHouse HQ'},

@@ -57,11 +57,14 @@ export default async function HomePage() {
 		subtitle: "Rare & Handpicked Botanicals",
 		hideSubtitleOnMobile: true,
 		hideSubtitleOnDesktop: true,
+		bodyLayoutClass: 'mt-6',
+		headerLayoutClass: 'md:px-8 md:pt-6'
     };
 
 	//Editorial Config
 	const headerData: HeaderData = {
-		title: 'The Promise'	
+		title: 'The Promise',	
+		bodyLayoutClass: 'md:pt-7 md:px-10 md:pb-11',
 	}
 	const metaData: MetaDataItem[] = [
 			{label: 'Location', badgeText: 'DAP', value: 'GreenHouse HQ'},
@@ -73,7 +76,7 @@ export default async function HomePage() {
 		{
 			id: "manifesto",
 			type: "hero",
-			layoutClasses: "min-w-[85vw] shrink-0 snap-center md:min-w-0 col-span-2 row-span-2 md:col-span-2 md:row-span-2 min-h-[450px] md:min-h-full", 
+			layoutClasses: "md:min-w-0 col-span-2 row-span-2 md:col-span-2 md:row-span-2 min-h-[450px] md:min-h-full", 
 			title: "FARM TO DOOR. NO MIDDLEMAN.",
 			subtitle: "Direct from Source",
 			description: "We ship our plants directly from our climate-controlled greenhouses to your doorstep. No retail markups, no transit stress—just vibrant, healthy greenery at fair prices.",
@@ -83,7 +86,7 @@ export default async function HomePage() {
 		{
 			id: "metrics",
 			type: "minimalist",
-			layoutClasses: "min-w-[70vw] shrink-0 snap-center md:min-w-0 col-span-1 row-span-1 md:col-span-1 bg-gray-100 hover:bg-gray-200 text-black",
+			layoutClasses: "md:min-w-0 col-span-1 row-span-1 md:col-span-1 bg-gray-100 hover:bg-gray-200 text-black",
 			title: "0%",
 			subtitle: "Retail Markups",
 			description: "Zero middlemen means we invest margins back into soil quality and careful packaging."
@@ -91,7 +94,7 @@ export default async function HomePage() {
 		{
 			id: "guarantee",
 			type: "led-glow",
-			layoutClasses: "min-w-[75vw] shrink-0 snap-center md:min-w-0 col-span-1 row-span-1 md:col-span-1 bg-emerald-950/80 border border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.15)] hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]",
+			layoutClasses: "md:min-w-0 col-span-1 row-span-1 md:col-span-1 bg-emerald-950/80 border border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.15)] hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]",
 			title: "30-Day",
 			subtitle: "Ironclad Guarantee",
 			description: "Hand-inspected before shipping. Doesn't arrive happy? We replace it instantly. No questions asked."
@@ -106,21 +109,18 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			{categoryCardConfig.length > 0 && 
 			( <SectionWrapper headerData={categoryHeaderData}>
-				<div>
-                   {layout}
-                </div>
-			 </SectionWrapper>)}
-
+				{layout}
+			</SectionWrapper>)}
 			{/* 3. Product Discovery Section */}
 
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper 			
 			headerData={headerData}
 			metaData={metaData}
-		    >
-			<EditorialLayout 
-			EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA}
-			/>
+			>
+				<EditorialLayout 
+				EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA}
+				/>
 			</SectionWrapper>
 		</div>
 	);

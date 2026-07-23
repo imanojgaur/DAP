@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export interface GuaranteeCardProps{
     id: string, 
-    type?: 'led-glow',
+    type: 'led-glow',
     layoutClasses?: string, 
     title: string,
     subtitle: string,
@@ -11,7 +11,7 @@ export interface GuaranteeCardProps{
 }
 export interface MinimalistProps{
     id: string,
-    type?: "minimalist",
+    type: "minimalist",
     layoutClasses: string,
     title: string,
     subtitle: string,
@@ -19,7 +19,7 @@ export interface MinimalistProps{
 }
 export interface EditorialHeroProps{
     id: string, 
-    type?: 'hero',
+    type: 'hero',
     layoutClasses?: string,
     subtitle: string, 
     title: string, 
@@ -32,62 +32,91 @@ export type EDITORIAL_CARDS_PROPS = EditorialHeroProps | MinimalistProps | Guara
 
 export function EditorialLayout({
     EDITORIAL_CARDS_DATA, 
-}:{
+}: {
     EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[],
-}
-) {
+}) {
     return (
+        <div className="w-full">
 
-        <div >
-            
-            {EDITORIAL_CARDS_DATA.map((card) => {
-                if (card.type === "hero") {
+            <div className="flex md:hidden flex-row overflow-x-auto gap-1 snap-x snap-mandatory no-scrollbar pb-6 pt-6 px-2 w-full">
+                {EDITORIAL_CARDS_DATA.map((card) => {
+                    if (card.type === "hero") {
+                        return (
+                            <EditorialHero 
+                                key={card.id}
+                                {...card}
+                                // w-[94vw] makes it almost touch the screen edges
+                                layoutClasses={`${card.layoutClasses || ''} w-[93vw] shrink-0 snap-center rounded-sm`}
+                            />
+                        );
+                    }
+                    if (card.type === "minimalist") {
+                        return (
+                            <Minimalist
+                                key={card.id}
+                                {...card}
+                                description={card.description} 
+                                layoutClasses={`${card.layoutClasses || ''} w-[93vw] shrink-0 snap-center rounded-sm`}
+                            />
+                        );
+                    }
                     return (
-                        <EditorialHero 
-                        key={card.type}
-                        id={card.id}
-                        title={card.title}
-                        subtitle={card.subtitle}
-                        description={card.description}
-                        linkHref={card.linkHref}
-                        linkText={card.linkText}
-                        layoutClasses={card.layoutClasses}
+                        <GuaranteeCard
+                            key={card.id}
+                            {...card}
+                            layoutClasses={`${card.layoutClasses || ''} w-[93vw] shrink-0 snap-center rounded-sm`}
                         />
                     );
-                }
+                })}
                 
-                if (card.type === "minimalist") {
+                {/*gap right edge */}
+                <div className="w-2 shrink-0"></div>
+            </div>
+
+            {/* 
+               💻 DESKTOP VIEW: 
+               - Added 'grid-rows-2' to strictly enforce vertical gap
+               - Added 'gap-6' which gives exactly 24px space everywhere 
+            */}
+            <div className="hidden md:grid grid-cols-3 grid-rows-2 gap-0 w-full">
+                {EDITORIAL_CARDS_DATA.map((card) => {
+                    if (card.type === "hero") {
+                        return (
+                            <EditorialHero 
+                                key={card.id}
+                                {...card}
+                                layoutClasses={`${card.layoutClasses || ''} col-span-2 row-span-2 min-h-[500px] `}
+                            />
+                        );
+                    }
+                    
+                    if (card.type === "minimalist") {
+                        return (
+                            <Minimalist
+                                key={card.id}
+                                {...card}
+                                description={card.description}
+                                layoutClasses={`${card.layoutClasses || ''} col-span-1 row-span-1 min-h-[240px] `}
+                            />
+                        );
+                    }
+                    
                     return (
-                        <Minimalist
-                        key={card.type}
-                        id={card.id}
-                        title={card.title}
-                        subtitle={card.subtitle}
-                        description={card.subtitle}
-                        layoutClasses={card.layoutClasses}
+                        <GuaranteeCard
+                            key={card.id}
+                            {...card}
+                            layoutClasses={`${card.layoutClasses || ''} col-span-1 row-span-1 min-h-[240px] `}
                         />
                     );
-                }
-                
-                return (
-                    <GuaranteeCard
-                    key={card.type}
-                    id={card.id}
-                    title={card.title}
-                    description={card.description}
-                    subtitle={card.subtitle}
-                    layoutClasses={card.layoutClasses}
-                    />
-                );
-            })}
+                })}
+            </div>
         </div>
     );
 }
 
-
 export function EditorialHero(card: EditorialHeroProps){
     return ( 
-        <div key={card.id} className={`group relative overflow-hidden rounded-[2rem] p-6 md:p-12 flex flex-col justify-between border border-gray-200 ${card.layoutClasses}`}>
+        <div key={card.id} className={`group relative overflow-hidden rounded-sm md:rounded-none p-6 md:p-12 flex flex-col justify-between border border-gray-200 ${card.layoutClasses}`}>
             <div className="absolute inset-0 z-0">
                 <Image 
                     src="/home/hero/hero-1.avif"
@@ -99,21 +128,18 @@ export function EditorialHero(card: EditorialHeroProps){
             </div>
 
             <div className="relative z-10">
-                {/* TEXT SIZE INCREASED HERE */}
                 <span className="inline-block bg-emerald-500 text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full mb-6">
                     {card.subtitle}
                 </span>
                 <h3 className="text-white text-4xl md:text-6xl font-black italic tracking-tighter mb-4 leading-[0.9]">
                     {card.title}
                 </h3>
-                {/* TEXT SIZE INCREASED HERE */}
                 <p className="text-gray-300 text-sm md:text-base leading-relaxed max-w-sm mb-6 opacity-80 group-hover:opacity-100 -translate-x-5 group-hover:translate-x-0 transition-all duration-700 delay-100">
                     {card.description}
                 </p>
             </div>
 
             <div className="relative z-10">
-                {/* TEXT SIZE INCREASED HERE */}
                 <Link href={card.linkHref || '#'} className="inline-flex items-center gap-2 text-white font-bold text-sm md:text-base uppercase tracking-widest hover:text-emerald-400 transition-colors">
                     <span className="border-b border-white/30 pb-1 group-hover:border-emerald-400">{card.linkText}</span>
                     <svg aria-hidden="true" className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -125,18 +151,15 @@ export function EditorialHero(card: EditorialHeroProps){
     );
 }
 
-
 export function Minimalist (card: MinimalistProps){
     return (
-        <div key={card.id} className={`group rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 ${card.layoutClasses}`}>
+        <div key={card.id} className={`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center transition-all duration-500 bg-gray-100 hover:bg-gray-200 text-black ${card.layoutClasses}`}>
             <h3 className="text-6xl md:text-8xl font-black tracking-tighter mb-1 text-black group-hover:scale-105 transition-transform duration-500 origin-left">
                 {card.title}
             </h3>
-            {/* TEXT SIZE INCREASED HERE */}
             <h4 className="text-sm md:text-base font-bold uppercase tracking-widest text-gray-500 mb-3">
                 {card.subtitle}
             </h4>
-            {/* TEXT SIZE INCREASED HERE */}
             <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-[250px]">
                 {card.description}
             </p>
@@ -144,10 +167,9 @@ export function Minimalist (card: MinimalistProps){
     );
 }
 
-
 export function GuaranteeCard (card: GuaranteeCardProps){
     return (
-        <div key={card.id} className={`group rounded-[2rem] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden transition-all duration-700 ${card.layoutClasses}`}>
+        <div key={card.id} className={`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center relative overflow-hidden transition-all duration-700 bg-emerald-950/80 border border-emerald-500/50 ${card.layoutClasses}`}>
             <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500" 
                     style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #10b981 1px, transparent 0)', backgroundSize: '16px 16px' }} />
             
@@ -158,11 +180,9 @@ export function GuaranteeCard (card: GuaranteeCardProps){
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
             </div>
-            {/* TEXT SIZE INCREASED HERE */}
             <h4 className="relative z-10 text-white text-base md:text-lg font-bold uppercase tracking-widest mb-1 drop-shadow-md">
                 {card.title} <span className="block md:inline">{card.subtitle}</span>
             </h4>
-            {/* TEXT SIZE INCREASED HERE */}
             <p className="relative z-10 text-xs md:text-sm text-emerald-100/70 leading-relaxed mt-2 group-hover:text-white transition-colors duration-500">
                 {card.description}
             </p>

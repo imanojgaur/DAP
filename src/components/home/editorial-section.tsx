@@ -38,7 +38,7 @@ export function EditorialLayout({
     return (
         <div className="w-full">
 
-            <div className="flex md:hidden flex-row overflow-x-auto gap-1 snap-x snap-mandatory no-scrollbar pb-6 pt-6 px-2 w-full">
+            <div className="flex md:hidden flex-row overflow-x-auto gap-1 snap-x snap-mandatory no-scrollbar pb-6 md:pt-6 px-2 w-full">
                 {EDITORIAL_CARDS_DATA.map((card) => {
                     if (card.type === "hero") {
                         return (

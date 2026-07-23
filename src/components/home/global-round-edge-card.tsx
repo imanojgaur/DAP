@@ -29,12 +29,12 @@
             style={{ '--mobile-h': `${mobileHeight}px` } as React.CSSProperties}
             className={`
                 group relative z-10 hover:z-50 transform-gpu break-inside-avoid 
-                shrink-0 min-w-[40vw] w-[222px] md:min-w-[400px] md:flex-1
+                shrink-0 min-w-[40vw] w-[222px] md:min-w-[23vw] md:flex-1
                 mb-3 md:mb-0 
                 ${spanFullColumnOnMobile ? '[column-span:all] mt-2' : ''} 
                 ${visibilityClasses} 
                 ${className}
-                /* Sirf Card Lift yahan hoga, Shadow nahi */
+         
                 transition-transform duration-700 ease-out hover:-translate-y-2
             `}
         >

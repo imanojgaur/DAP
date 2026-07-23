@@ -29,7 +29,7 @@ export function generateCardLayout({
             <div 
                 key={`desktop-row-${cardInThisRow}-${rowIndex}`} 
                 // 'contents' allows mobile masonry to ignore this wrapper div.
-                className="flex flex-row overflow-x-auto gap-3 md:gap-5 snap-x snap-mandatory no-scrollbar w-full pt-6 pb-11 px-8 -my-4"
+                className="flex flex-row overflow-x-auto gap-3 md:gap-5 snap-x snap-mandatory no-scrollbar w-full md:pt-6 md:pb-11 px-2 md:px-7 -my-4"
             >
                 {renderCardsInThisRow.map((data, index) =>{
                     const globalIndex = renderIndexStart + index;

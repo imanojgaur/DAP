@@ -35,40 +35,33 @@ export function EditorialLayout({
 }: {
     EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[],
 }) {
+    const heroMobileCard = (EDITORIAL_CARDS_DATA.find((card): card is EditorialHeroProps => card.type === "hero"));
+    const minimalistMobileCard = (EDITORIAL_CARDS_DATA.find((card): card is MinimalistProps => card.type === "minimalist"));
+    const ledGlowMobileCard = (EDITORIAL_CARDS_DATA.find((card): card is GuaranteeCardProps => card.type === "led-glow"));
     return (
         <div className="w-full">
 
             <div className="flex md:hidden flex-row overflow-x-auto gap-1 snap-x snap-mandatory no-scrollbar pb-6 md:pt-6 px-2 w-full">
-                {EDITORIAL_CARDS_DATA.map((card) => {
-                    if (card.type === "hero") {
-                        return (
-                            <EditorialHero 
-                                key={card.id}
-                                {...card}
-                                // w-[94vw] makes it almost touch the screen edges
-                                layoutClasses={`${card.layoutClasses || ''} w-[93vw] shrink-0 snap-center rounded-sm`}
-                            />
-                        );
-                    }
-                    if (card.type === "minimalist") {
-                        return (
-                            <Minimalist
-                                key={card.id}
-                                {...card}
-                                description={card.description} 
-                                layoutClasses={`${card.layoutClasses || ''} w-[93vw] shrink-0 snap-center rounded-sm`}
-                            />
-                        );
-                    }
-                    return (
-                        <GuaranteeCard
-                            key={card.id}
-                            {...card}
-                            layoutClasses={`${card.layoutClasses || ''} w-[93vw] shrink-0 snap-center rounded-sm`}
-                        />
-                    );
-                })}
-                
+
+                    {heroMobileCard && <EditorialHero 
+                    key={heroMobileCard.id}
+                    {...heroMobileCard} 
+                    layoutClasses={`${heroMobileCard.layoutClasses || ''} w-[85vw] shrink-0 snap-center rounded-sm`}
+                    />}
+
+                <div  key={'Mobile Editorial'} className="flex flex-col">
+                    {minimalistMobileCard && <Minimalist
+                        key={minimalistMobileCard.id}
+                        {...minimalistMobileCard}
+                        layoutClasses={`${minimalistMobileCard.layoutClasses || ''} w-[60vw] shrink-0 snap-center rounded-sm`}
+                    />}
+
+                    {ledGlowMobileCard && <GuaranteeCard
+                        key={ledGlowMobileCard.id}
+                        {...ledGlowMobileCard}
+                        layoutClasses={`${ledGlowMobileCard.layoutClasses || ''} w-[60vw] shrink-0 snap-center rounded-sm`}
+                    />}
+                </div>
                 {/*gap right edge */}
                 <div className="w-2 shrink-0"></div>
             </div>

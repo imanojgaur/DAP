@@ -54,7 +54,7 @@ export function HomeHero() {
                 {/* MAIN CONTENT CONTAINER */}
                 <div className="absolute inset-0 z-20 flex flex-col justify-end pb-24 md:pb-24 pt-24 px-8 md:px-24 w-full max-w-5xl">
                     
-                    <div className="w-fit flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-6 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                    <div className="hidden w-fit flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-6 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -77,22 +77,22 @@ export function HomeHero() {
                             asChild
                             className="rounded-full bg-white text-black hover:bg-emerald-500 hover:text-white px-8 md:px-12 h-14 md:h-16 text-lg md:text-xl font-black uppercase tracking-tighter transition-colors duration-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)]"
                         >
-                            <Link href="/featured">Shop Now</Link>
+                            <Link href={ROUTES.CATEGORIES.INDOOR}>Shop Now</Link>
                         </Button>
                         <Button
                             asChild
                             variant="outline"
                             className="rounded-full bg-black/20 backdrop-blur-sm border-2 border-white/50 text-white hover:bg-white hover:text-black px-8 md:px-12 h-14 md:h-16 text-lg md:text-xl font-black uppercase tracking-tighter transition-all duration-500"
                         >
-                            <Link href={ROUTES.CATEGORIES.INDOOR}>Indoor Plants</Link>
+                            <Link href={ROUTES.CATEGORIES.ROOT}>View Your Collections</Link>
                         </Button>
                     </div>
                 </div>
        
                 {/* 4. THE LED PILL SHAPE */}
-                <div className="absolute top-12 right-12 z-20 hidden md:block">
+                <div className="hidden absolute top-85 md:top-12 right-6 md:right-12 z-20 md:block">
                     {/* The Pill Container - LED Green Vibe */}
-                    <div className="relative overflow-hidden rounded-full border border-emerald-500/40 bg-emerald-950/40 backdrop-blur-md flex flex-col items-end px-6 py-3 shadow-[0_0_20px_rgba(16,185,129,0.3)] min-w-[220px]">
+                    <div className="relative overflow-hidden rounded-full md:border border-emerald-500/40 bg-emerald-950/40 md:backdrop-blur-md flex flex-col items-center px-6 py-3 md:shadow-[0_0_20px_rgba(16,185,129,0.3)] min-w-[220px]">
                         
                         {/* The Text INSIDE the Pill */}
                         <div className="relative z-10 flex flex-col items-end">
@@ -103,7 +103,7 @@ export function HomeHero() {
                             >
                                 {HERO_SLIDES[currentImageIndex].category}
                             </span>
-                            <span className="text-emerald-100/60 text-[9px] font-bold uppercase tracking-[0.3em] mt-0.5">
+                            <span className=" hidden md:text-emerald-100/60 md:text-[9px] md:font-bold md:uppercase md:tracking-[0.3em] md:mt-0.5">
                                 Featured Collection
                             </span>
                         </div>

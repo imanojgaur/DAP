@@ -36,7 +36,7 @@ export default async function HomePage() {
 			`Explore ${matchDBResult.product_count} Varities`
 			: `Explore Collections`,
 			callToActionText: 'Shop Now',
-			slug: matchDBResult?.slug? matchDBResult.slug: '#',
+			slug: matchDBResult?.slug? matchDBResult.slug: baseConfigObj.slug,
 			imageSrc: baseConfigObj.imageSrc,
 			className: ""//for dynamic card: make another array..
 		}

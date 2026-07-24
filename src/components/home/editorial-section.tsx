@@ -46,20 +46,20 @@ export function EditorialLayout({
                     {heroMobileCard && <EditorialHero 
                     key={heroMobileCard.id}
                     {...heroMobileCard} 
-                    layoutClasses={`${heroMobileCard.layoutClasses || ''} w-[85vw] shrink-0 snap-center rounded-sm`}
+                    layoutClasses={`${heroMobileCard.layoutClasses || ''} w-[85vw] shrink-0 snap-center rounded-sm min-h-full`}
                     />}
 
                 <div  key={'Mobile Editorial'} className="flex flex-col">
                     {minimalistMobileCard && <Minimalist
                         key={minimalistMobileCard.id}
                         {...minimalistMobileCard}
-                        layoutClasses={`${minimalistMobileCard.layoutClasses || ''} w-[60vw] shrink-0 snap-center rounded-sm`}
+                        layoutClasses={`${minimalistMobileCard.layoutClasses || ''} w-[60vw] shrink-0 snap-center rounded-sm min-h-[50vh]`}
                     />}
 
                     {ledGlowMobileCard && <GuaranteeCard
                         key={ledGlowMobileCard.id}
                         {...ledGlowMobileCard}
-                        layoutClasses={`${ledGlowMobileCard.layoutClasses || ''} w-[60vw] shrink-0 snap-center rounded-sm`}
+                        layoutClasses={`${ledGlowMobileCard.layoutClasses || ''} w-[60vw] shrink-0 snap-center rounded-sm min-h-[50vh]`}
                     />}
                 </div>
                 {/*gap right edge */}

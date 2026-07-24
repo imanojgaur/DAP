@@ -10,13 +10,13 @@ export default async function HomePage() {
 	
 	// 1. Category Base Configuration
     const baseCategoryConfig = [
-        { slug: 'deal-of-the-day', imageSrc: '/home/deal-of-the-day.webp' },
-        { slug: 'plants-1', imageSrc: '/home/best-seller.avif' }, 
-        { slug: 'balcony-plants', imageSrc: '/home/balconey5.avif' },
-        { slug: 'vastu-plants', imageSrc: '/home/vastu.avif' },
-        { slug: 'mood-improving-plants', imageSrc: '/home/mood-boosting.avif' },
-        { slug: 'air-purifying-plants', imageSrc: '/home/purify2.avif' },
-        { slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
+        { name: "Deal Of The Day", slug: 'deal-of-the-day', imageSrc: '/home/deal-of-the-day.webp' },
+        { name: "Best Seller", slug: 'plants-1', imageSrc: '/home/best-seller.avif' }, 
+        { name: "Balcony Plants", slug: 'balcony-plants', imageSrc: '/home/balconey5.avif' },
+        { name: "Vastu", slug: 'vastu-plants', imageSrc: '/home/vastu.avif' },
+        { name: "Mood Boosting", slug: 'mood-improving-plants', imageSrc: '/home/mood-boosting.avif' },
+        { name: "Air Purifying", slug: 'air-purifying-plants', imageSrc: '/home/purify2.avif' },
+        { name: "Indoor Collection", slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
     ];
 
 	// Fetch db for Categories
@@ -31,7 +31,7 @@ export default async function HomePage() {
 		: null;
 
 		return 	{
-			title: matchDBResult?.name || "Premium Product",
+			title: baseConfigObj?.name || "Premium Product",
 			subtitle: matchDBResult?.product_count ? 
 			`Explore ${matchDBResult.product_count} Varities`
 			: `Explore Collections`,

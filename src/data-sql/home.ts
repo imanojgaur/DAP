@@ -15,12 +15,11 @@ export async function getHomeCategories(sluges: string[]){
         SELECT 
         c.name,
         c.slug, 
-        CAST(COUNT(jcp."B") AS INTEGER) AS product_count
+        COUNT(jcp."B"):: INTEGER AS product_count
         FROM categories c
         LEFT JOIN "_CategoryToProduct" jcp ON c.id = jcp."A"
         WHERE c.slug IN (${Prisma.join(sluges)})  -- create secure parameter: ($1, $2, $3)
         GROUP BY c.id, c.name, c.slug;`;
-        console.log(data);
         return data;
     } catch (e){
         console.error("Error fetching Home Categories: ", e)

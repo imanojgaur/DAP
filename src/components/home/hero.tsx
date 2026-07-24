@@ -75,14 +75,14 @@ export function HomeHero() {
                     <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-500 fill-mode-both">
                         <Button
                             asChild
-                            className="rounded-full bg-white text-black hover:bg-emerald-500 hover:text-white px-8 md:px-12 h-14 md:h-16 text-lg md:text-xl font-black uppercase tracking-tighter transition-colors duration-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)]"
+                            className="rounded-full bg-white text-black hover:bg-emerald-500 hover:text-white px-8 md:px-12 h-10 md:h-16 text-lg md:text-xl font-black uppercase tracking-tighter transition-colors duration-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)]"
                         >
                             <Link href={ROUTES.CATEGORIES.INDOOR}>Shop Now</Link>
                         </Button>
                         <Button
                             asChild
                             variant="outline"
-                            className="rounded-full bg-black/20 backdrop-blur-sm border-2 border-white/50 text-white hover:bg-white hover:text-black px-8 md:px-12 h-14 md:h-16 text-lg md:text-xl font-black uppercase tracking-tighter transition-all duration-500"
+                            className="rounded-full bg-black/20 backdrop-blur-sm border-2 border-white/50 text-white hover:bg-white hover:text-black px-8 md:px-12 h-10 md:h-16 text-lg md:text-xl font-black uppercase tracking-tighter transition-all duration-500"
                         >
                             <Link href={ROUTES.CATEGORIES.ROOT}>View Your Collections</Link>
                         </Button>
@@ -111,10 +111,19 @@ export function HomeHero() {
                 </div>
 
                 {/* 5. ANIMATED SCROLL INDICATOR */}
-                <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20 flex flex-col items-center gap-3">
-                    <span className="text-white/50 text-[9px] font-bold uppercase tracking-[0.3em] rotate-90 translate-y-[-20px]">
+                <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20 flex flex-col items-center gap-4 md:gap-6">
+                    
+                    {/* DESKTOP TEXT: */}
+                    <span className="hidden md:block text-white/50 text-[9px] font-bold uppercase tracking-[0.3em] [writing-mode:vertical-rl] whitespace-nowrap">
                         Scroll
                     </span>
+                    
+                    {/* MOBILE TEXT:  */}
+                    <span className="block md:hidden text-white/50 text-[9px] font-bold uppercase tracking-[0.3em] [writing-mode:vertical-rl] whitespace-nowrap">
+                        {HERO_SLIDES[currentImageIndex].category}
+                    </span>
+                    
+                    {/* THE BOUNCING LINE */}
                     <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
                         <div className="w-full h-1/2 bg-white absolute top-0 animate-[bounce_2s_infinite]" />
                     </div>

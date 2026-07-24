@@ -127,7 +127,7 @@ export function EditorialHero(card: EditorialHeroProps){
                 <h3 className="text-white text-4xl md:text-6xl font-black italic tracking-tighter mb-4 leading-[0.9]">
                     {card.title}
                 </h3>
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed max-w-sm mb-6 opacity-80 group-hover:opacity-100 -translate-x-5 group-hover:translate-x-0 transition-all duration-700 delay-100">
+                <p className="px-4 md:px-5 text-gray-300 text-sm md:text-base leading-relaxed max-w-sm mb-6 opacity-80 group-hover:opacity-100 -translate-x-5 group-hover:translate-x-0 transition-all duration-700 delay-100">
                     {card.description}
                 </p>
             </div>

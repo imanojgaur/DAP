@@ -20,3 +20,25 @@ export async function getHomeCategories(slug: string[]){
     
 };
     // no prisma aliasing allowed: {rename _count: product_count}
+
+export async function getHomeProduct(homeCategory: 'home') {
+    return await prisma.product.findFirst({
+        where: {
+            categories: { 
+                some: {
+                    slug: homeCategory,
+                }
+            }
+        },
+        select: { 
+            id: true,
+            name: true, 
+            slug: true, 
+            price: true, 
+            compareAtPrice: true, 
+            stockQuantity: true, 
+        },
+        take: 10, 
+    })
+    
+}

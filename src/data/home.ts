@@ -16,6 +16,7 @@ export async function getHomeCategories(slug: string[]){
                 }
             }
         }
-    })};
-
+    })
+    
+};
     // no prisma aliasing allowed: {rename _count: product_count}

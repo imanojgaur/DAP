@@ -3,7 +3,8 @@ import type { GlobalRoundEdgeCardProps } from "@/components/home/global-round-ed
 import { HomeHero } from "@/components/home/hero";
 import { generateCardLayout } from "@/components/home/layout-generator";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
-import { getHomeCategories } from "@/data-sql"
+// import { getHomeCategories } from "@/data-sql"
+import { getHomeCategories } from "@/data";
 import { currentYear } from "@/utilities";
 
 export default async function HomePage() {
@@ -32,8 +33,8 @@ export default async function HomePage() {
 
 		return 	{
 			title: baseConfigObj?.name || "Premium Product",
-			subtitle: matchDBResult?.product_count ? 
-			`Explore ${matchDBResult.product_count} Varities`
+			subtitle: matchDBResult?._count.products ? 
+			`Explore ${matchDBResult._count.products} Varities`
 			: `Explore Collections`,
 			callToActionText: 'Shop Now',
 			slug: matchDBResult?.slug? matchDBResult.slug: baseConfigObj.slug,

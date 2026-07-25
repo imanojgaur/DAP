@@ -9,6 +9,7 @@ export interface categoriesData {
     product_count: number
 }
 
+// perfect for smaller datasets . 
 export async function getHomeCategories(sluges: string[]){
     try{
         const data = await prisma.$queryRaw<categoriesData[]>`

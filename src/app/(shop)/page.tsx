@@ -1,14 +1,16 @@
 import { type EDITORIAL_CARDS_PROPS, EditorialLayout } from "@/components/home/editorial-section";
-import type { GlobalRoundEdgeCardProps } from "@/components/home/global-round-edge-card";
+import { GlobalRoundEdgeCard, type GlobalRoundEdgeCardProps } from "@/components/home/global-round-edge-card";
 import { HomeHero } from "@/components/home/hero";
 import { generateCardLayout } from "@/components/home/layout-generator";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
-// import { getHomeCategories } from "@/data-sql"
 import { getHomeCategories } from "@/data";
+import { getHomeProduct } from "@/data/home";
+// import { getHomeCategories } from "@/data-sql"
 import { currentYear } from "@/utilities";
 
 export default async function HomePage() {
-	
+
+	//Category Belt logic
 	// 1. Category Base Configuration
     const baseCategoryConfig = [
         { name: "Deal Of The Day", slug: 'deal-of-the-day', imageSrc: '/home/deal-of-the-day.webp' },
@@ -20,11 +22,11 @@ export default async function HomePage() {
         { name: "Indoor Collection", slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
     ];
 
-	// Fetch db for Categories
+	//2. Fetch db for Categories
 	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug)
 	const categoriesdbData = await getHomeCategories(categorySluges);
 
-    //create category config Object. 
+    //3. create category config Object. 
 	const categoryCardConfig: GlobalRoundEdgeCardProps[] = baseCategoryConfig.map((baseConfigObj) => {
 
 		const matchDBResult  = Array.isArray(categoriesdbData) === true 
@@ -43,7 +45,7 @@ export default async function HomePage() {
 		}
 	});
 	
-	//category layout nevigation 
+	//4. category layout nevigation 
 	const layout = generateCardLayout({
 		categoryDataArray: categoryCardConfig,
 		desktopLayoutPattern: [7],
@@ -61,6 +63,16 @@ export default async function HomePage() {
 		bodyLayoutClass: 'mb-5 md:mb-0 mt-6',
 		headerLayoutClass: 'px-5 md:px-8 md:pt-6'
     };
+
+	//Home feature Products 
+	const featureProducts = await getHomeProduct('home');
+	const productHeader: HeaderData = {
+		title: 'Featured Products',
+		description: 'Rare finds and everyday favorites',
+		bodyLayoutClass: 'mb-5 md:mb-0 mt-15 md:mt-6',
+		headerLayoutClass: 'px-5 md:px-8 md:pt-6',		
+	}
+
 
 	//Editorial Config
 	const headerData: HeaderData = {
@@ -113,7 +125,26 @@ export default async function HomePage() {
 			( <SectionWrapper headerData={categoryHeaderData}>
 				{layout}
 			</SectionWrapper>)}
+
 			{/* 3. Product Discovery Section */}
+			<SectionWrapper 
+			headerData={productHeader}
+			>
+				<div className="flex flex-row gap-6 overflow-x-auto no-scrollbar px-3 md:px-5 md:py-6"> 
+					{featureProducts?.map((product) => (
+							<GlobalRoundEdgeCard
+							key={product.id}
+							title={product.name}
+							subtitle={`$ ${product.price}`}
+							slug={product.slug}
+							callToActionText={"Shop Now"}
+							imageSrc={product.images[0].secureUrl ?? "default-image.png[pending]"}
+							/>		
+						))
+					}
+				</div>
+				
+			</SectionWrapper>
 
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper 			

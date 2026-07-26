@@ -22,7 +22,7 @@ export async function getHomeCategories(slug: string[]){
     // no prisma aliasing allowed: {rename _count: product_count}
 
 export async function getHomeProduct(homeCategory: 'home') {
-    return await prisma.product.findFirst({
+    return await prisma.product.findMany({
         where: {
             categories: { 
                 some: {
@@ -37,8 +37,13 @@ export async function getHomeProduct(homeCategory: 'home') {
             price: true, 
             compareAtPrice: true, 
             stockQuantity: true, 
+            images: {
+                select: {
+                    secureUrl: true,
+                }
+            }
         },
-        take: 10, 
+        take: 20, 
     })
     
 }

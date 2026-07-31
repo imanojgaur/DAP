@@ -39,7 +39,9 @@ export async function getHomeProduct(homeCategory: 'home') {
             stockQuantity: true, 
             images: {
                 select: {
-                    secureUrl: true,
+                    publicId: true,
+                    height: true, 
+                    width: true, 
                 }
             }
         },

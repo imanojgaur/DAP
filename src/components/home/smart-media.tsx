@@ -1,26 +1,26 @@
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 
-export interface BaseProps {
+interface BaseProps {
     alt: string, 
     fill: boolean, 
     className: string, 
     sizes: string, 
 }
 
-interface CloudinaryProps extends BaseProps {
+export interface CloudinaryProps extends BaseProps {
     sourceType: 'cloudinary'
     publicId: string,  
     width: number, 
     height: number, 
 }
 
-interface NextServerProps extends BaseProps { 
+export interface NextServerProps extends BaseProps { 
     sourceType: 'nextServer',
     imageSrc: string, 
 }
 
-type SmartMediaProps = CloudinaryProps | NextServerProps
+export type SmartMediaProps = CloudinaryProps | NextServerProps
 
 export function SmartMedia(props:SmartMediaProps ){
     if(props.sourceType === 'cloudinary'){

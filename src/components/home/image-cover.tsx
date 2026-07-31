@@ -1,30 +1,46 @@
 import Link from "next/link";
-import { SmartMedia, type SmartMediaProps } from "./smart-media"
+import React from "react";
 
-export type Media = Omit<SmartMediaProps,  "alt" | 'fill' | "className" | "sizes">
-
-export interface ImageCoverProps {
-    title: string,
+export interface BaseProps {
     endPoint: string,
-    images: Media[],
     className?: string, 
-    overlayContent: React.ReactNode, 
-    productFragment: React.ReactNode, 
 }
 
-export interface OverlayTextProps { 
-    title: string, 
-    subtitle: string, 
-    callToActionText: string, 
+interface OverlayProps {
+    overlayContent: React.ReactNode, 
+    productFragment?: never
 }
+
+interface FragmentProps {
+    productFragment: React.ReactNode, 
+    overlayContent?: never
+} 
+
+// Mutually exclusive content 
+type Content = OverlayProps | FragmentProps
+
+interface HorizontalImgScroller  {
+    imgScroller: React.ReactNode
+    dynamicImgGrid?: never
+}
+
+interface DynamicImgGrid {
+    dynamicImgGrid: React.ReactNode 
+    imgScroller?: never 
+}
+// Mutually exclusive Images Layout
+type ImageLayout = HorizontalImgScroller | DynamicImgGrid
+
+type ImageCoverProps = BaseProps & Content & ImageLayout 
+
 
 export function ImageCover({
-    title, 
     endPoint,
-    images,
     className,
     overlayContent, 
     productFragment, 
+    imgScroller, 
+    dynamicImgGrid
 }:ImageCoverProps ){
     return (
         <>
@@ -52,22 +68,10 @@ export function ImageCover({
                     shadow-lg
                     focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500
                 "
-            >
-                {/* Background Image  */}
-                <div className="absolute inset-0 z-0">
-                    {images.map((image, index) => (
-                        <SmartMedia
-                            key={image.src}
-                            {...image}
-                            alt={`${title}-${index}`}
-                            fill
-                            className="object-cover transform-gpu transition-transform duration-[2000ms] ease-out group-hover:scale-110"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        
-                        />))}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 group-hover:backdrop-blur-[2px] transition-all duration-700" />
-                </div>
-
+            >   
+                {/* Background Iage */}
+                {dynamicImgGrid? dynamicImgGrid: imgScroller}
+                
                 {/* Content Overlay*/}
                     {overlayContent && 
                         <div className="relative z-10 transform transition-transform duration-700 ease-out group-hover:-translate-y-2">
@@ -84,6 +88,12 @@ export function ImageCover({
             }
         </>
     );
+}
+
+export interface OverlayTextProps { 
+    title: string, 
+    subtitle: string, 
+    callToActionText: string, 
 }
 
 export function OverlayText({title, subtitle, callToActionText}: OverlayTextProps){
@@ -113,7 +123,7 @@ export function OverlayText({title, subtitle, callToActionText}: OverlayTextProp
     );
 }
 
-export function HorizontalScroller({children}:{children: React.ReactNode}){
+export function HorizontalCardScroller({children}:{children: React.ReactNode}){
     return (
         <div className="flex flex-row gap-6 overflow-x-auto no-scrollbar px-3 md:px-5 md:py-6"> 
             {children}

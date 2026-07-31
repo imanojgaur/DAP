@@ -1,5 +1,5 @@
-import { type EDITORIAL_CARDS_PROPS, EditorialLayout } from "@/components/home/editorial-section";
-import { GlobalRoundEdgeCard, type GlobalRoundEdgeCardProps } from "@/components/home/global-round-edge-card";
+import { EditorialLayout, type EDITORIAL_CARDS_PROPS } from "@/components/home/editorial-section";
+import { ImageCover } from '@/components/home/image-cover'
 import { HomeHero } from "@/components/home/hero";
 import { generateCardLayout } from "@/components/home/layout-generator";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
@@ -13,7 +13,7 @@ export default async function HomePage() {
 	//Category Belt logic
 	// 1. Category Base Configuration
     const baseCategoryConfig = [
-        { name: "Deal Of The Day", slug: 'deal-of-the-day', imageSrc: '/home/deal-of-the-day.webp' },
+        { name: "Deal Of The Day", slug: 'deal-of-the-day', images: ['/home/deal-of-the-day.webp'] },
         { name: "Best Seller", slug: 'plants-1', imageSrc: '/home/best-seller.avif' }, 
         { name: "Balcony Plants", slug: 'balcony-plants', imageSrc: '/home/balconey5.avif' },
         { name: "Vastu", slug: 'vastu-plants', imageSrc: '/home/vastu.avif' },
@@ -121,30 +121,10 @@ export default async function HomePage() {
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			{categoryCardConfig.length > 0 && 
-			( <SectionWrapper headerData={categoryHeaderData}>
-				{layout}
-			</SectionWrapper>)}
+
 
 			{/* 3. Product Discovery Section */}
-			<SectionWrapper 
-			headerData={productHeader}
-			>
-				<div className="flex flex-row gap-6 overflow-x-auto no-scrollbar px-3 md:px-5 md:py-6"> 
-					{featureProducts?.map((product) => (
-							<GlobalRoundEdgeCard
-							key={product.id}
-							title={product.name}
-							subtitle={`$ ${product.price}`}
-							slug={product.slug}
-							callToActionText={"Shop Now"}
-							imageSrc={product?.images[0]?.secureUrl ?? "default-image.png[pending]"}
-							/>		
-						))
-					}
-				</div>
-				
-			</SectionWrapper>
+			
 
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper 			

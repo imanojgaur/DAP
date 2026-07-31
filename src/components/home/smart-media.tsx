@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 
-interface SmartMediaProps {
+export interface SmartMediaProps {
     sourceType: 'cloudinary' | 'nextServer'
     src: string, 
     width?: number, 

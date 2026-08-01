@@ -22,11 +22,19 @@ export function DynamicImageGrid ({images}:{images: ImageLayoutProps[]}) {
 }
 
 export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
-    const primaryImage = images.find((image) => image.isPrimary)
-    const secondaryImages = images.filter((images))
+    const primaryImage = images.find((image) => image.isPrimary) || images[0]
+    const secondaryImages = images.filter((image) => !image.isPrimary).slice(0,4)
     return (
         <div className="absolute inset-0 z-0 flex flex-row overflow-x-auoto snap-x snap-mandatory no-scrollbar">
-            {images.map((image) => (
+            <div className="relative w-full h-full snap-o snap-center overflow-hidden">
+                <SmartMedia
+                {...primaryImage}
+                fill 
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+            </div>
+            {secondaryImages.map((image) => (
                 // Give Image a physical wrapper to not let stack
                 <div key={image.sourceType === 'cloudinary'? image.publicId: image.imageSrc}
                 className="relative w-full h-full snap-0 snap-center overflow-hidden"

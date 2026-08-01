@@ -6,6 +6,7 @@ import { SmartMedia, type SmartMediaProps } from "./smart-media";
 type  ImageLayoutProps = DistributiveOmit<SmartMediaProps, 'fill' | 'className' | 'sizes'> & {isPrimary?: boolean}
 
 export function DynamicImageGrid ({images}:{images: ImageLayoutProps[]}) {
+
     return (
         <div>
             {images.map((image) => (
@@ -26,7 +27,8 @@ export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
     const secondaryImages = images.filter((image) => !image.isPrimary).slice(0,4)
     return (
         <div className="absolute inset-0 z-0 flex flex-row overflow-x-auoto snap-x snap-mandatory no-scrollbar">
-            <div className="relative w-full h-full snap-o snap-center overflow-hidden">
+            
+            {primaryImage && <div className="relative w-full h-full snap-o snap-center overflow-hidden">
                 <SmartMedia
                 {...primaryImage}
                 fill 
@@ -34,7 +36,9 @@ export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
             </div>
-            {secondaryImages.map((image) => (
+            }
+
+            {secondaryImages?.map((image) => (
                 // Give Image a physical wrapper to not let stack
                 <div key={image.sourceType === 'cloudinary'? image.publicId: image.imageSrc}
                 className="relative w-full h-full snap-0 snap-center overflow-hidden"

@@ -1,5 +1,5 @@
 import { EditorialLayout, type EDITORIAL_CARDS_PROPS } from "@/components/home/editorial-section";
-import { ImageCover } from '@/components/home/image-cover'
+import { HorizontalCardScroller, ImageCover, OverlayText } from '@/components/home/image-cover'
 import { HomeHero } from "@/components/home/hero";
 import { generateCardLayout } from "@/components/home/layout-generator";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
@@ -7,6 +7,8 @@ import { getHomeCategories } from "@/data";
 import { getHomeProduct } from "@/data/home";
 // import { getHomeCategories } from "@/data-sql"
 import { currentYear } from "@/utilities";
+import { HorizontalImgScroller } from "@/components/home/img-layout";
+import { ChevronMove } from "@/components/home/scroll-button";
 
 export default async function HomePage() {
 
@@ -45,15 +47,6 @@ export default async function HomePage() {
 		}
 	});
 	
-	//4. category layout nevigation 
-	const layout = generateCardLayout({
-		categoryDataArray: categoryCardConfig,
-		desktopLayoutPattern: [7],
-    	mobileRandomImageHeight: [290, 250, 340, 240, 350, 290, 220], // Left Col sum = 840px | Right Col sum = 840px | Completely unique sizes | masory pattern
-		maxCardOnDesktop: 7,
-		maxCardOnMobile: 7
-	});
-
 	const categoryHeaderData: HeaderData = {
 		title: "The Collections",
 		description: "Curated greenery for every lifestyle",
@@ -121,10 +114,20 @@ export default async function HomePage() {
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			<sectionWrapper>
-				
-			</sectionWrapper>
+			<SectionWrapper 
+			headerData={categoryHeaderData}>
+				<ChevronMove>
+					<HorizontalCardScroller>
 
+						<ImageCover
+						endPoint=""
+						className=""
+						overlayContent={<OverlayText title="" subtitle="" callToActionText="" />}
+						imgScroller={<ChevronMove><HorizontalImgScroller images={} /></ChevronMove>}
+						/>
+					</HorizontalCardScroller>		
+				</ChevronMove>
+			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
 			

@@ -8,75 +8,97 @@ import { currentYear } from "@/utils";
 import { HorizontalImgScroller, type ImageLayoutProps } from "@/components/home/img-layout";
 import { ChevronMove } from "@/components/home/scroll-button";
 
+interface CategoryConfig {
+	title: string, 
+	slug: string, 
+	images: ImageLayoutProps[]
+	subtitle: string, 
+	callToActionText: string, 
+	className?: string, 
+}
+
 export default async function HomePage() {
 
-	//Category Belt logic
-	//cat img config
+	// 1. Category Belt logic
+	// cat img config
 	const images: ImageLayoutProps[][]  = [
 		[
-			{sourceType:'nextServer', isPrimary:true, imageSrc:'/home/deal-of-the-day.webp', alt:''}
+			{sourceType:'nextServer', isPrimary:true, imageSrc:'/home/deal-of-the-day.webp', alt:'Deal Of The Day'}
 			
 		],
 		[
-			{sourceType:'nextServer', isPrimary:true, imageSrc:'/home/best-seller.avif', alt:''}
+			{sourceType:'nextServer', isPrimary:true, imageSrc:'/home/best-seller.avif', alt:'Best Seller'}
 		],
 		[
-			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/balconey5.avif', alt:''},
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey1.avif', alt:''},
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey2.avif', alt:''},
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey3.avif', alt:''}, 
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey4.avif', alt:''},
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey6.avif', alt:''}
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/balconey5.avif', alt:'Balcony Plants'},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey1.avif', alt:'Balcony Plants'},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey2.avif', alt:'Balcony Plants'},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey3.avif', alt:'Balcony Plants'}, 
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey4.avif', alt:'Balcony Plants'},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey6.avif', alt:'Balcony Plants'}
 		], 
 		[
-			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/vastu.avif', alt:''}, 
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/vastu2.avif', alt:''}
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/vastu.avif', alt:'Vastu'}, 
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/vastu2.avif', alt:'Vastu'}
 		], 
 		[
-			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/mood-boosting.avif', alt:''},
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/mood-boosting.avif', alt:'Mood Boosting'},
 		],
 		[
-			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/purify2.avif', alt:''}, 
-			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/purify-air1.avif', alt:''}, 
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/purify2.avif', alt:'Air Purifying'}, 
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/purify-air1.avif', alt:'Air Purifying'}, 
 		], 
 		[
-			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/indoor-plants.avif', alt:''}, 
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/indoor-plants.avif', alt:'Indoor Collection'}, 
 		]
 	]
-	// 1. Category Base Configuration
+
+	// Category Base Configuration
     const baseCategoryConfig = [
-        { name: "Deal Of The Day", slug: 'deal-of-the-day'},
-        { name: "Best Seller", slug: 'plants-1'}, 
-        { name: "Balcony Plants", slug: 'balcony-plants'},
-        { name: "Vastu", slug: 'vastu-plants'},
-        { name: "Mood Boosting", slug: 'mood-improving-plants'},
-        { name: "Air Purifying", slug: 'air-purifying-plants'},
-        { name: "Indoor Collection", slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
+        { title: "Deal Of The Day", slug: 'deal-of-the-day'},
+        { title: "Best Seller", slug: 'plants-1'}, 
+        { title: "Balcony Plants", slug: 'balcony-plants'},
+        { title: "Vastu", slug: 'vastu-plants'},
+        { title: "Mood Boosting", slug: 'mood-improving-plants'},
+        { title: "Air Purifying", slug: 'air-purifying-plants'},
+        { title: "Indoor Collection", slug: 'indoor-plants'}
     ];
 
-	//2. Fetch db for Categories
+	//Categories fetch db
 	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug)
 	const categoriesdbData = await getHomeCategories(categorySluges);
 
-    //3. create category config Object. 
-	const categoryCardConfig: GlobalRoundEdgeCardProps[] = baseCategoryConfig.map((baseConfigObj) => {
+    // category config Object creation 
+	// -> Create Base Config Obj with images data
+
+	const baseCatConfigWithImg = baseCategoryConfig.map((obj) => {
+		const imagesArr = images.find((imgArrItem) => (
+			obj.title === imgArrItem[0].alt
+		))
+
+		return {
+			...obj, 
+			images: imagesArr? imagesArr: []
+		}
+	})
+
+	const categoryConfig: CategoryConfig[] = baseCatConfigWithImg.map((baseObj) => {
 
 		const matchDBResult  = Array.isArray(categoriesdbData) === true 
-		? categoriesdbData.find((dbPassedObject) => dbPassedObject.slug === baseConfigObj.slug)
+		? categoriesdbData.find((dbObj) => dbObj.slug === baseObj.slug)
 		: null;
 
 		return 	{
-			title: baseConfigObj?.name || "Premium Product",
+			...baseObj,
 			subtitle: matchDBResult?._count.products ? 
 			`Explore ${matchDBResult._count.products} Varities`
 			: `Explore Collections`,
 			callToActionText: 'Shop Now',
-			slug: matchDBResult?.slug? matchDBResult.slug: baseConfigObj.slug,
-			imageSrc: baseConfigObj.imageSrc,
-			className: ""//for dynamic card: make another array..
+			className: ""//for dynamic card: make another array..haha
 		}
 	});
 	
+	// category Header Data 
 	const categoryHeaderData: HeaderData = {
 		title: "The Collections",
 		description: "Curated greenery for every lifestyle",
@@ -87,7 +109,8 @@ export default async function HomePage() {
 		headerLayoutClass: 'px-5 md:px-8 md:pt-6'
     };
 
-	//Home feature Products 
+
+	//2. Home feature Products Belt data 
 	const featureProducts = await getHomeProduct('home');
 	const productHeader: HeaderData = {
 		title: 'Featured Products',

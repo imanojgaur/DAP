@@ -56,8 +56,9 @@ export function DynamicImageGrid ({images}:{images: ImageLayoutProps[]}) {
 }
 
 export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
-    const primaryImage = images.find((image) => image.isPrimary) || images[0]
+    const {isPrimary, ...primaryImage} = images.find((image) => image.isPrimary) || images[0]
     const secondaryImages = images.filter((image) => !image.isPrimary)
+    console.log(primaryImage, secondaryImages)
     return (
         <div className="absolute inset-0 z-0 flex flex-row overflow-x-auto snap-x snap-mandatory no-scrollbar">
             
@@ -71,19 +72,21 @@ export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
             </div>
             }
 
-            {secondaryImages.length > 0 && secondaryImages.map((image) => (
+            {secondaryImages.length > 0 && secondaryImages.map((item) => {
                 // Give Image a physical wrapper to not let stack
-                <div key={image.sourceType === 'cloudinary'? image.publicId: image.imageSrc}
-                className="relative w-full h-full snap-0 snap-center overflow-hidden"
-                >
-                    <SmartMedia 
-                    {...image}
-                    fill
-                    className="object-cover transform-gpu transition-transform duration-[2000ms] ease-out group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                </div>
-            ))}
+                const {isPrimary, ...image} = item
+                return (
+                    <div key={image.sourceType === 'cloudinary'? image.publicId: image.imageSrc}
+                    className="relative w-full h-full snap-0 snap-center overflow-hidden"
+                    >
+                        <SmartMedia 
+                        {...image}
+                        fill
+                        className="object-cover transform-gpu transition-transform duration-[2000ms] ease-out group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </div>
+            )})}
             {/* Gradient overlay  */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 group-hover:backdrop-blur-[2px] transition-all duration-700" />
         </div>

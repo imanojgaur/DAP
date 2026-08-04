@@ -121,6 +121,9 @@ export default async function HomePage() {
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
+			<sectionWrapper>
+				
+			</sectionWrapper>
 
 
 			{/* 3. Product Discovery Section */}

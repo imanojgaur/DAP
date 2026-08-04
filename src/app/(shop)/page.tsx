@@ -4,7 +4,7 @@ import { HomeHero } from "@/components/home/hero";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
 import { getHomeCategories, getHomeProduct } from "@/data";
 // import { getHomeCategories } from "@/data-sql"
-import { currentYear } from "@/utils";
+import { currentYear } from "@/utilities";
 import { HorizontalImgScroller, type ImageLayoutProps } from "@/components/home/img-layout";
 import { ChevronMove } from "@/components/home/scroll-button";
 

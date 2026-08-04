@@ -1,26 +1,56 @@
 import { EditorialLayout, type EDITORIAL_CARDS_PROPS } from "@/components/home/editorial-section";
 import { HorizontalCardScroller, ImageCover, OverlayText } from '@/components/home/image-cover'
 import { HomeHero } from "@/components/home/hero";
-import { generateCardLayout } from "@/components/home/layout-generator";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
-import { getHomeCategories } from "@/data";
-import { getHomeProduct } from "@/data/home";
+import { getHomeCategories, getHomeProduct } from "@/data";
 // import { getHomeCategories } from "@/data-sql"
-import { currentYear } from "@/utilities";
-import { HorizontalImgScroller } from "@/components/home/img-layout";
+import { currentYear } from "@/utils";
+import { HorizontalImgScroller, type ImageLayoutProps } from "@/components/home/img-layout";
 import { ChevronMove } from "@/components/home/scroll-button";
 
 export default async function HomePage() {
 
 	//Category Belt logic
+	//cat img config
+	const images: ImageLayoutProps[][]  = [
+		[
+			{sourceType:'nextServer', isPrimary:true, imageSrc:'/home/deal-of-the-day.webp', alt:''}
+			
+		],
+		[
+			{sourceType:'nextServer', isPrimary:true, imageSrc:'/home/best-seller.avif', alt:''}
+		],
+		[
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/balconey5.avif', alt:''},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey1.avif', alt:''},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey2.avif', alt:''},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey3.avif', alt:''}, 
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey4.avif', alt:''},
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/balconey6.avif', alt:''}
+		], 
+		[
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/vastu.avif', alt:''}, 
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/vastu2.avif', alt:''}
+		], 
+		[
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/mood-boosting.avif', alt:''},
+		],
+		[
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/purify2.avif', alt:''}, 
+			{sourceType: 'nextServer', isPrimary: false, imageSrc: '/home/purify-air1.avif', alt:''}, 
+		], 
+		[
+			{sourceType: 'nextServer', isPrimary: true, imageSrc: '/home/indoor-plants.avif', alt:''}, 
+		]
+	]
 	// 1. Category Base Configuration
     const baseCategoryConfig = [
-        { name: "Deal Of The Day", slug: 'deal-of-the-day', images: ['/home/deal-of-the-day.webp'] },
-        { name: "Best Seller", slug: 'plants-1', imageSrc: '/home/best-seller.avif' }, 
-        { name: "Balcony Plants", slug: 'balcony-plants', imageSrc: '/home/balconey5.avif' },
-        { name: "Vastu", slug: 'vastu-plants', imageSrc: '/home/vastu.avif' },
-        { name: "Mood Boosting", slug: 'mood-improving-plants', imageSrc: '/home/mood-boosting.avif' },
-        { name: "Air Purifying", slug: 'air-purifying-plants', imageSrc: '/home/purify2.avif' },
+        { name: "Deal Of The Day", slug: 'deal-of-the-day'},
+        { name: "Best Seller", slug: 'plants-1'}, 
+        { name: "Balcony Plants", slug: 'balcony-plants'},
+        { name: "Vastu", slug: 'vastu-plants'},
+        { name: "Mood Boosting", slug: 'mood-improving-plants'},
+        { name: "Air Purifying", slug: 'air-purifying-plants'},
         { name: "Indoor Collection", slug: 'indoor-plants', imageSrc: '/home/indoor-plants.avif' }
     ];
 

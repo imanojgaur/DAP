@@ -3,7 +3,7 @@ import { SmartMedia, type SmartMediaProps } from "./smart-media";
 
 
 
-type  ImageLayoutProps = DistributiveOmit<SmartMediaProps, 'fill' | 'className' | 'sizes'> & {isPrimary?: boolean}
+export type  ImageLayoutProps = DistributiveOmit<SmartMediaProps, 'fill' | 'className' | 'sizes'> & {isPrimary?: boolean}
 
 export function DynamicImageGrid ({images}:{images: ImageLayoutProps[]}) {
     const isPrimary = images.find((image) => image.isPrimary) || images[0]

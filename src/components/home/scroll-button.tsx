@@ -3,7 +3,13 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react"
 
-export function ChevronMove ({children}:{children:React.ReactNode}) {
+export function ChevronMove ({
+    children, 
+    className
+}:{
+    children:React.ReactNode, 
+    className?: string,
+}) {
     const scrollRef = useRef(null);
 
     function scrollRight () {
@@ -21,9 +27,7 @@ export function ChevronMove ({children}:{children:React.ReactNode}) {
     }
 
     return (
-        <div className="relative"
-        ref = {scrollRef}
-        >
+        <div className={`${className}`} ref = {scrollRef}>
             {children}
             <button 
             type="submit" 

@@ -62,7 +62,7 @@ export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
     return (
         <div className="absolute inset-0 z-0 flex flex-row overflow-x-auto snap-x snap-mandatory no-scrollbar">
             
-            {primaryImage && <div className="relative w-full h-full snap-0 snap-center overflow-hidden">
+            {primaryImage && <div className="relative w-full h-full shrink-0 snap-0 snap-center overflow-hidden">
                 <SmartMedia
                 {...primaryImage}
                 fill 
@@ -77,7 +77,7 @@ export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
                 const {isPrimary, ...image} = item
                 return (
                     <div key={image.sourceType === 'cloudinary'? image.publicId: image.imageSrc}
-                    className="relative w-full h-full snap-0 snap-center overflow-hidden"
+                    className="relative w-full h-full shrink-0 snap-0 snap-center overflow-hidden"
                     >
                         <SmartMedia 
                         {...image}

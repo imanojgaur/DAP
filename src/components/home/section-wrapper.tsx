@@ -57,7 +57,7 @@ export function SectionWrapper({
     );
 
     return (
-        <section className={`relative w-full max-w-[1600px] ${headerData?.bodyLayoutClass} foverflow-hidden`}>
+        <section className={`relative w-full max-w-[1600px] ${headerData?.bodyLayoutClass}`}>
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-3xl opacity-50 -z-10 pointer-events-none" />
 
             <div className={`group flex flex-col md:flex-row md:items-end justify-between md:mb-3 pb-4 cursor-default ${headerData?.headerLayoutClass}`}>
@@ -128,7 +128,7 @@ export function SectionWrapper({
                 </div>
             </div>
             
-            <div>
+            <div className="relative w-full h-full">
                 {children}
             </div>
         </section>

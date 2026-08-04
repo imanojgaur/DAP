@@ -177,7 +177,10 @@ export default async function HomePage() {
 						endPoint={`/collectons/${catObj.slug}`}
 						className={catObj.className}
 						overlayContent={<OverlayText title={catObj.title} subtitle={catObj.subtitle} callToActionText={catObj.callToActionText} />}
-						imgScroller={<ChevronMove><HorizontalImgScroller images={catObj.images} /></ChevronMove>}
+						imgScroller={
+							<ChevronMove className="absolute inset-0">
+								<HorizontalImgScroller images={catObj.images} />
+							</ChevronMove>}
 						/>))}
 					</HorizontalCardScroller>		
 				</ChevronMove>

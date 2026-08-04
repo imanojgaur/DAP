@@ -109,6 +109,17 @@ export default async function HomePage() {
 		headerLayoutClass: 'px-5 md:px-8 md:pt-6'
     };
 
+	const chevronIndividualCard = {
+		layoutClass: 'absolute inset-0',
+		leftChevron: 'right-8 bottom-8 rounded-full', 
+		rightChevron: 'right-20 bottom-8 rounded-full'
+	}
+
+	const chevronBelt = {
+		leftChevron: 'right-10 bottom-20 roundedfull',
+		rightChevron: 'left-10 bottom-20 roundedfull'
+	}
+
 
 	//2. Home feature Products Belt data 
 	const featureProducts = await getHomeProduct('home');
@@ -169,7 +180,10 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper 
 			headerData={categoryHeaderData}>
-				<ChevronMove>
+				<ChevronMove
+				rightChevron={chevronBelt.rightChevron}
+				leftChevron={chevronBelt.leftChevron}
+				>
 					<HorizontalCardScroller>
 						{categoryConfig?.map((catObj)=>(
 						<ImageCover
@@ -178,7 +192,11 @@ export default async function HomePage() {
 						className={catObj.className}
 						overlayContent={<OverlayText title={catObj.title} subtitle={catObj.subtitle} callToActionText={catObj.callToActionText} />}
 						imgScroller={
-							<ChevronMove className="absolute inset-0">
+							<ChevronMove 
+							layoutClass={chevronIndividualCard.layoutClass}
+							rightChevron={chevronIndividualCard.rightChevron}
+							leftChevron={chevronIndividualCard.leftChevron}
+							>
 								<HorizontalImgScroller images={catObj.images} />
 							</ChevronMove>}
 						/>))}

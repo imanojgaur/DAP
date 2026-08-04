@@ -5,10 +5,14 @@ import { useRef } from "react"
 
 export function ChevronMove ({
     children, 
-    className
+    layoutClass,
+    leftChevron,
+    rightChevron,
 }:{
     children:React.ReactNode, 
-    className?: string,
+    layoutClass?: string,
+    leftChevron?: string, 
+    rightChevron?: string,
 }) {
     const scrollRef = useRef(null);
 
@@ -27,18 +31,18 @@ export function ChevronMove ({
     }
 
     return (
-        <div className={`${className}`} ref = {scrollRef}>
+        <div className={`${layoutClass}`} ref = {scrollRef}>
             {children}
             <button 
             type="submit" 
             onClick={scrollRight}
-            className="absolute bg-white-500 rounded-full w-40px h-auto right-8 bottom-8"
-            ><ChevronRight/></button>
+            className={` absolute bg-[#F4F4F4] w-10 flex justify-center items-center h-10 ${rightChevron}`}
+            ><ChevronRight /></button>
 
             <button 
             type="submit"
             onClick={scrollLeft}
-            className='absolute bg-white-500 rounded-full w-400px h-auto left-8 bottom-8'
+            className={`absolute  bg-[#F4F4F4] w-10 flex justify-center items-center h-10 ${leftChevron}`}
             ><ChevronLeft /></button>
         </div>
     )

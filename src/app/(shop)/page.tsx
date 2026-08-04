@@ -78,7 +78,7 @@ export default async function HomePage() {
 
 		return {
 			...obj, 
-			images: imagesArr? imagesArr: []
+			images: imagesArr? imagesArr: [] //fallback if images array is undefined 
 		}
 	})
 
@@ -171,13 +171,14 @@ export default async function HomePage() {
 			headerData={categoryHeaderData}>
 				<ChevronMove>
 					<HorizontalCardScroller>
-
+						{categoryConfig?.map((catObj)=>(
 						<ImageCover
-						endPoint=""
-						className=""
-						overlayContent={<OverlayText title="" subtitle="" callToActionText="" />}
-						imgScroller={<ChevronMove><HorizontalImgScroller images={} /></ChevronMove>}
-						/>
+						key={catObj.title}
+						endPoint={`/collectons/${catObj.slug}`}
+						className={catObj.className}
+						overlayContent={<OverlayText title={catObj.title} subtitle={catObj.subtitle} callToActionText={catObj.callToActionText} />}
+						imgScroller={<ChevronMove><HorizontalImgScroller images={catObj.images} /></ChevronMove>}
+						/>))}
 					</HorizontalCardScroller>		
 				</ChevronMove>
 			</SectionWrapper>

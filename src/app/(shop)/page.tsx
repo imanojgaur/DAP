@@ -116,8 +116,8 @@ export default async function HomePage() {
 	}
 
 	const chevronBelt = {
-		leftChevron: 'right-10 bottom-20 roundedfull',
-		rightChevron: 'left-10 bottom-20 roundedfull'
+		leftChevron: 'right-10 bottom-50 rounded-full z-10',
+		rightChevron: 'left-10 bottom-50 rounded-full z-10'
 	}
 
 

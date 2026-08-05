@@ -58,7 +58,7 @@ export function DynamicImageGrid ({images}:{images: ImageLayoutProps[]}) {
 export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
     const {isPrimary, ...primaryImage} = images.find((image) => image.isPrimary) || images[0]
     const secondaryImages = images.filter((image) => !image.isPrimary)
-    console.log(primaryImage, secondaryImages)
+   
     return (
         <div className="absolute inset-0 z-0 flex flex-row overflow-x-auto snap-x snap-mandatory no-scrollbar">
             

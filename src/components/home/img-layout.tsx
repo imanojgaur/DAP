@@ -84,7 +84,7 @@ export function DynamicHorizontalImgRaw({
 	const secondaryImages = images.filter((image) => !image.isPrimary);
 
 	return (
-		<Carousel className="absolute inset-0 z-0 w-full h-full">
+		<Carousel className="absolute inset-0 w-full h-full">
 			<CarouselContent className="w-full h-full pl-0 -ml-0">
 				<CarouselItem className="relative w-full h-full pl-0 overflow-hidden">
 					{primaryImage && (
@@ -119,11 +119,26 @@ export function DynamicHorizontalImgRaw({
 							</CarouselItem>
 						);
 					})}
+				</CarouselContent>
 				{/* Gradient overlay  */}
-				<div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 group-hover:backdrop-blur-[2px] transition-all duration-700" />
-				<CarouselPrevious className="opacity-0 group-hover:opacity-100 bottom-8 left-8 flex justify-content item-center" />
-				<CarouselNext className="opacity-0 group-hover:opacity-100 bottom-8 right-8 flex justify-content item-center" />
-			</CarouselContent>
+				<div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 group-hover:backdrop-blur-[2px] transition-all duration-700" />
+				
+				<CarouselPrevious 
+				className="absolute z-40 
+				opacity-0 group-hover:opacity-100 
+				transition-all duration-300 disabled:hidden 
+				top-1/2 -translate-y-1/2 left-4  
+				flex justify-center items-center
+				bg-white/20 hover:bg-white text-white hover:text-black border-none backdrop-blur-sm
+				" />
+				<CarouselNext 
+				className="absolute z-40 
+				opacity-0 group-hover:opacity-100 
+				transition-all duration-300 disabled:hidden 
+				top-1/2 -translate-y-1/2 right-4  
+				flex justify-center items-center
+				bg-white/20 hover:bg-white text-white hover:text-black border-none backdrop-blur-sm
+				" />
 		</Carousel>
 	);
 }

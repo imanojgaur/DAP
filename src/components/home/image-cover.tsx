@@ -106,7 +106,7 @@ export function OverlayText({
 			</span>
 
 			{/* Heading */}
-			<h3 className="text-2xl md:text-4xl font-black italic text-white uppercase tracking-tighter leading-none mb-3 drop-shadow-lg transition-all duration-1000 delay-300 ease-out group-hover:delay-0 group-hover:duration-500 group-hover:translate-x-2 group-hover:tracking-[0.05em]">
+			<h3 className="transform origin-left text-2xl md:text-4xl font-black italic text-white uppercase tracking-tighter leading-none mb-3 drop-shadow-lg transition-all duration-1000 delay-300 ease-out group-hover:delay-0 group-hover:duration-500 group-hover:translate-x-2 group-hover:scale-105">
 				{title}
 			</h3>
 

@@ -259,11 +259,11 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper headerData={categoryHeaderData}>
 				<HomeCarousel>
-					<CarouselContent className="flex">
+					<CarouselContent className="flex -ml-4 py-6">
 						{categoryConfig?.map((catObj) => (
 							<CarouselItem
 								key={catObj.title}
-								className="basis-1/2 pl-8 lg:basis-1/4 w-full h-full"
+								className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4"
 							>
 								<ImageCover
 									key={catObj.title}

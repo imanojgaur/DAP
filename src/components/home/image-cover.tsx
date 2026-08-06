@@ -45,7 +45,7 @@ export function ImageCover({
 			<div
 				className={`
                 group relative z-10 hover:z-50 transform-gpu break-inside-avoid 
-                shrink-0 min-w-[40vw] w-[222px] md:min-w-[23vw] md:flex-1
+                w-full h-full md:flex-1
                 mb-3 md:mb-0   
                 ${className}
          

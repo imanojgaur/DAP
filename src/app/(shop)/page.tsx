@@ -16,7 +16,8 @@ import {
 import { getHomeCategories, getHomeProduct } from "@/data";
 // import { getHomeCategories } from "@/data-sql"
 import { currentYear } from "@/utilities";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { HomeCarousel } from "@/components/home/carousel-wrapper";
 
 interface CategoryConfig {
 	title: string;
@@ -252,8 +253,8 @@ export default async function HomePage() {
 
 			{/* 2. Navigation Section */}
 			<SectionWrapper headerData={categoryHeaderData}>
-				<Carousel className="w-full h-full">
-					<CarouselContent className="flex flex-row overflow-x-auto snap-x snap-mandatory no-scrollbar">
+				<HomeCarousel>
+			        <CarouselContent className="flex">
 						{categoryConfig?.map((catObj) => (
 							<CarouselItem key={catObj.title} className="basis-1/2 pl-8 lg:basis-1/4 w-full h-full">
 								<ImageCover
@@ -274,7 +275,7 @@ export default async function HomePage() {
 				    </CarouselContent>
 					<CarouselPrevious className="absolute bottom-8 left-8 flex justify-content item-center" />
 					<CarouselNext className="absolute z-10 bottom-8 right-8 flex justify-content items-center" />
-				</Carousel>
+				</HomeCarousel>
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}

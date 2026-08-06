@@ -1,6 +1,6 @@
 import type { DistributiveOmit } from "@/types";
 import { SmartMedia, type SmartMediaProps } from "./smart-media";
-
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 export type ImageLayoutProps = DistributiveOmit<
 	SmartMediaProps,
 	"fill" | "className" | "sizes"
@@ -78,42 +78,45 @@ export function DynamicHorizontalImgRaw({
 	const secondaryImages = images.filter((image) => !image.isPrimary);
 
 	return (
-		<div className="absolute inset-0 z-0 flex flex-row overflow-x-auto snap-x snap-mandatory no-scrollbar">
-			{primaryImage && (
-				<div className="relative w-full h-full shrink-0 snap-0 snap-center overflow-hidden">
-					<SmartMedia
-						{...primaryImage}
-						fill
-						className="object-cover"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					/>
-				</div>
-			)}
+		<Carousel className="absolute inset-0 z-0 w-full h-full">
+            <CarouselContent className="w-full h-full pl-0 -ml-0">
+                <CarouselItem className="relative w-full h-full pl-0 overflow-hidden">
+					{primaryImage && (
+						<SmartMedia
+							{...primaryImage}
+							fill
+							className="object-cover"
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+							/>
+					)}
+				</CarouselItem>
 
 			{secondaryImages.length > 0 &&
 				secondaryImages.map((item) => {
 					// Give Image a physical wrapper to not let stack
 					const { isPrimary, ...image } = item;
 					return (
-						<div
-							key={
-								image.sourceType === "cloudinary"
-									? image.publicId
-									: image.imageSrc
-							}
-							className="relative w-full h-full shrink-0 snap-0 snap-center overflow-hidden"
-						>
+						<CarouselItem 
+						className="relative w-full h-full pl-0 overflow-hidden"
+						key={
+							image.sourceType === 'cloudinary'
+							? image.publicId
+							: image.imageSrc
+						}>
 							<SmartMedia
 								{...image}
 								fill
 								className="object-cover transform-gpu transition-transform duration-[2000ms] ease-out group-hover:scale-110"
 								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-							/>
-						</div>
+								/>
+						</CarouselItem>
 					);
 				})}
 			{/* Gradient overlay  */}
 			<div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 group-hover:backdrop-blur-[2px] transition-all duration-700" />
-		</div>
+			<CarouselPrevious className="opacity-0 group-hover:opacity-100 bottom-8 left-8 flex justify-content item-center"/>
+			<CarouselNext className="opacity-0 group-hover:opacity-100 bottom-8 right-8 flex justify-content item-center"/>
+			</CarouselContent>
+		</Carousel>
 	);
 }

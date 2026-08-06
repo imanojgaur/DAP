@@ -253,9 +253,9 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper headerData={categoryHeaderData}>
 				<Carousel className="w-full h-full">
-					<CarouselContent className="flex flex-row overflow-x-auto">
+					<CarouselContent className="flex flex-row overflow-x-auto snap-x snap-mandatory no-scrollbar">
 						{categoryConfig?.map((catObj) => (
-							<CarouselItem key={catObj.title} className="basis-1/2 pl-8 lg:basis-1/4">
+							<CarouselItem key={catObj.title} className="basis-1/2 pl-8 lg:basis-1/4 w-full h-full">
 								<ImageCover
 								key={catObj.title}
 								endPoint={`/collectons/${catObj.slug}`}

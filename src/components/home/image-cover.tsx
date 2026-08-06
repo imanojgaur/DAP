@@ -56,27 +56,32 @@ export function ImageCover({
 				<div className="absolute inset-0 rounded-[1.5rem] md:rounded-[2.5rem] shadow-[0_0_10px_10px_rgba(16,185,129,0.5)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none -z-10" />
 
 				{/* 3. THE ACTUAL CARD  */}
-				<Link
-					href={endPoint}
-					className="
+				<div
+					className="group
                     relative flex flex-col justify-end w-full h-full 
                     bg-gray-900 overflow-hidden p-6 md:p-10
                     rounded-[1.5rem] md:rounded-[2.5rem] 
                     min-h-[250px] md:!min-h-[350px]
                     shadow-lg
-                    focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500
                 "
 				>
-					{/* Background Iage */}
+					{/* Background Image Carousel*/}
 					{dynamicImgGrid ? dynamicImgGrid : imgScroller}
 
+					{/* {sibling link} */}
+					<Link 
+					href={endPoint}
+					className="absolute inset-0 z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500"
+					>
+						<span className="sr-only">Go to {endPoint}</span>
+					</Link>
 					{/* Content Overlay*/}
 					{overlayContent && (
-						<div className="relative z-10 transform transition-transform duration-700 ease-out group-hover:-translate-y-2">
+						<div className="relative z-20 pointer-events-none transform transition-transform duration-700 ease-out group-hover:-translate-y-2">
 							{overlayContent}
 						</div>
 					)}
-				</Link>
+				</div>
 			</div>
 			{productFragment && <div className="mt-2 px-2">{productFragment}</div>}
 		</>

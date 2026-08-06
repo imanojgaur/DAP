@@ -1,8 +1,8 @@
 // engine 1: Generate Desirable rows and no.of card each row
-import {
-	GlobalRoundEdgeCard,
-	type GlobalRoundEdgeCardProps,
-} from "./global-round-edge-card";
+// import {
+// 	GlobalRoundEdgeCard,
+// 	type GlobalRoundEdgeCardProps,
+// } from "./global-round-edge-card";
 
 interface GenerateCardLayoutProps {
 	categoryDataArray: GlobalRoundEdgeCardProps[];

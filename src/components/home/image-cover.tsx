@@ -122,11 +122,3 @@ export function OverlayText({title, subtitle, callToActionText}: OverlayTextProp
     );
 }
 
-export function HorizontalCardScroller({children}:{children: React.ReactNode}){
-    return (
-        <div className="flex flex-row gap-6 overflow-x-auto no-scrollbar px-3 md:px-5 md:py-6"> 
-            {children}
-        </div>
-    )
-
-}

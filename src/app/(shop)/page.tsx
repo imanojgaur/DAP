@@ -1,12 +1,12 @@
 import { EditorialLayout, type EDITORIAL_CARDS_PROPS } from "@/components/home/editorial-section";
-import { HorizontalCardScroller, ImageCover, OverlayText } from '@/components/home/image-cover'
+import { ImageCover, OverlayText } from '@/components/home/image-cover'
 import { HomeHero } from "@/components/home/hero";
 import { SectionWrapper, type HeaderData, type MetaDataItem } from "@/components/home/section-wrapper";
 import { getHomeCategories, getHomeProduct } from "@/data";
 // import { getHomeCategories } from "@/data-sql"
 import { currentYear } from "@/utilities";
-import { HorizontalImgScroller, type ImageLayoutProps } from "@/components/home/img-layout";
-import { ChevronMove } from "@/components/home/scroll-button";
+import { DynamicHorizontalImgRaw, type ImageLayoutProps } from "@/components/home/img-layout";
+
 
 interface CategoryConfig {
 	title: string, 
@@ -109,18 +109,6 @@ export default async function HomePage() {
 		headerLayoutClass: 'px-5 md:px-8 md:pt-6'
     };
 
-	const chevronIndividualCard = {
-		layoutClass: 'absolute inset-0',
-		leftChevron: 'right-8 bottom-8 rounded-full', 
-		rightChevron: 'right-20 bottom-8 rounded-full'
-	}
-
-	const chevronBelt = {
-		leftChevron: 'right-10 bottom-50 rounded-full z-10',
-		rightChevron: 'left-10 bottom-50 rounded-full z-10'
-	}
-
-
 	//2. Home feature Products Belt data 
 	const featureProducts = await getHomeProduct('home');
 	const productHeader: HeaderData = {
@@ -180,11 +168,8 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper 
 			headerData={categoryHeaderData}>
-				<ChevronMove
-				rightChevron={chevronBelt.rightChevron}
-				leftChevron={chevronBelt.leftChevron}
-				>
-					<HorizontalCardScroller>
+
+					
 						{categoryConfig?.map((catObj)=>(
 						<ImageCover
 						key={catObj.title}
@@ -192,16 +177,12 @@ export default async function HomePage() {
 						className={catObj.className}
 						overlayContent={<OverlayText title={catObj.title} subtitle={catObj.subtitle} callToActionText={catObj.callToActionText} />}
 						imgScroller={
-							<ChevronMove 
-							layoutClass={chevronIndividualCard.layoutClass}
-							rightChevron={chevronIndividualCard.rightChevron}
-							leftChevron={chevronIndividualCard.leftChevron}
-							>
-								<HorizontalImgScroller images={catObj.images} />
-							</ChevronMove>}
+					
+								<DynamicHorizontalImgRaw images={catObj.images} /> }
+							
 						/>))}
-					</HorizontalCardScroller>		
-				</ChevronMove>
+					
+				
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}

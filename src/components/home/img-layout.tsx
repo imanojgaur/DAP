@@ -55,7 +55,7 @@ export function DynamicImageGrid ({images}:{images: ImageLayoutProps[]}) {
     )
 }
 
-export function HorizontalImgScroller ({images}:{images: ImageLayoutProps[]}) {
+export function DynamicHorizontalImgRaw ({images}:{images: ImageLayoutProps[]}) {
     const {isPrimary, ...primaryImage} = images.find((image) => image.isPrimary) || images[0]
     const secondaryImages = images.filter((image) => !image.isPrimary)
    

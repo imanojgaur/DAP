@@ -1,3 +1,4 @@
+import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import {
 	type EDITORIAL_CARDS_PROPS,
 	EditorialLayout,
@@ -13,11 +14,15 @@ import {
 	type MetaDataItem,
 	SectionWrapper,
 } from "@/components/home/section-wrapper";
+import {
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@/components/ui/carousel";
 import { getHomeCategories, getHomeProduct } from "@/data";
 // import { getHomeCategories } from "@/data-sql"
 import { currentYear } from "@/utilities";
-import { CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { HomeCarousel } from "@/components/home/carousel-wrapper";
 
 interface CategoryConfig {
 	title: string;
@@ -254,25 +259,30 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper headerData={categoryHeaderData}>
 				<HomeCarousel>
-			        <CarouselContent className="flex">
+					<CarouselContent className="flex">
 						{categoryConfig?.map((catObj) => (
-							<CarouselItem key={catObj.title} className="basis-1/2 pl-8 lg:basis-1/4 w-full h-full">
-								<ImageCover
+							<CarouselItem
 								key={catObj.title}
-								endPoint={`/collectons/${catObj.slug}`}
-								className={catObj.className}
-								overlayContent={
-									<OverlayText
-									title={catObj.title}
-									subtitle={catObj.subtitle}
-									callToActionText={catObj.callToActionText}
-									/>
-								}
-								imgScroller={<DynamicHorizontalImgRaw images={catObj.images} />}
+								className="basis-1/2 pl-8 lg:basis-1/4 w-full h-full"
+							>
+								<ImageCover
+									key={catObj.title}
+									endPoint={`/collectons/${catObj.slug}`}
+									className={catObj.className}
+									overlayContent={
+										<OverlayText
+											title={catObj.title}
+											subtitle={catObj.subtitle}
+											callToActionText={catObj.callToActionText}
+										/>
+									}
+									imgScroller={
+										<DynamicHorizontalImgRaw images={catObj.images} />
+									}
 								/>
 							</CarouselItem>
 						))}
-				    </CarouselContent>
+					</CarouselContent>
 					<CarouselPrevious className="absolute bottom-8 left-8 flex justify-content item-center" />
 					<CarouselNext className="absolute z-10 bottom-8 right-8 flex justify-content items-center" />
 				</HomeCarousel>

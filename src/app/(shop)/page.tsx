@@ -283,8 +283,8 @@ export default async function HomePage() {
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious className="absolute bottom-8 left-8 flex justify-content item-center" />
-					<CarouselNext className="absolute z-10 bottom-8 right-8 flex justify-content items-center" />
+					<CarouselPrevious className="absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
+					<CarouselNext className="absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
 				</HomeCarousel>
 			</SectionWrapper>
 

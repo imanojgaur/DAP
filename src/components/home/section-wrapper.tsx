@@ -1,4 +1,3 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
 export type MetaDataEffect = "default" | "emerald-text" | "emerald-badge";
 
 export interface MetaDataItem {

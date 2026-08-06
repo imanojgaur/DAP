@@ -137,8 +137,6 @@ export const featHeader: HeaderData = {
 };
 
 
-
-
 //Editorial Config
 export const edtheader: HeaderData = {
         title: "The Promise",

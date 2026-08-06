@@ -1,16 +1,21 @@
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
-import {
-	EditorialLayout,
-} from "@/components/home/editorial-section";
+import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
+// import { getHomeCategories } from "@/data-sql"
+import {
+	baseCategoryConfig,
+	catHeader,
+	EDITORIAL_CARDS_DATA,
+	edtheader,
+	edtMetaData,
+	images,
+} from "@/components/home/home.confi";
 import { ImageCover, OverlayText } from "@/components/home/image-cover";
 import {
 	DynamicHorizontalImgRaw,
 	type ImageLayoutProps,
 } from "@/components/home/img-layout";
-import {
-	SectionWrapper,
-} from "@/components/home/section-wrapper";
+import { SectionWrapper } from "@/components/home/section-wrapper";
 import {
 	CarouselContent,
 	CarouselItem,
@@ -18,8 +23,6 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getHomeCategories, getHomeProduct } from "@/data";
-// import { getHomeCategories } from "@/data-sql"
-import { images, catHeader, baseCategoryConfig, edtMetaData, edtheader, EDITORIAL_CARDS_DATA } from "@/components/home/home.confi";
 
 interface CategoryConfig {
 	title: string;
@@ -31,8 +34,7 @@ interface CategoryConfig {
 }
 
 export default async function HomePage() {
-
-	// HANDLE CATEGORY DATA AND PASS SAFELY 
+	// HANDLE CATEGORY DATA AND PASS SAFELY
 	//Categories fetch db
 	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug);
 	const categoriesdbData = await getHomeCategories(categorySluges);
@@ -69,10 +71,8 @@ export default async function HomePage() {
 		},
 	);
 
-
-	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY 
+	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
 	const featProducts = await getHomeProduct("home");
-	
 
 	return (
 		<div className="min-h-screen bg-white">

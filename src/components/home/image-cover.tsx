@@ -69,9 +69,9 @@ export function ImageCover({
 					{dynamicImgGrid ? dynamicImgGrid : imgScroller}
 
 					{/* {sibling link} */}
-					<Link 
-					href={endPoint}
-					className="absolute inset-0 z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500"
+					<Link
+						href={endPoint}
+						className="absolute inset-0 z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500"
 					>
 						<span className="sr-only">Go to {endPoint}</span>
 					</Link>

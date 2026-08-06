@@ -7,7 +7,7 @@ export function HomeCarousel({ children }: { children: React.ReactNode }) {
 		<Carousel
 			className="w-full h-full relative"
 			opts={{
-				align: 'start', // start card scrolling at start
+				align: "start", // start card scrolling at start
 				dragFree: true, // ensure native browser scrolling
 				slidesToScroll: 1,
 			}}

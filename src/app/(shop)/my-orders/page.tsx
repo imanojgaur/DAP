@@ -14,7 +14,6 @@ const STATUS_STEPS = [
 ];
 
 export default async function MyOrdersPage() {
-
 	return (
 		<div className="max-w-3xl mx-auto p-6 space-y-6">
 			<h1 className="text-3xl font-bold">My Orders</h1>

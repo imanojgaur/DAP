@@ -1,1 +1,1 @@
-export { getHomeCategories, getHomeProduct } from "./home"
+export { getHomeCategories, getHomeProduct } from "./home";

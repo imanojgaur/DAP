@@ -28,8 +28,6 @@ import { ProfileEditorSheet } from "./profile-editor-sheet";
 type NavLevel = { title: string; items: NavItem[] };
 
 export default function MobileNav() {
-
-
 	return (
 		<Sheet onOpenChange={handleOpenChange}>
 			<SheetTrigger asChild>

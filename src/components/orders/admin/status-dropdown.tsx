@@ -14,21 +14,21 @@ import type { OrderStatus } from "../../../../generated/prisma/client";
 export function StatusDropdown({
 
 	return (
-		<Select
-			defaultValue={currentStatus}
-			onValueChange={handleStatusChange}
-			disabled={isPending}
-		>
-			<SelectTrigger className="w-[180px]">
-				<SelectValue placeholder="Select status" />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectItem value={`PENDING`}>Pending</SelectItem>
-				<SelectItem value={`PROCESSING`}>Processing</SelectItem>
-				<SelectItem value={`SHIPPED`}>Shipped</SelectItem>
-				<SelectItem value={`DELIVERED`}>Delivered</SelectItem>
-				<SelectItem value={`CANCELLED`}>Cancelled</SelectItem>
-			</SelectContent>
-		</Select>
-	);
+<Select
+	defaultValue={currentStatus}
+	onValueChange={handleStatusChange}
+	disabled={isPending}
+>
+	<SelectTrigger className="w-[180px]">
+		<SelectValue placeholder="Select status" />
+	</SelectTrigger>
+	<SelectContent>
+		<SelectItem value={`PENDING`}>Pending</SelectItem>
+		<SelectItem value={`PROCESSING`}>Processing</SelectItem>
+		<SelectItem value={`SHIPPED`}>Shipped</SelectItem>
+		<SelectItem value={`DELIVERED`}>Delivered</SelectItem>
+		<SelectItem value={`CANCELLED`}>Cancelled</SelectItem>
+	</SelectContent>
+</Select>;
+)
 }

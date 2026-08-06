@@ -6,10 +6,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-
-
 export function OptionCard
-	return (
+return (
 		<Card
 			className={`cursor-pointer transition-all hover:border-green-500 ${
 				isSelected

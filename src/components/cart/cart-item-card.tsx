@@ -9,8 +9,6 @@ import { formatPrice } from "@/lib/backend";
 import { type CartItem, useCartStore } from "@/store/cart-store";
 
 export function CartItemCard({ item }: { item: CartItem }) {
-
-
 	return (
 		<Card className="overflow-hidden border-gray-100 shadow-sm hover:shadow-md transition-all">
 			{/* --- MOBILE STRIP VIEW (Visible only on small screens) --- */}

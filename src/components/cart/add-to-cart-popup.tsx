@@ -9,8 +9,6 @@ import { formatPrice } from "@/lib/backend";
 import { useCartStore } from "@/store/cart-store";
 
 export function CartNotification() {
-
-
 	return (
 		<>
 			{/* Dark overlay for mobile only */}

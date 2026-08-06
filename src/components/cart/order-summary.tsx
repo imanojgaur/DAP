@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/backend"; // Assuming you have this helper
 import { useCartStore } from "@/store/cart-store";
 
-	return (
+return (
 		<Card className="w-full border-gray-200 shadow-sm sticky top-24">
 			<CardHeader>
 				<CardTitle className="text-xl font-bold">Order Summary</CardTitle>

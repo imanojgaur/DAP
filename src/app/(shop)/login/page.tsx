@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
-
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-50/50 px-4">
 			<div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8">

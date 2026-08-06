@@ -6,8 +6,6 @@ import { ROUTES } from "@/lib/backend"; // Adjust if needed
 import { useCartStore } from "@/store/cart-store";
 
 export function CartDrawer() {
-
-
 	return (
 		<Link
 			href={ROUTES.CART || "/cart"}

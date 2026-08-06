@@ -2,7 +2,6 @@ import Link from "next/link";
 import { currentYear } from "@/utilities";
 
 export function Footer() {
-	
 	return (
 		<footer className="w-full bg-white border-t border-gray-100 pb-12 pt-8">
 			{/* Using max-w-7xl to match standard page gutters for a "good gap" */}

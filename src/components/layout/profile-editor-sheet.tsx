@@ -12,7 +12,6 @@ import {
 import { ProfileForm } from "./profile-form";
 
 export function ProfileEditorSheet({ user }: { user: any }) {
-
 	return (
 		<Sheet>
 			<SheetTrigger asChild>

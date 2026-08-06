@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function OrderSuccessPopup() {
-
-
 	return (
 		<>
 			{/* Dark overlay to focus on the success message */}

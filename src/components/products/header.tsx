@@ -6,7 +6,7 @@ import {
 	formatPrice,
 } from "@/lib/backend";
 
-	return (
+return (
 		<div className="flex flex-col gap-2 py-4">
 			{/* Title */}
 			<h1 className="text-l sm:text-2xl font-bold tracking-tight text-gray-900 capitalize">

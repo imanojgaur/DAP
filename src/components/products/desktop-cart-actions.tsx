@@ -4,9 +4,7 @@ import { ShoppingCart, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart-store"; // 1. Updated import
 
-
-
-	return (
+return (
 		<div className="hidden md:flex items-center gap-4 py-6 border-b border-gray-100">
 			<Button
 				size="lg"

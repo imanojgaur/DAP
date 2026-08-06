@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/backend";
 import { useCartStore } from "@/store/cart-store"; // 1. Updated import
 
-
 export function MobileCartBar(
 
-	return (
+return (
 		<div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:hidden">
 			<div className="flex flex-col max-w-[50%]">
 				<span className="text-sm font-medium text-gray-500 line-clamp-1">

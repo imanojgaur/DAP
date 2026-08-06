@@ -14,17 +14,16 @@ import {
 import type { ProductImage } from "../../../generated/prisma/client";
 
 export function ProductGallery() {
-	
-		return (
-			<div className="w-full aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">
-				<p className="text-gray-400 font-medium tracking-wide">
-					No image available
-				</p>
-			</div>
-		);
-	}
-
 	return (
+		<div className="w-full aspect-square bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">
+			<p className="text-gray-400 font-medium tracking-wide">
+				No image available
+			</p>
+		</div>
+	);
+}
+
+return (
 		// 1. Framer Motion Wrapper: Smooth fade-in and slide-up on page load
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}

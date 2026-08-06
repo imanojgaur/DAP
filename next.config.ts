@@ -4,7 +4,7 @@ const config: NextConfig = {
 	experimental: {
 		globalNotFound: true,
 	},
-	
+
 	images: {
 		remotePatterns: [
 			{

@@ -1,1 +1,1 @@
-export { type categoriesData, getHomeCategories } from "./home"
+export { type categoriesData, getHomeCategories } from "./home";

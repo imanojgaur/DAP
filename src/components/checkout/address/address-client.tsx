@@ -17,84 +17,82 @@ import { useCartStore } from "@/store/cart-store";
 export function AddressClient({
 
 	return (
-		<div className="pb-24 md:pb-12 text-gray-900">
-			{/* MOBILE HEADER */}
-			<div className="md:hidden flex items-center bg-white h-14 px-4 border-b border-gray-100 sticky top-0 z-50">
-				<button
-					type="button"
-					onClick={() => (step === "payment" ? setStep("address") : null)}
-					className="p-2 -ml-2"
-				>
-					<ChevronLeft className="h-6 w-6" />
-				</button>
-				<h1 className="text-lg font-medium ml-2">
-					{step === "address" ? "Select Address" : "Payment"}
-				</h1>
-			</div>
+<div className="pb-24 md:pb-12 text-gray-900">
+	{/* MOBILE HEADER */}
+	<div className="md:hidden flex items-center bg-white h-14 px-4 border-b border-gray-100 sticky top-0 z-50">
+		<button
+			type="button"
+			onClick={() => (step === "payment" ? setStep("address") : null)}
+			className="p-2 -ml-2"
+		>
+			<ChevronLeft className="h-6 w-6" />
+		</button>
+		<h1 className="text-lg font-medium ml-2">
+			{step === "address" ? "Select Address" : "Payment"}
+		</h1>
+	</div>
 
-			<div className="max-w-6xl mx-auto md:px-8 md:pt-12 flex flex-col md:flex-row gap-8 lg:gap-16">
-				{/* LEFT COLUMN: Main Flow */}
-				<div className="flex-1 flex flex-col">
-					{step === "address" ? (
-						<>
-							<div className="hidden md:block mb-8">
-								<h2 className="text-2xl font-bold tracking-tight mb-1">
-									Choose Address
-								</h2>
-								<p className="text-sm text-gray-500">
-									Select a delivery location
-								</p>
-							</div>
-
-							<MobileAddressBlock
-								user={user}
-								addresses={initialAddresses}
-								selectedId={selectedAddressId}
-							/>
-
-							<DesktopAddressGrid
-								user={user}
-								addresses={initialAddresses}
-								selectedId={selectedAddressId}
-								onSelect={setSelectedAddressId}
-								onConfirm={() => setStep("payment")} // Moves to payment
-							/>
-						</>
-					) : (
-						<div className="bg-white p-4 md:p-8 md:rounded-2xl md:border border-gray-100">
-							<div className="flex justify-between items-center mb-6">
-								<h2 className="text-xl md:text-2xl font-bold">
-									Select payment option
-								</h2>
-								<button
-									type="button"
-									onClick={() => setStep("address")}
-									className="text-sm font-medium text-blue-600 underline"
-								>
-									Change Address
-								</button>
-							</div>
-							<PaymentAccordion addressId={selectedAddressId!} />
-						</div>
-					)}
-
-					{/* Mobile Only Accordions */}
-					<div className="md:hidden">
-						<OrderDetailsAccordions items={items} total={total} />
+	<div className="max-w-6xl mx-auto md:px-8 md:pt-12 flex flex-col md:flex-row gap-8 lg:gap-16">
+		{/* LEFT COLUMN: Main Flow */}
+		<div className="flex-1 flex flex-col">
+			{step === "address" ? (
+				<>
+					<div className="hidden md:block mb-8">
+						<h2 className="text-2xl font-bold tracking-tight mb-1">
+							Choose Address
+						</h2>
+						<p className="text-sm text-gray-500">Select a delivery location</p>
 					</div>
-				</div>
 
-				{/* RIGHT COLUMN: Desktop Sticky Sidebar */}
-				<div className="hidden md:block w-[380px] shrink-0">
-					<div className="sticky top-24 bg-white p-6 rounded-2xl border border-gray-100">
-						<h2 className="text-xl font-bold mb-4">Order Summary</h2>
-						{/* We use the same accordion component here for desktop */}
-						<OrderDetailsAccordions items={items} total={total} isDesktop />
+					<MobileAddressBlock
+						user={user}
+						addresses={initialAddresses}
+						selectedId={selectedAddressId}
+					/>
+
+					<DesktopAddressGrid
+						user={user}
+						addresses={initialAddresses}
+						selectedId={selectedAddressId}
+						onSelect={setSelectedAddressId}
+						onConfirm={() => setStep("payment")} // Moves to payment
+					/>
+				</>
+			) : (
+				<div className="bg-white p-4 md:p-8 md:rounded-2xl md:border border-gray-100">
+					<div className="flex justify-between items-center mb-6">
+						<h2 className="text-xl md:text-2xl font-bold">
+							Select payment option
+						</h2>
+						<button
+							type="button"
+							onClick={() => setStep("address")}
+							className="text-sm font-medium text-blue-600 underline"
+						>
+							Change Address
+						</button>
 					</div>
+					<PaymentAccordion addressId={selectedAddressId!} />
 				</div>
+			)}
+
+			{/* Mobile Only Accordions */}
+			<div className="md:hidden">
+				<OrderDetailsAccordions items={items} total={total} />
 			</div>
 		</div>
-	);
+
+		{/* RIGHT COLUMN: Desktop Sticky Sidebar */}
+		<div className="hidden md:block w-[380px] shrink-0">
+			<div className="sticky top-24 bg-white p-6 rounded-2xl border border-gray-100">
+				<h2 className="text-xl font-bold mb-4">Order Summary</h2>
+				{/* We use the same accordion component here for desktop */}
+				<OrderDetailsAccordions items={items} total={total} isDesktop />
+			</div>
+		</div>
+	</div>
+</div>;
+)
 }
 
 // --- SHARED ACCORDION COMPONENT ---

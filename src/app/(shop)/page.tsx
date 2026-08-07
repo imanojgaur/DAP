@@ -1,3 +1,4 @@
+import { OverlayText } from "@/components/home/card-content";
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
@@ -10,7 +11,7 @@ import {
 	edtMetaData,
 	images,
 } from "@/components/home/home.confi";
-import { ImageCover, OverlayText } from "@/components/home/image-cover";
+import { ImageCover } from "@/components/home/image-cover";
 import {
 	DynamicHorizontalImgRaw,
 	type ImageLayoutProps,

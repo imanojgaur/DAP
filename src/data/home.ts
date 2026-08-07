@@ -36,6 +36,8 @@ export async function getHomeProduct(homeCategory: "home") {
 			price: true,
 			compareAtPrice: true,
 			stockQuantity: true,
+			totalReviews: true, 
+			averageRating: true, 
 			images: {
 				select: {
 					publicId: true,

@@ -13,6 +13,30 @@ export const images: ImageLayoutProps[][] = [
 				imageSrc: "/home/deal-of-the-day.webp",
 				alt: "Deal Of The Day",
 			},
+			{
+				sourceType: "nextServer", 
+				isPrimary: false, 
+				imageSrc: '/home/deal-of-the-day5.avif', 
+				alt: 'Deal Of The Day', 
+			}, 
+			{
+				sourceType: "nextServer", 
+				imageSrc: "/home/deal-of-the-day4.avif",
+				isPrimary: false, 
+				alt: "Deal Of The Day", 
+			}, 
+			{
+				sourceType: "nextServer", 
+				imageSrc: "/home/deal-of-the-day3.avif", 
+				isPrimary: false, 
+				alt: "Deal Of The Day", 
+			}, 
+			{
+				sourceType: "nextServer", 
+				imageSrc: "/home/deal-of-the-day2.avif", 
+				isPrimary: false, 
+				alt: "Deal Of The Day"
+			}
 		],
 		[
 			{
@@ -21,6 +45,18 @@ export const images: ImageLayoutProps[][] = [
 				imageSrc: "/home/best-seller.avif",
 				alt: "Best Seller",
 			},
+			{
+				sourceType: "nextServer",
+				isPrimary: false, 
+				imageSrc: '/home/best-seller3.avif', 
+				alt: 'Best Seller'
+			}, 
+			{
+				sourceType: "nextServer", 
+				isPrimary: false, 
+				imageSrc: '/home/best-seller2.avif', 
+				alt: 'Best Seller', 
+			}
 		],
 		[
 			{
@@ -81,6 +117,18 @@ export const images: ImageLayoutProps[][] = [
 				imageSrc: "/home/mood-boosting.avif",
 				alt: "Mood Boosting",
 			},
+			{
+				sourceType: "nextServer", 
+				isPrimary: false, 
+				imageSrc: "/home/mood-boosting2.avif", 
+				alt: "Mood Boosting", 
+			}, 
+			{
+				sourceType: "nextServer", 
+				isPrimary: false, 
+				imageSrc: "/home/mood-boosting3.avif", 
+				alt: "Mood Boosting", 
+			}
 		],
 		[
 			{

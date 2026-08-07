@@ -8,6 +8,12 @@ import type { ImageLayoutProps } from "./img-layout";
 export const images: ImageLayoutProps[][] = [
 		[
 			{
+				sourceType: "nextServer", 
+				imageSrc: "/home/deal-of-the-day2.avif", 
+				isPrimary: false, 
+				alt: "Deal Of The Day"
+			},
+			{
 				sourceType: "nextServer",
 				isPrimary: true,
 				imageSrc: "/home/deal-of-the-day.webp",
@@ -31,12 +37,6 @@ export const images: ImageLayoutProps[][] = [
 				isPrimary: false, 
 				alt: "Deal Of The Day", 
 			}, 
-			{
-				sourceType: "nextServer", 
-				imageSrc: "/home/deal-of-the-day2.avif", 
-				isPrimary: false, 
-				alt: "Deal Of The Day"
-			}
 		],
 		[
 			{

@@ -110,10 +110,10 @@ export const images: ImageLayoutProps[][] = [
 export const baseCategoryConfig = [
 		{ title: "Deal Of The Day", slug: "deal-of-the-day" },
 		{ title: "Best Seller", slug: "plants-1" },
-		{ title: "Balcony Plants", slug: "balcony-plants" },
-		{ title: "Vastu", slug: "vastu-plants" },
 		{ title: "Mood Boosting", slug: "mood-improving-plants" },
 		{ title: "Air Purifying", slug: "air-purifying-plants" },
+		{ title: "Balcony Plants", slug: "balcony-plants" },
+		{ title: "Vastu", slug: "vastu-plants" },
 		{ title: "Indoor Collection", slug: "indoor-plants" },
 	];
 

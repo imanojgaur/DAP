@@ -1,15 +1,21 @@
+import Link from "next/link";
+import React from "react";
+import { IndianRupee } from "lucide-react";
+
 export interface OverlayTextProps {
 	title: string;
 	subtitle: string;
 	callToActionText: string;
 }
 
-export interface ProductFragment {
-	title: string; 
-	slug: string; 
-	price: number; 
-	compareAtPrice: number; 
-	
+interface ProductInfoLayoutProps {
+    title: string,
+	endpoint: string,
+    body: string[],
+	price: number,
+	compareAtPrice: string,
+	actionsSlot?: React.ReactNode
+	className: string, 
 }
 
 export function OverlayText({
@@ -52,4 +58,49 @@ export function OverlayText({
 			</div>
 		</>
 	);
+}
+
+export function ProductInfo ({
+	title,
+	endpoint,
+	body, 
+	price,
+	compareAtPrice,
+	actionsSlot,
+	className,
+}:ProductInfoLayoutProps){
+	return (
+		<div className={`flex flex-col gap-1 ${className}`}>
+			<Link href={endpoint}>
+				<h3 className="font-bold line-clamp-2">{title}</h3>
+				<div>
+					{body && 
+					<>
+						<span className="text-gray-500">{body[0]}</span>
+						{body.map((item, index)=>{
+							if (index > 0) {
+								return(
+										<>
+										<span className="text-sm font-bold text-gray-500">.</span>
+										<span className="text-gray-500">{item}</span>
+										</>
+								)
+							}
+							return null
+						})}
+					</>
+					}
+				</div>
+				<div className="mt-auto">
+					<span className="text-gray-500"><IndianRupee/>{price}</span>
+					{compareAtPrice && <span className="text-gray-500 line-through"><IndianRupee/>{compareAtPrice}</span>}
+				</div>
+			</Link>
+
+			{/* action buttons */}
+			<div className="mt-auto">
+		     	{actionsSlot}
+			</div>
+		</div>
+	)
 }

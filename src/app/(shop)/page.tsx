@@ -1,4 +1,4 @@
-import { OverlayText } from "@/components/home/card-content";
+import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
@@ -33,6 +33,8 @@ interface CategoryConfig {
 	callToActionText: string;
 	className?: string;
 }
+
+type FeatureProductConfig = Omit<ProductInfoProps, 'className' | 'actionsSlot'> & {images: ImageLayoutProps[]}
 
 export default async function HomePage() {
 	// HANDLE CATEGORY DATA AND PASS SAFELY
@@ -74,6 +76,21 @@ export default async function HomePage() {
 
 	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
 	const featProducts = await getHomeProduct("home");
+	const featProductConfig: FeatureProductConfig [] = featProducts.map((item)=>{
+	    return {
+			title: item.name, 
+			endpoint: item.slug, 
+			price: item.price, 
+			compareAtPrice: item.compareAtPrice, 
+			body: [`⭐${item.averageRating}`, item.totalReviews, item.stockQuantity],
+			images: item.images.map((image): ImageLayoutProps => {
+				return {
+					...image, 
+					sourceType: "cloudinary",
+				 	alt: item.name
+				}})
+		} 
+	})
 
 	return (
 		<div className="min-h-screen bg-white">

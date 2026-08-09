@@ -1,6 +1,5 @@
-import Link from "next/link";
-import React from "react";
 import { IndianRupee } from "lucide-react";
+import Link from "next/link";
 
 export interface OverlayTextProps {
 	title: string;
@@ -8,14 +7,14 @@ export interface OverlayTextProps {
 	callToActionText: string;
 }
 
-interface ProductInfoLayoutProps {
+export interface ProductInfoProps {
     title: string,
 	endpoint: string,
-    body: string[],
+    body: any[],
 	price: number,
-	compareAtPrice: string,
+	compareAtPrice: number | null,
 	actionsSlot?: React.ReactNode
-	className: string, 
+	className?: string, 
 }
 
 export function OverlayText({
@@ -68,7 +67,7 @@ export function ProductInfo ({
 	compareAtPrice,
 	actionsSlot,
 	className,
-}:ProductInfoLayoutProps){
+}:ProductInfoProps){
 	return (
 		<div className={`flex flex-col gap-1 ${className}`}>
 			<Link href={endpoint}>

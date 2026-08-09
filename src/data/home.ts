@@ -43,6 +43,7 @@ export async function getHomeProduct(homeCategory: "home") {
 					publicId: true,
 					height: true,
 					width: true,
+					isPrimary: true, 
 				},
 			},
 		},

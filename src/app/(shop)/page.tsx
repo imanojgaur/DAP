@@ -82,10 +82,10 @@ export default async function HomePage() {
 			endpoint: item.slug,  
 			body: [`⭐${item.averageRating}`, item.totalReviews, item.stockQuantity],
 			images: item.images.map((image): ImageLayoutProps => {
-				return {
+				return { 
 					...image, 
-					sourceType: "cloudinary",
-				 	alt: item.name
+					sourceType: 'cloudinary', 
+					alt: item.name, 
 				}})
 		} 
 	})

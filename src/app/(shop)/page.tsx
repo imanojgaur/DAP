@@ -78,10 +78,8 @@ export default async function HomePage() {
 	const featProducts = await getHomeProduct("home");
 	const featProductConfig: FeatureProductConfig [] = featProducts.map((item)=>{
 	    return {
-			title: item.name, 
-			endpoint: item.slug, 
-			price: item.price, 
-			compareAtPrice: item.compareAtPrice, 
+			...item,
+			endpoint: item.slug,  
 			body: [`⭐${item.averageRating}`, item.totalReviews, item.stockQuantity],
 			images: item.images.map((image): ImageLayoutProps => {
 				return {

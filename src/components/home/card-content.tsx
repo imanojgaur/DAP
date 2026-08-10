@@ -8,7 +8,7 @@ export interface OverlayTextProps {
 }
 
 export interface ProductInfoProps {
-    title: string,
+    name: string,
 	endpoint: string,
     body: any[],
 	price: number,

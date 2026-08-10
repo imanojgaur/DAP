@@ -69,20 +69,24 @@ export function ProductInfo ({
 	className,
 }:ProductInfoProps){
 	return (
-		<div className={`flex flex-col gap-1 ${className}`}>
+		<div className={`flex flex-col gap-4 ${className}`}>
 			<Link href={endpoint}>
+			{/* image heading */}
 				<h3 className="font-bold line-clamp-2">{name}</h3>
-				<div>
+
+                {/* Display body */}
+				<div className="flex flex-row gap-2 mt-auto">
 					{body && 
 					<>
 						<span className="text-gray-500">{body[0]}</span>
 						{body.map((item, index)=>{
 							if (index > 0) {
 								return(
-										<>
-										<span className="text-sm font-bold text-gray-500">.</span>
+										<div key={item}>
+										<span className="text-sm font-bold text-gray-500">.  .</span>
 										<span className="text-gray-500">{item}</span>
-										</>
+										</div>
+								
 								)
 							}
 							return null
@@ -90,16 +94,16 @@ export function ProductInfo ({
 					</>
 					}
 				</div>
-				<div className="mt-auto">
-					<span className="text-gray-500"><IndianRupee/>{price}</span>
-					{compareAtPrice && <span className="text-gray-500 line-through"><IndianRupee/>{compareAtPrice}</span>}
+				<div className="flex flex-row gap-2 mt-auto mb-0 pb-0">
+					<span className="flex flex-row gap-2 text-gray-500"><IndianRupee/>{price}</span>
+					{compareAtPrice && <span className="flex flex-row gap-2 text-gray-500 line-through">{compareAtPrice}</span>}
 				</div>
 			</Link>
 
 			{/* action buttons */}
-			<div className="mt-auto">
+			{actionsSlot && <div className="mt-auto">
 		     	{actionsSlot}
-			</div>
+			</div>}
 		</div>
 	)
 }

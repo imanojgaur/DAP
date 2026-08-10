@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 
@@ -24,7 +25,7 @@ export type SmartMediaProps = CloudinaryProps | NextServerProps;
 
 export function SmartMedia(props: SmartMediaProps) {
 	if (props.sourceType === "cloudinary") {
-		const { sourceType, publicId, ...safeProps } = props;
+		const { sourceType, publicId, height, width, ...safeProps } = props;
 		return (
 			<CldImage
 				src={publicId}

@@ -6,6 +6,7 @@ import { HomeHero } from "@/components/home/hero";
 import {
 	baseCategoryConfig,
 	catHeader,
+	featHeader, 
 	EDITORIAL_CARDS_DATA,
 	edtheader,
 	edtMetaData,
@@ -99,24 +100,24 @@ export default async function HomePage() {
 			<SectionWrapper headerData={catHeader}>
 				<HomeCarousel>
 					<CarouselContent className="flex ml-0 pr-4 md:pr-8 py-5">
-						{categoryConfig?.map((catObj) => (
+						{categoryConfig?.map((card) => (
 							<CarouselItem
-								key={catObj.title}
+								key={card.title}
 								className="pl-4 md:pl-8 basis-[50%] sm:basis-[30%] lg:basis-[25%]"
 							>
 								<ImageCover
-									key={catObj.title}
-									endPoint={`/collectons/${catObj.slug}`}
-									className={catObj.className}
+									key={card.title}
+									endPoint={`/collectons/${card.slug}`}
+									className={card.className}
 									overlayContent={
 										<OverlayText
-											title={catObj.title}
-											subtitle={catObj.subtitle}
-											callToActionText={catObj.callToActionText}
+											title={card.title}
+											subtitle={card.subtitle}
+											callToActionText={card.callToActionText}
 										/>
 									}
 									imgScroller={
-										<DynamicHorizontalImgRaw images={catObj.images} />
+										<DynamicHorizontalImgRaw images={card.images} />
 									}
 								/>
 							</CarouselItem>
@@ -128,7 +129,31 @@ export default async function HomePage() {
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
-
+			<SectionWrapper headerData={featHeader} >
+				<HomeCarousel>
+					<CarouselContent>
+						{featProductConfig?.map((card)=>(
+							<CarouselItem key={card.name}>
+								<ImageCover key={card.name}
+								endPoint={`/products/${card.endpoint}`} 
+								className={''}
+								imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
+								productFragment={<ProductInfo  
+									name={card.name}
+									endpoint={card.endpoint}
+									body={card.body}
+									price={card.price}
+									compareAtPrice={card.compareAtPrice}
+									className=""
+								/>}
+								/>
+							</CarouselItem>
+						))}
+					</CarouselContent>
+					<CarouselPrevious/>
+					<CarouselNext/>
+				</HomeCarousel>
+			</SectionWrapper>
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper headerData={edtheader} metaData={edtMetaData}>
 				<EditorialLayout EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA} />

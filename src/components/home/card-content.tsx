@@ -60,7 +60,7 @@ export function OverlayText({
 }
 
 export function ProductInfo ({
-	title,
+	name,
 	endpoint,
 	body, 
 	price,
@@ -71,7 +71,7 @@ export function ProductInfo ({
 	return (
 		<div className={`flex flex-col gap-1 ${className}`}>
 			<Link href={endpoint}>
-				<h3 className="font-bold line-clamp-2">{title}</h3>
+				<h3 className="font-bold line-clamp-2">{name}</h3>
 				<div>
 					{body && 
 					<>

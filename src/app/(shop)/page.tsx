@@ -81,7 +81,7 @@ export default async function HomePage() {
 	    return {
 			...item,
 			endpoint: item.slug,  
-			body: [`⭐${item.averageRating}`, item.totalReviews, item.stockQuantity],
+			body: [`⭐${item.averageRating}`, `review ${item.totalReviews}`, `${item.stockQuantity? "In Stock": null}`],
 			images: item.images.map((image): ImageLayoutProps => {
 				return { 
 					...image, 
@@ -123,35 +123,40 @@ export default async function HomePage() {
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious className="absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
-					<CarouselNext className="absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
+					<CarouselPrevious className="md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
+					<CarouselNext className="md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
 				</HomeCarousel>
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
 			<SectionWrapper headerData={featHeader} >
 				<HomeCarousel>
-					<CarouselContent>
+					<CarouselContent className="flex ml-0 mb-20 pr-4 md:pr-8 py-7">
 						{featProductConfig?.map((card)=>(
-							<CarouselItem key={card.name}>
+							<CarouselItem 
+							key={card.name}
+							className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%]"
+							>
 								<ImageCover key={card.name}
 								endPoint={`/products/${card.endpoint}`} 
 								className={''}
 								imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
-								productFragment={<ProductInfo  
+								productFragment={
+								<ProductInfo  
 									name={card.name}
 									endpoint={card.endpoint}
 									body={card.body}
 									price={card.price}
 									compareAtPrice={card.compareAtPrice}
 									className=""
-								/>}
+								/>
+							    }
 								/>
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious/>
-					<CarouselNext/>
+					<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
+					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
 				</HomeCarousel>
 			</SectionWrapper>
 			{/* 4. Brand Trust / Editorial Section */}

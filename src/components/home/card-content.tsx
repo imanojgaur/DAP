@@ -70,14 +70,14 @@ export function ProductInfo ({
 }:ProductInfoProps){
 	return (
 		<div className={`${className}`}>
-			<Link href={endpoint} className="grid grid-rows-4 gap-1">
+			<Link href={endpoint} className="flex flex-col gap-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md">
 			{/* image heading */}
-				<h3 className="row-span-2 font-bold line-clamp-2">{name}</h3>
+				<h3 className="font-bold line-clamp-2 text-emerald-500 md:text-gray-900 md:group-hover:text-emerald-500 transition-colors duration-200">{name}</h3>
 
                 {/* Display body: ratings reviews ... */}
 				<div className="flex items-center flex-wrap gap-1.5 text-gray-500">
 					{body?.map((item, index) => (
-					<React.Fragment key={item[index]}>
+					<React.Fragment key={index}>
 						{index > 0 && <span className="font-bold">·</span>}
 						<span className="text-gray-500">{item}</span> 	
 					</React.Fragment>
@@ -85,14 +85,15 @@ export function ProductInfo ({
 				</div>
 				
 				{/* Price Section */}
-				<div className="flex gap-4 pl-2">
-					<span className="flex flex-row gap-3 text-gray-500">₹{price}</span>
-					{compareAtPrice && <span className="flex flex-row gap-2 text-gray-500 line-through">₹{compareAtPrice}</span>}
+				<div className="flex items-center mt-0.5 gap-4">
+					<span className="bg-gray-100 px-2.5 py-1.5 font-bold text-gray-500 rounded-full">₹{price}</span>
+					<span className="font-bold">·</span>
+					{compareAtPrice && <span className="text-gray-500 line-through">₹{compareAtPrice}</span>}
 				</div>
 			</Link>
 
 			{/* action buttons */}
-			{actionsSlot && <div className="">
+			{actionsSlot && <div className="mt-3">
 		     	{actionsSlot}
 			</div>}
 		</div>

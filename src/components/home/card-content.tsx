@@ -1,5 +1,5 @@
-import { IndianRupee } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 
 export interface OverlayTextProps {
 	title: string;
@@ -74,27 +74,18 @@ export function ProductInfo ({
 			{/* image heading */}
 				<h3 className="row-span-2 font-bold line-clamp-2">{name}</h3>
 
-                {/* Display body */}
-				<div className="flex flex-row gap-4 pl-2">
-					{body && 
-					<>
-						<span className="text-gray-500">{body[0]}</span>
-						{body.map((item, index)=>{
-							if (index > 0) {
-								return(
-										<div key={item}>
-										<span className="text-sm font-bold text-gray-500"></span>
-										<span className="text-gray-500">{item}</span>
-										</div>
-								
-								)
-							}
-							return null
-						})}
-					</>
-					}
+                {/* Display body: ratings reviews ... */}
+				<div className="flex items-center flex-wrap gap-1.5 text-gray-500">
+					{body?.map((item, index) => (
+					<React.Fragment key={item[index]}>
+						{index > 0 && <span className="font-bold">·</span>}
+						<span className="text-gray-500">{item}</span> 	
+					</React.Fragment>
+					))}
 				</div>
-				<div className="flex flex-row gap-4 pl-2">
+				
+				{/* Price Section */}
+				<div className="flex gap-4 pl-2">
 					<span className="flex flex-row gap-3 text-gray-500">₹{price}</span>
 					{compareAtPrice && <span className="flex flex-row gap-2 text-gray-500 line-through">₹{compareAtPrice}</span>}
 				</div>

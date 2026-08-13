@@ -70,11 +70,16 @@ export function ProductInfo ({
 }:ProductInfoProps){
 	return (
 		<div className={`${className}`}>
-			<Link href={endpoint} className="flex flex-col gap-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md">
-			{/* image heading */}
-				<h3 className="font-bold line-clamp-2 text-emerald-500 md:text-gray-900 md:group-hover:text-emerald-500 transition-colors duration-200">{name}</h3>
 
-                {/* Display body: ratings reviews ... */}
+			{/* image heading */}
+		    <Link href={endpoint} className="group/link relative block pb-1">
+				<h3 className="font-bold line-clamp-2 text-emerald-400 md:text-gray-900 md:group-hover/link:text-emerald-500 transition-all duration-300 ease-out">{name}</h3>
+			    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover/link:w-full"/>
+			</Link>
+		
+			<Link href={endpoint} className="flex flex-col gap-1 mt-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md">
+				
+				{/* Display body: ratings reviews ... */}
 				<div className="flex items-center flex-wrap gap-1.5 text-gray-500">
 					{body?.map((item, index) => (
 					<React.Fragment key={index}>

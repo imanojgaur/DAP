@@ -70,7 +70,6 @@ export default async function HomePage() {
 					? `Explore ${matchDBResult._count.products} Varities`
 					: `Explore Collections`,
 				callToActionText: "Shop Now",
-				className: "", //for dynamic card: make another array..haha
 			};
 		},
 	);
@@ -99,16 +98,16 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper headerData={catHeader}>
 				<HomeCarousel>
-					<CarouselContent className="flex ml-0 pr-4 md:pr-8 py-5">
+					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-6 md:pb-2">
 						{categoryConfig?.map((card) => (
 							<CarouselItem
 								key={card.title}
-								className="pl-4 md:pl-8 basis-[50%] sm:basis-[30%] lg:basis-[25%]"
+								className="pl-4 md:pl-8 basis-[50%] sm:basis-[30%] lg:basis-[25%] flex flex-col"
 							>
 								<ImageCover
 									key={card.title}
 									endPoint={`/collectons/${card.slug}`}
-									className={card.className}
+									className={"h-70 md:h-auto md:aspect-[1/1]"}
 									overlayContent={
 										<OverlayText
 											title={card.title}
@@ -123,23 +122,23 @@ export default async function HomePage() {
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious className="md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
-					<CarouselNext className="md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none" />
+					<CarouselPrevious className="md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+					<CarouselNext className="md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
 				</HomeCarousel>
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
 			<SectionWrapper headerData={featHeader} >
 				<HomeCarousel>
-					<CarouselContent className="flex ml-0 mb-20 pr-4 md:pr-8 py-7">
+					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7">
 						{featProductConfig?.map((card)=>(
 							<CarouselItem 
 							key={card.name}
-							className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%]"
+							className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
 							>
 								<ImageCover key={card.name}
 								endPoint={`/products/${card.endpoint}`} 
-								className={''}
+								className={'aspect-[4/5]'}
 								imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
 								productFragment={
 								<ProductInfo  

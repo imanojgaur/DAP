@@ -180,7 +180,7 @@ export const catHeader: HeaderData = {
 export const featHeader: HeaderData = {
     title: "Featured Products",
     description: "Rare finds and everyday favorites",
-    bodyLayoutClass: "mb-5 md:mb-0 mt-15 md:mt-6",
+    bodyLayoutClass: "mb-5 md:mb-0 mt-8 md:mt-6",
     headerLayoutClass: "px-5 md:px-8 md:pt-6",
 };
 

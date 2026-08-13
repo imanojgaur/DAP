@@ -69,13 +69,13 @@ export function ProductInfo ({
 	className,
 }:ProductInfoProps){
 	return (
-		<div className={`flex flex-col gap-4 ${className}`}>
-			<Link href={endpoint}>
+		<div className={`${className}`}>
+			<Link href={endpoint} className="grid grid-rows-4 gap-1">
 			{/* image heading */}
-				<h3 className="font-bold line-clamp-2">{name}</h3>
+				<h3 className="row-span-2 font-bold line-clamp-2">{name}</h3>
 
                 {/* Display body */}
-				<div className="flex flex-row gap-2 mt-auto">
+				<div className="flex flex-row gap-4 pl-2">
 					{body && 
 					<>
 						<span className="text-gray-500">{body[0]}</span>
@@ -94,14 +94,14 @@ export function ProductInfo ({
 					</>
 					}
 				</div>
-				<div className="flex flex-row gap-2 mt-auto mb-0 pb-0">
-					<span className="flex flex-row gap-2 text-gray-500"><IndianRupee/>{price}</span>
-					{compareAtPrice && <span className="flex flex-row gap-2 text-gray-500 line-through">{compareAtPrice}</span>}
+				<div className="flex flex-row gap-4 pl-2">
+					<span className="flex flex-row gap-3 text-gray-500">₹{price}</span>
+					{compareAtPrice && <span className="flex flex-row gap-2 text-gray-500 line-through">₹{compareAtPrice}</span>}
 				</div>
 			</Link>
 
 			{/* action buttons */}
-			{actionsSlot && <div className="mt-auto">
+			{actionsSlot && <div className="">
 		     	{actionsSlot}
 			</div>}
 		</div>

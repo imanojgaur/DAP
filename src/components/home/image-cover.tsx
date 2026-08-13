@@ -45,10 +45,8 @@ export function ImageCover({
 			<div
 				className={`
                 group relative z-10 hover:z-50 transform-gpu break-inside-avoid 
-                w-full h-full md:flex-1
+                w-full flex flex-col md:flex-1
                 mb-3 md:mb-0   
-                ${className}
-         
                 transition-transform duration-700 ease-out hover:-translate-y-2
             `}
 			>
@@ -57,13 +55,12 @@ export function ImageCover({
 
 				{/* 3. THE ACTUAL CARD  */}
 				<div
-					className="group
-                    relative flex flex-col justify-end w-full h-full 
+					className={`group
+                    relative flex flex-col justify-end w-full 
                     bg-gray-900 overflow-hidden p-6 md:p-10
                     rounded-[1.5rem] md:rounded-[2.5rem] 
-                    min-h-[250px] md:!min-h-[350px]
-                    shadow-lg
-                "
+                    ${className}
+                    shadow-lg`}
 				>
 					{/* Background Image Carousel*/}
 					{dynamicImgGrid ? dynamicImgGrid : imgScroller}
@@ -83,7 +80,7 @@ export function ImageCover({
 					)}
 				</div>
 			</div>
-			{productFragment && <div className="mt-2 px-2">{productFragment}</div>}
+			{productFragment && <div className="mt-2 px-2 grow">{productFragment}</div>}
 		</>
 	);
 }

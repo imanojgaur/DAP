@@ -69,12 +69,12 @@ export function ProductInfo ({
 	className,
 }:ProductInfoProps){
 	return (
-		<div className={`${className}`}>
+		<div className={`${className} group`}>
 
 			{/* image heading */}
-		    <Link href={endpoint} className="group/link relative block pb-1">
-				<h3 className="font-bold line-clamp-2 text-emerald-400 md:text-gray-900 md:group-hover/link:text-emerald-500 transition-all duration-300 ease-out">{name}</h3>
-			    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover/link:w-full"/>
+		    <Link href={endpoint} className="relative block pb-1">
+				<h3 className="font-bold line-clamp-2 text-emerald-400 md:text-gray-900 md:group-hover:text-emerald-500 transition-all duration-300 ease-out">{name}</h3>
+			    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover:w-full"/>
 			</Link>
 		
 			<Link href={endpoint} className="flex flex-col gap-1 mt-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md">

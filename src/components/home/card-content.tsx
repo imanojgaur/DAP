@@ -83,7 +83,7 @@ export function ProductInfo ({
 							if (index > 0) {
 								return(
 										<div key={item}>
-										<span className="text-sm font-bold text-gray-500">.  .</span>
+										<span className="text-sm font-bold text-gray-500"></span>
 										<span className="text-gray-500">{item}</span>
 										</div>
 								

@@ -80,7 +80,7 @@ export default async function HomePage() {
 	    return {
 			...item,
 			endpoint: item.slug,  
-			body: [`⭐${item.averageRating}`, `review ${item.totalReviews}`, `${item.stockQuantity? "In Stock": null}`],
+			body: [`★${item.averageRating}`, `review ${item.totalReviews}`, `${item.stockQuantity? "In Stock": null}`],
 			images: item.images.map((image): ImageLayoutProps => {
 				return { 
 					...image, 

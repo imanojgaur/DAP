@@ -25,6 +25,7 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getHomeCategories, getHomeProduct } from "@/data";
+import { convertIntoRupee } from "@/utilities";
 
 interface CategoryConfig {
 	title: string;
@@ -77,8 +78,20 @@ export default async function HomePage() {
 	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
 	const featProducts = await getHomeProduct("home");
 	const featProductConfig: FeatureProductConfig [] = featProducts.map((item)=>{
+		const currPricePaise = item.price
+		const realPricePaise = item.compareAtPrice
+
+		const finalComparePrice = (realPricePaise === currPricePaise)
+		    ? realPricePaise + 5000
+		    : realPricePaise
+
+		const currPriceRupee = convertIntoRupee(currPricePaise);
+		const realPriceRupee = finalComparePrice? convertIntoRupee(finalComparePrice): null
+		
 	    return {
 			...item,
+			price: currPriceRupee, 
+			compareAtPrice: realPriceRupee, 
 			endpoint: item.slug,  
 			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item.stockQuantity? "In Stock": null}`, `Ship In ${24} hours`],
 			images: item.images.map((image): ImageLayoutProps => {

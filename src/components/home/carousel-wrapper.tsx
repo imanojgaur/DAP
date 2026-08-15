@@ -3,6 +3,7 @@ import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { Carousel } from "@/components/ui/carousel";
 
 export function HomeCarousel({ children }: { children: React.ReactNode }) {
+	
 	return (
 		<Carousel
 			className="w-full h-full relative"
@@ -11,7 +12,9 @@ export function HomeCarousel({ children }: { children: React.ReactNode }) {
 				dragFree: true, // ensure native browser scrolling
 				slidesToScroll: 1,
 			}}
-			plugins={[WheelGesturesPlugin()]}
+			plugins={[WheelGesturesPlugin(
+				{forceWheelAxis:'x'}  // Ignore vertical trackpad jitter.
+			)]}
 		>
 			{children}
 		</Carousel>

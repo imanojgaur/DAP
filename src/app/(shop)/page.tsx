@@ -111,7 +111,9 @@ export default async function HomePage() {
 			{/* 2. Navigation Section */}
 			<SectionWrapper headerData={catHeader}>
 				<HomeCarousel>
-					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-6 md:pb-2">
+					{/* overscroll-x-none: let the embela do its native physics, disably windows/mac native edge bounce effect */}
+					{/* slect none is not accidental text highlights: that might conflict with scroll*/}
+					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-6 md:pb-2 overscroll-x-none select-none touch-action-pan-y">
 						{categoryConfig?.map((card) => (
 							<CarouselItem
 								key={card.title}
@@ -143,7 +145,7 @@ export default async function HomePage() {
 			{/* 3. Product Discovery Section */}
 			<SectionWrapper headerData={featHeader} >
 				<HomeCarousel>
-					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7">
+					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
 						{featProductConfig?.map((card)=>(
 							<CarouselItem 
 							key={card.name}

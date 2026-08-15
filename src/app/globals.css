@@ -132,3 +132,7 @@
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
+
+.is-wheel-dragging * {
+	pointer-events: none !important;
+}

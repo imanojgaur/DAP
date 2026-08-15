@@ -80,7 +80,7 @@ export function ProductInfo ({
 			<Link href={endpoint} className="flex flex-col gap-1 mt-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md">
 				
 				{/* Display body: ratings reviews ... */}
-				<div className="flex items-center flex-wrap gap-1.5 text-gray-500">
+				<div className="flex items-center flex-wrap gap-1 text-sm text-gray-500">
 					{body?.map((item, index) => (
 					<React.Fragment key={index}>
 						{index > 0 && <span className="font-bold">·</span>}

@@ -124,3 +124,15 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+.no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.is-wheel-dragging * {
+	pointer-events: none !important;
+}

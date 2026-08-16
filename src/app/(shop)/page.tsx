@@ -1,53 +1,182 @@
-import Link from "next/link";
-import { CategoryGrid } from "@/components/home/category-grid";
-import { FeaturedProducts } from "@/components/home/featured-products";
+import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import { HomeCarousel } from "@/components/home/carousel-wrapper";
+import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
+// import { getHomeCategories } from "@/data-sql"
+import {
+	baseCategoryConfig,
+	catHeader,
+	featHeader, 
+	EDITORIAL_CARDS_DATA,
+	edtheader,
+	edtMetaData,
+	images,
+} from "@/components/home/home.confi";
+import { ImageCover } from "@/components/home/image-cover";
+import {
+	DynamicHorizontalImgRaw,
+	type ImageLayoutProps,
+} from "@/components/home/img-layout";
+import { SectionWrapper } from "@/components/home/section-wrapper";
+import {
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@/components/ui/carousel";
+import { getHomeCategories, getHomeProduct } from "@/data";
+import { convertIntoRupee } from "@/utilities";
 
-export default function HomePage() {
+interface CategoryConfig {
+	title: string;
+	slug: string;
+	images: ImageLayoutProps[];
+	subtitle: string;
+	callToActionText: string;
+	className?: string;
+}
+
+type FeatureProductConfig = Omit<ProductInfoProps, 'className' | 'actionsSlot'> & {images: ImageLayoutProps[]}
+
+export default async function HomePage() {
+	// HANDLE CATEGORY DATA AND PASS SAFELY
+	//Categories fetch db
+	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug);
+	const categoriesdbData = await getHomeCategories(categorySluges);
+
+	// category config Object creation
+	// -> Create Base Config Obj with images data
+
+	const baseCatConfigWithImg = baseCategoryConfig.map((obj) => {
+		const imagesArr = images.find(
+			(imgArrItem) => obj.title === imgArrItem[0].alt,
+		);
+
+		return {
+			...obj,
+			images: imagesArr ? imagesArr : [], //fallback if images array is undefined
+		};
+	});
+
+	const categoryConfig: CategoryConfig[] = baseCatConfigWithImg.map(
+		(baseObj) => {
+			const matchDBResult =
+				Array.isArray(categoriesdbData) === true
+					? categoriesdbData.find((dbObj) => dbObj.slug === baseObj.slug)
+					: null;
+
+			return {
+				...baseObj,
+				subtitle: matchDBResult?._count.products
+					? `Explore ${matchDBResult._count.products} Varities`
+					: `Explore Collections`,
+				callToActionText: "Shop Now",
+			};
+		},
+	);
+
+	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
+	const featProducts = await getHomeProduct("home");
+	const featProductConfig: FeatureProductConfig [] = featProducts.map((item)=>{
+		const currPricePaise = item.price
+		const realPricePaise = item.compareAtPrice
+
+		const finalComparePrice = (realPricePaise === currPricePaise)
+		    ? realPricePaise + 5000
+		    : realPricePaise
+
+		const currPriceRupee = convertIntoRupee(currPricePaise);
+		const realPriceRupee = finalComparePrice? convertIntoRupee(finalComparePrice): null
+		
+	    return {
+			...item,
+			price: currPriceRupee, 
+			compareAtPrice: realPriceRupee, 
+			endpoint: item.slug,  
+			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item.stockQuantity? "In Stock": null}`, `Ship In ${24} hours`],
+			images: item.images.map((image): ImageLayoutProps => {
+				return { 
+					...image, 
+					sourceType: 'cloudinary', 
+					alt: item.name, 
+				}})
+		} 
+	})
+
 	return (
-		<main className="min-h-screen bg-white">
+		<div className="min-h-screen bg-white">
 			{/* 1. Impact Section */}
 			<HomeHero />
 
 			{/* 2. Navigation Section */}
-			<CategoryGrid />
+			<SectionWrapper headerData={catHeader}>
+				<HomeCarousel>
+					{/* overscroll-x-none: let the embela do its native physics, disably windows/mac native edge bounce effect */}
+					{/* slect none is not accidental text highlights: that might conflict with scroll*/}
+					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-6 md:pb-2 overscroll-x-none select-none touch-action-pan-y">
+						{categoryConfig?.map((card) => (
+							<CarouselItem
+								key={card.title}
+								className="pl-4 md:pl-8 basis-[50%] sm:basis-[30%] lg:basis-[25%] flex flex-col"
+							>
+								<ImageCover
+									key={card.title}
+									endPoint={`/collectons/${card.slug}`}
+									className={"h-70 md:h-auto md:aspect-[1/1]"}
+									overlayContent={
+										<OverlayText
+											title={card.title}
+											subtitle={card.subtitle}
+											callToActionText={card.callToActionText}
+										/>
+									}
+									imgScroller={
+										<DynamicHorizontalImgRaw images={card.images} />
+									}
+								/>
+							</CarouselItem>
+						))}
+					</CarouselContent>
+					<CarouselPrevious className="md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+					<CarouselNext className="md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+				</HomeCarousel>
+			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
-			<section className="max-w-7xl mx-auto px-4 py-20">
-				<div className="flex justify-between items-end mb-10">
-					<div>
-						<h2 className="text-2xl font-bold tracking-tight">
-							The Latest Drops
-						</h2>
-						<p className="text-gray-500">Fresh greenery for your collection.</p>
-					</div>
-					<Link
-						href="/products"
-						className="font-medium underline underline-offset-4 hover:text-green-700"
-					></Link>
-				</div>
-
-				<FeaturedProducts />
-			</section>
-
+			<SectionWrapper headerData={featHeader} >
+				<HomeCarousel>
+					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
+						{featProductConfig?.map((card)=>(
+							<CarouselItem 
+							key={card.name}
+							className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
+							>
+								<ImageCover key={card.name}
+								endPoint={`/products/${card.endpoint}`} 
+								className={'aspect-[4/5]'}
+								imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
+								productFragment={
+								<ProductInfo  
+									name={card.name}
+									endpoint={card.endpoint}
+									body={card.body}
+									price={card.price}
+									compareAtPrice={card.compareAtPrice}
+									className=""
+								/>
+							    }
+								/>
+							</CarouselItem>
+						))}
+					</CarouselContent>
+					<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
+					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
+				</HomeCarousel>
+			</SectionWrapper>
 			{/* 4. Brand Trust / Editorial Section */}
-			<section className="px-4 pb-20 md:px-8">
-				<div className="bg-black rounded-[2.5rem] p-12 md:p-24 flex flex-col items-center text-center">
-					<h2 className="text-white text-4xl md:text-6xl font-black italic tracking-tighter mb-6 leading-none">
-						FARM TO DOOR. <br /> NO MIDDLEMAN.
-					</h2>
-					<p className="text-gray-400 max-w-xl mb-10 text-lg">
-						We ship our plants directly from our greenhouse to your doorstep. No
-						retail markups, just healthy plants at fair prices.
-					</p>
-					<button
-						type="button"
-						className="bg-white text-black px-12 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-gray-200 transition-colors"
-					>
-						Learn Our Process
-					</button>
-				</div>
-			</section>
-		</main>
+			<SectionWrapper headerData={edtheader} metaData={edtMetaData}>
+				<EditorialLayout EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA} />
+			</SectionWrapper>
+		</div>
 	);
 }

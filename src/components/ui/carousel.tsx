@@ -3,10 +3,10 @@
 import useEmblaCarousel, {
 	type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utilities/utils";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -76,10 +76,10 @@ function Carousel({
 
 	const handleKeyDown = React.useCallback(
 		(event: React.KeyboardEvent<HTMLDivElement>) => {
-			if (event.key === "ArrowLeft") {
+			if (event.key === "ChevronLeft") {
 				event.preventDefault();
 				scrollPrev();
-			} else if (event.key === "ArrowRight") {
+			} else if (event.key === "ChevronRight") {
 				event.preventDefault();
 				scrollNext();
 			}
@@ -137,12 +137,12 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			ref={carouselRef}
-			className="overflow-hidden"
+			className="w-full h-full overflow-hidden"
 			data-slot="carousel-content"
 		>
 			<div
 				className={cn(
-					"flex",
+					"flex will-change-transform",
 					orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
 					className,
 				)}
@@ -152,7 +152,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function 	CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 	const { orientation } = useCarousel();
 
 	return (
@@ -161,7 +161,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 			aria-roledescription="slide"
 			data-slot="carousel-item"
 			className={cn(
-				"min-w-0 shrink-0 grow-0 basis-full",
+				"min-w-0 shrink-0 grow-0 basis-full will-change-transform", // will-change-transform: give gpu control for pixcel printing instead of cpu calculating where to put what or when to stop start scroll 
 				orientation === "horizontal" ? "pl-4" : "pt-4",
 				className,
 			)}
@@ -184,7 +184,7 @@ function CarouselPrevious({
 			variant={variant}
 			size={size}
 			className={cn(
-				"absolute size-8 rounded-full",
+				"absolute size-8 md:size-10 rounded-sm",
 				orientation === "horizontal"
 					? "top-1/2 -left-12 -translate-y-1/2"
 					: "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -194,7 +194,7 @@ function CarouselPrevious({
 			onClick={scrollPrev}
 			{...props}
 		>
-			<ArrowLeft />
+			<ChevronLeft />
 			<span className="sr-only">Previous slide</span>
 		</Button>
 	);
@@ -214,7 +214,7 @@ function CarouselNext({
 			variant={variant}
 			size={size}
 			className={cn(
-				"absolute size-8 rounded-full",
+				"absolute size-8 md:size-10 rounded-sm",
 				orientation === "horizontal"
 					? "top-1/2 -right-12 -translate-y-1/2"
 					: "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -224,7 +224,7 @@ function CarouselNext({
 			onClick={scrollNext}
 			{...props}
 		>
-			<ArrowRight />
+			<ChevronRight />
 			<span className="sr-only">Next slide</span>
 		</Button>
 	);

@@ -1,0 +1,1 @@
+export { type categoriesData, getHomeCategories } from "./home";

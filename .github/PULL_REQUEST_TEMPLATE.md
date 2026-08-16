@@ -18,6 +18,7 @@
 <!-- Drag and drop your screenshots or Loom video links right here -->
 
 ## ✅ Pre-Merge Checklist
+- [ ] Passed next build
 - [ ] Tested on Desktop (Mouse & Trackpad)
 - [ ] Tested on Mobile (Touch Swipes)
 - [ ] No unnecessary React re-renders verified via Profiler

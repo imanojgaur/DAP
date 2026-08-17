@@ -11,7 +11,7 @@ export default function ShopError({
 	reset: () => void;
 }) {
 	useEffect(() => {
-		// Silently log to error tracking service
+		// Silently log to error tracking service : datadog/sanatry
 		console.error("Shop section error:", error);
 	}, [error]);
 

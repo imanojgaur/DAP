@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-// This object works same as <meta name="description"> and <title /> in pure html inside head.
 export const metadata: Metadata = {
 	title: "DAP - Bring Greenery Home",
 	description:

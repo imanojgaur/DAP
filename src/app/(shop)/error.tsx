@@ -2,10 +2,10 @@
 
 import { RefreshCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { startTransition, useEffect } from "react";
+import { useTransition } from "react";
 
 export default function ShopError({
-	error,
+	// error,
 	reset,
 }: {
 	error: Error & { digest?: string };
@@ -18,11 +18,12 @@ export default function ShopError({
 	// 	// console.error("Shop section error:", error);
 	// }, [error]);
 
+	const [isPending, startTransition] = useTransition(); 
 	const router = useRouter();
 	function handleReset () {
 		startTransition(() => {
-			router.refresh()
 			reset() 
+			router.refresh()
 		})
 	}
 
@@ -31,7 +32,7 @@ export default function ShopError({
 			<div className="max-w-md w-full text-center space-y-6">
 				<div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-muted/50 border border-border/50">
 					<RefreshCcw
-						className="h-6 w-6 text-muted-foreground"
+						className={`h-6 w-6 text-muted-foreground ${isPending? "animate-spin": ""}`}
 						strokeWidth={1.5}
 					/>
 				</div>
@@ -50,9 +51,10 @@ export default function ShopError({
 					<button
 						type="button"
 						onClick={handleReset}
+						disabled={isPending}
 						className="inline-flex items-center justify-center rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
 					>
-						Try loading again 
+						{isPending? "loading....":"Try loading again"}
 					</button>
 				</div>
 			</div>

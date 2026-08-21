@@ -58,6 +58,7 @@ export default async function HomePage() {
 		};
 	});
 
+	// Create final category rendering object 
 	const categoryConfig: CategoryConfig[] = baseCatConfigWithImg.map(
 		(baseObj) => {
 			const matchDBResult =

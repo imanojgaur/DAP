@@ -1,7 +1,8 @@
 "use client";
 
 import { RefreshCcw } from "lucide-react";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { startTransition, useEffect } from "react";
 
 export default function ShopError({
 	error,
@@ -10,10 +11,20 @@ export default function ShopError({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
-	useEffect(() => {
-		// Silently log to error tracking service : datadog/sanatry
-		console.error("Shop section error:", error);
-	}, [error]);
+
+	
+	// log to error tracking service : datadog/sanatry
+	// useEffect(() => {
+	// 	// console.error("Shop section error:", error);
+	// }, [error]);
+
+	const router = useRouter();
+	function handleReset () {
+		startTransition(() => {
+			router.refresh()
+			reset() 
+		})
+	}
 
 	return (
 		<div className="flex min-h-[60vh] flex-col items-center justify-center px-6">
@@ -38,10 +49,10 @@ export default function ShopError({
 				<div className="pt-2">
 					<button
 						type="button"
-						onClick={() => reset()}
+						onClick={handleReset}
 						className="inline-flex items-center justify-center rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
 					>
-						Try loading again
+						Try loading again 
 					</button>
 				</div>
 			</div>

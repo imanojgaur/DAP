@@ -36,7 +36,7 @@ interface CategoryConfig {
 	className?: string;
 }
 
-// type FeatureProductConfig = Omit<ProductInfoProps, 'className' | 'actionsSlot'> & {images: ImageLayoutProps[]}
+type FeatureProductConfig = Omit<ProductInfoProps, 'className' | 'actionsSlot'> & {images: ImageLayoutProps[]}
 
 export default async function HomePage() {
 	// HANDLE CATEGORY DATA AND PASS SAFELY
@@ -76,33 +76,34 @@ export default async function HomePage() {
 		},
 	);
 
-	// // HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
-	// const featProducts = await getHomeProduct("home");
-	// const featProductConfig: FeatureProductConfig [] = featProducts.map((item)=>{
-	// 	const currPricePaise = item.price
-	// 	const realPricePaise = item.compareAtPrice
+	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
+	const featProducts = await getHomeProduct("home");
+	const featProductConfig: FeatureProductConfig [] = featProducts.length > 0? featProducts.map((item)=>{
+		const currPricePaise = item.price
+		const realPricePaise = item.compareAtPrice
 
-	// 	const finalComparePrice = (realPricePaise === currPricePaise)
-	// 	    ? realPricePaise + 5000
-	// 	    : realPricePaise
+		const finalComparePrice = (realPricePaise === currPricePaise)
+		    ? realPricePaise + 5000
+		    : realPricePaise
 
-	// 	const currPriceRupee = convertIntoRupee(currPricePaise);
-	// 	const realPriceRupee = finalComparePrice? convertIntoRupee(finalComparePrice): null
+		const currPriceRupee = convertIntoRupee(currPricePaise);
+		const realPriceRupee = finalComparePrice? convertIntoRupee(finalComparePrice): null
 		
-	//     return {
-	// 		...item,
-	// 		price: currPriceRupee, 
-	// 		compareAtPrice: realPriceRupee, 
-	// 		endpoint: item.slug,  
-	// 		body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item.stockQuantity? "In Stock": null}`, `Ship In ${24} hours`],
-	// 		images: item.images.map((image): ImageLayoutProps => {
-	// 			return { 
-	// 				...image, 
-	// 				sourceType: 'cloudinary', 
-	// 				alt: item.name, 
-	// 			}})
-	// 	} 
-	// })
+	    return {
+			...item,
+			price: currPriceRupee, 
+			compareAtPrice: realPriceRupee, 
+			endpoint: item.slug,  
+			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item.stockQuantity? "In Stock": null}`, `Ship In ${24} hours`],
+			images: item.images.map((image): ImageLayoutProps => {
+				return { 
+					...image, 
+					sourceType: 'cloudinary', 
+					alt: item.name, 
+				}})
+		} 
+	}) 
+	: []; // if db return empty array
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -144,7 +145,7 @@ export default async function HomePage() {
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
-		{/*	<SectionWrapper headerData={featHeader} >
+			{featProducts.length > 0  && <SectionWrapper headerData={featHeader} >
 				<HomeCarousel>
 					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
 						{featProductConfig?.map((card)=>(
@@ -173,7 +174,7 @@ export default async function HomePage() {
 					<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
 					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
 				</HomeCarousel>
-			</SectionWrapper> */}
+			</SectionWrapper>}
 
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper headerData={edtheader} metaData={edtMetaData}>

@@ -1,5 +1,5 @@
 import type { HeaderData, MetaDataItem } from "./section-wrapper";
-import { currentYear } from "@/utilities";
+import { currentYear } from "@/utilities/date";
 import type { EDITORIAL_CARDS_PROPS } from "./editorial-section";
 import type { ImageLayoutProps } from "./img-layout";
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { currentYear } from "@/utilities";
+import { currentYear } from "@/utilities/date";
 
 export function Footer() {
 	return (

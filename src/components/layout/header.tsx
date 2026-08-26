@@ -1,4 +1,5 @@
 import { Logo } from "../shared/logo";
+import { DoddleStickerCart, HandSearchDoodle, DoodleStickerSearch} from "./svg-icons";
 
 export function Header(){
     return (
@@ -31,18 +32,18 @@ export function Header(){
 
                     {/* Desktop Nevigation */}
                     <nav className="flex gap-6 justify-center items-center">
-                        <a href="/something/.svg">something 1</a>
-                        <a href="/fuckyou">another thing 2</a>
-                        <a href="/someting">what thing 3</a>
+
                     </nav>
 
                     {/* Action Group */}
                     <div className="flex justify-end items-center gap-6">
-                        <div>something too 1</div>
-                        <div>something too 2</div>
+                        <div className="group flex justify-center items-center gap-3 bg-[#f5f5f5] hover:bg-gray-200 rounded-full pl-2 pr-4 py-1.5 transition-colors duration-300">
+                            <DoodleStickerSearch /> 
+                            <span className="font-[700] text-md group-hover:text-emerald-500">Search...</span> 
+                        </div>
+                        <DoddleStickerCart />
                     </div>
-                </div>
-                
+                </div> 
             </div>
          </header>
     )

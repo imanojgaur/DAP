@@ -127,12 +127,11 @@ export function HomeHero() {
 
 				{/* SLIDER DOTS */}
 				<div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-					{HERO_SLIDES.map((_, index) => {
-						const randomKey = ["A", "B", "C", "D", "E", "F", "G", "H"];
+					{HERO_SLIDES.map((item, index) => {
 						return (
 							<button
 								type="button"
-								key={randomKey[index]}
+								key={item.src}
 								onClick={() => setCurrentImageIndex(index)}
 								className={`h-1.5 rounded-full transition-all duration-500 ${
 									index === currentImageIndex

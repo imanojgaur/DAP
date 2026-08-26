@@ -4,7 +4,7 @@ import { logoConfig } from "@/config/nav-config";
 
 export function Logo(props:{className?:string}) {
 	return (
-		<Link href={logoConfig.href} className={`flex items-center h-full ${props?.className}`}>
+		<Link href={logoConfig.href} className={`flex items-center ${props?.className}`}>
 			<Image
 				src={logoConfig.svg}
 				alt={logoConfig.alt}

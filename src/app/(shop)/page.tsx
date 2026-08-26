@@ -94,7 +94,7 @@ export default async function HomePage() {
 			price: currPriceRupee, 
 			compareAtPrice: realPriceRupee, 
 			endpoint: item.slug,  
-			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item.stockQuantity? "In Stock": null}`, `Ship In ${24} hours`],
+			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item?.stockQuantity > 10 ? "In Stock": `Hurry up ${item.stockQuantity} Left` }`, `Ship In ${24} hours`],
 			images: item.images.map((image): ImageLayoutProps => {
 				return { 
 					...image, 

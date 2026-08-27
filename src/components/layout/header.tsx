@@ -1,5 +1,5 @@
-import { Logo } from "../shared/logo";
-import { DoddleStickerCart, HandSearchDoodle, DoodleStickerSearch} from "./svg-icons";
+import {  PremiumStickerLogo } from "../shared/icon-svg"
+import { DoddleStickerCart, DoodleStickerSearch, HandSearchDoodle, } from "./svg-icons";
 
 export function Header(){
     return (
@@ -27,7 +27,7 @@ export function Header(){
                 <div className="grid grid-cols-[1fr_auto_1fr] px-[2vw] min-h-16 md:h-16 items-center"> 
                     {/* Site Logo */}
                     <div className="flex justify-start items-center">
-                        <Logo className="h-full w-24"/>
+                        <PremiumStickerLogo className="h-8 md:h-12 w-auto text-[#111111] cursor-pointer hover:text-emerald-700 transition-colors duration-300" />
                     </div>
 
                     {/* Desktop Nevigation */}
@@ -39,7 +39,7 @@ export function Header(){
                     <div className="flex justify-end items-center gap-6">
                         <div className="group flex justify-center items-center gap-3 bg-[#f5f5f5] hover:bg-gray-200 rounded-full pl-2 pr-4 py-1.5 transition-colors duration-300">
                             <DoodleStickerSearch /> 
-                            <span className="font-[700] text-md group-hover:text-emerald-500">Search...</span> 
+                            <span className="font-[700] text-md group-hover:text-emerald-700">Search...</span> 
                         </div>
                         <DoddleStickerCart />
                     </div>

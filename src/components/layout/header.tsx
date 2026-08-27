@@ -1,7 +1,7 @@
 import {  PremiumStickerLogo } from "../shared/svg-icon"
 import { DoddleStickerCart, DoodleStickerSearch, UserAccountIcon } from "./svg-icon";
 
-export function Header(){
+export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
     return (
 
         <header className="bg-[#ffffff]">  
@@ -31,9 +31,9 @@ export function Header(){
                     </div>
 
                     {/* Desktop Nevigation */}
-                    <nav className="flex gap-6 justify-center items-center">
-
-                    </nav>
+                    <div className="flex gap-6 justify-center items-center">
+                        {DesktopNav}
+                    </div>
 
                     {/* Action Group */}
                     <div className="flex justify-end items-center gap-6">

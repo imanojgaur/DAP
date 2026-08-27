@@ -1,0 +1,81 @@
+import Link from "next/link";
+import { navConfig } from "@/config/nav-config";
+import { cn } from "@/utilities/utils";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
+
+export function DesktopNav () {
+    return (
+        <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+                    {navConfig?.map((navHeading)=>{
+                        const contCols = navHeading.items?.length
+                        return (
+                            <NavigationMenuItem 
+                                key={navHeading.title}
+                            >
+                                <NavigationMenuTrigger
+                                    className="cursor-pointer rounded-full"
+                                >
+                                    {navHeading.title}
+                                </NavigationMenuTrigger>
+
+                                <NavigationMenuContent>
+
+                                    <div className="grid grid-cols-[1fr_auto_1fr] w-screen max-w-[1920px] mt-15 mb-10 p-2 mx-auto">
+                                        {/*Left spacer */}
+                                        <div></div>
+                                        {/* Main Content */}
+                                        <div 
+                                            style={{'gridTemplateColumns':`repeat(${contCols}, minmax(0, 1fr))`} as React.CSSProperties}
+                                            className="grid gap-20 justify-center"
+                                        >
+                                            {navHeading.items? navHeading.items.map((contCol)=> (
+                                                <div key={contCol.title} className="flex flex-col">
+                                                    <h4 className="cursor-pointer text-gray-200 hover:text-gray-500 font-bold text-sm px-3 mb-4">
+                                                        {contCol.title}
+                                                    </h4>
+                                                    <ul key={contCol.title}>
+                                                        {contCol?.items ? contCol.items.map((item)=>(
+                                                            <ListItem 
+                                                                key={item.title}
+                                                                href={item.href} 
+                                                                title={item.title} 
+                                                                className="px-3 line-clamp-0 hover:bg-slate-100 transition-colors"
+                                                            />
+                                                        )):null}
+                                                    </ul>
+                                                </div>
+                                            )):null}
+                                        </div>
+                                        {/* right spacer */}
+                                        <div></div>
+                                    </div>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>)
+                        })}
+            </NavigationMenuList>
+        </NavigationMenu>
+    )
+}
+
+function ListItem({
+    className,
+    title, 
+    children, 
+    href, 
+    ...props
+}: React.ComponentPropsWithoutRef<"li"> & {href:string}) {
+    return (
+        <li {...props}>
+            <NavigationMenuLink asChild>
+                <Link href={href}>
+                    <div className={cn("flex flex-col justify-center item-center gap-1 text-gray-500 text-sm rounded-xl", className)}>
+                        <div className="leading-none font-medium">{title}</div>
+                        <div className="line-clamp-2 text-muted-foreground">{children}</div>
+                   </div>
+                </Link>
+            </NavigationMenuLink>
+        </li>
+    )
+
+}

@@ -11,7 +11,7 @@ export type LogoConfig = {
 
 export type NavItem = {
 	title: string;
-	href?: string;
+	href: string;
 	description?: string;
 	items?: NavItem[];
 };

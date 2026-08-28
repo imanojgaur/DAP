@@ -113,9 +113,9 @@ function NavigationMenuViewport({
 				data-slot="navigation-menu-viewport"
 				className={cn(
 					"origin-top relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden border-b border-gray-100 bg-white text-popover-foreground shadow-xl",
-					"data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:slide-in-from-top-30",
-					" data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-top-30",
-					"transition-all ease-in-out duration-400",
+					"data-[state=open]:animate-in data-[state=open]:slide-in-from-top-100",
+					" data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top-100",
+					"transition-all ease-in-out duration-500",
 					className,
 				)}
 				{...props}

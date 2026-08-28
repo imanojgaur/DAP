@@ -4,9 +4,10 @@ import { DoddleStickerCart, DoodleStickerSearch, UserAccountIcon } from "./svg-i
 export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
     return (
 
-        <header className="bg-[#ffffff]">  
+        <header className="bg-white fixed left-0 top-0 z-50 w-full border-b border-gray-200">  
 
-            <div className="max-w-[1920px] mx-auto">
+            {/* shadow matter: why on header only giving shadow not working but removing shadow of header and giving only this div only even works */}
+            <div className="w-full max-w-[1920px] mx-auto">
 
                 {/* Eybrow Nav (Help & user Account) */}
                 <div className="hidden md:flex gap-2 justify-end items-center h-8 bg-[#f5f5f5] px-[2vw] font-[500] text-sm">

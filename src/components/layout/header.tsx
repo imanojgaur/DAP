@@ -47,9 +47,11 @@ export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
 
                     {/* Action Group */}
                     <div className="flex justify-end items-center gap-6">
-                        <div className="group/search flex justify-center items-center gap-3 bg-[#f5f5f5] hover:bg-gray-200 rounded-full pl-2 pr-4 py-1.5 transition-colors duration-300">
-                            <DoodleStickerSearch className="group-hover:text-emerald-700 hover:translate-y-0" /> 
-                            <span className="font-[700] text-md group-hover:text-emerald-700">Search...</span> 
+                        <div className="group/search  bg-white hover:bg-white/80 rounded-full pl-2 pr-5 py-1 cursor-pointer">
+                            <div className="flex justify-center items-center gap-3 ">
+                                <DoodleStickerSearch className="hover:text-black hover:translate-y-0" /> 
+                                <span className="font-[500] text-sm">Search...</span> 
+                            </div>
                         </div>
                         <DoddleStickerCart />
                     </div>

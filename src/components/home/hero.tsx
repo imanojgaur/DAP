@@ -30,7 +30,7 @@ export function HomeHero() {
 	}, []);
 
 	return (
-		<section className="pb-3 mt-24">
+		<section className="pb-3">
 			<div className="relative w-full h-[90vh] overflow-hidden group bg-black">
 				{/* 1. CINEMATIC CROSSFADE BACKGROUNDS */}
 				{HERO_SLIDES.map((slide, index) => (

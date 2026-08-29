@@ -8,9 +8,7 @@ export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
 
             {/* Shield: Dropdown text move blow this getting invisible into*/}
             <div className="absolute inset-0 w-full h-full bg-white/80 backdrop-blur-md transition-all group-has-[[data-state=open]]:bg-white group-has-[[data-state=open]]:duration-300 group-has-[[data-state=open]]:delay-0 duration-[1500ms] delay-[200ms] ease-in"/>
-            {/* Expose header transparencey  */}
-            <div className="absolute inset-0 -z-1 mt-10 bg-black color-black"/>
-            
+        
             {/* 1. THE PAGE BLUR OVERLAY: Fades in ONLY when the group has an open menu*/}
             <div className="absolute top-full left-0 w-screen h-[100vh] bg-black/50 -z-30 opacity-0 pointer-events-none transition-opacity duration-500 group-has-[[data-state=open]]:opacity-100" />
            

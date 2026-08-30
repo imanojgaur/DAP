@@ -8,7 +8,7 @@ export default function ShopLayout({
 	return (
 		<div className="flex flex-col min-h-screen">
 			<Header DesktopNav={<DesktopNav />}/>
-			<main className="flex-grow mt-24">{children}</main>
+			<main className="flex-grow mt-10">{children}</main>
 			<Footer />
 		</div>
 	);

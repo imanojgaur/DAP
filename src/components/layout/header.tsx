@@ -1,5 +1,5 @@
-import {  PremiumStickerLogo } from "../shared/svg-icon"
-import { DoddleStickerCart, DoodleStickerSearch, UserAccountIcon } from "./svg-icon";
+import {  PremiumStickerLogo } from "../shared/shared-icon"
+import { DoddleStickerCart, DoodleStickerSearch, UserAccountIcon } from "./layout-icon";
 
 export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
     return (

@@ -1,4 +1,4 @@
-import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import { AddToCartButton, OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
@@ -164,6 +164,7 @@ export default async function HomePage() {
 									body={card.body}
 									price={card.price}
 									compareAtPrice={card.compareAtPrice}
+									actionsSlot={<AddToCartButton />}
 									className=""
 								/>
 							    }

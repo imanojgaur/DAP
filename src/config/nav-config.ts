@@ -91,6 +91,10 @@ const navConfig: NavItem[] = [
 			},
 		],
 	},
+	// {
+	// 	title: "Blogs",
+	// 	href: "#"
+	// }
 ];
 
 export { navConfig, logoConfig };

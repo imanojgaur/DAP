@@ -1,26 +1,38 @@
 "use client";
 
 import { RefreshCcw } from "lucide-react";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 export default function ShopError({
-	error,
+	// error,
 	reset,
 }: {
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
-	useEffect(() => {
-		// Silently log to your error tracking service
-		console.error("Shop section error:", error);
-	}, [error]);
+
+	
+	// log to error tracking service : datadog/sanatry
+	// useEffect(() => {
+	// 	// console.error("Shop section error:", error);
+	// }, [error]);
+
+	const [isPending, startTransition] = useTransition(); 
+	const router = useRouter();
+	function handleReset () {
+		startTransition(() => {
+			reset() 
+			router.refresh()
+		})
+	}
 
 	return (
 		<div className="flex min-h-[60vh] flex-col items-center justify-center px-6">
 			<div className="max-w-md w-full text-center space-y-6">
 				<div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-muted/50 border border-border/50">
 					<RefreshCcw
-						className="h-6 w-6 text-muted-foreground"
+						className={`h-6 w-6 text-muted-foreground ${isPending? "animate-spin": ""}`}
 						strokeWidth={1.5}
 					/>
 				</div>
@@ -38,10 +50,11 @@ export default function ShopError({
 				<div className="pt-2">
 					<button
 						type="button"
-						onClick={() => reset()}
+						onClick={handleReset}
+						disabled={isPending}
 						className="inline-flex items-center justify-center rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
 					>
-						Try loading again
+						{isPending? "loading....":"Try loading again"}
 					</button>
 				</div>
 			</div>

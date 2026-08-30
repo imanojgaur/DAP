@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-// This object works same as <meta name="description"> and <title /> in pure html inside head.
 export const metadata: Metadata = {
 	title: "DAP - Bring Greenery Home",
 	description:
@@ -26,7 +25,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F4F4F4]`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F4F4F4] text-[#111111]`}
 			>
 				{children}
 				<Analytics />

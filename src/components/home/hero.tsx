@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/config/constants/routes";
-import { currentYear } from "@/utilities";
+import { currentYear } from "@/utilities/date";
 
 // Array of premium editorial slides
 const HERO_SLIDES = [
@@ -127,12 +127,11 @@ export function HomeHero() {
 
 				{/* SLIDER DOTS */}
 				<div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-					{HERO_SLIDES.map((_, index) => {
-						const randomKey = ["A", "B", "C", "D", "E", "F", "G", "H"];
+					{HERO_SLIDES.map((item, index) => {
 						return (
 							<button
 								type="button"
-								key={randomKey[index]}
+								key={item.src}
 								onClick={() => setCurrentImageIndex(index)}
 								className={`h-1.5 rounded-full transition-all duration-500 ${
 									index === currentImageIndex

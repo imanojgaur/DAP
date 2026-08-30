@@ -1,67 +1,61 @@
-// "use client";
+import {  PremiumStickerLogo } from "../shared/shared-icon"
+import { DoddleStickerCart, DoodleStickerSearch, UserAccountIcon } from "./layout-icon";
 
-// import Link from "next/link";
-// import { useSession } from "next-auth/react";
-// import { CartSync } from "@/components/cart/cart-sync";
-// import { Logo } from "../shared/logo";
-// import { CartDrawer } from "./cart";
-// import { Navbar } from "./desktop-nav";
-// import MobileNav from "./mobile-nav";
-// import { SearchBar } from "./search-bar";
-// import { UserDropdown } from "./user-dropdown";
+export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
+    return (
 
-// export function Header() {
-// 	return (
-// 		<div className="sticky top-0 z-50 flex w-full flex-col bg-white">
-// 			{/* --- DESKTOP TOP STRIP (Minimal Nike Vibe) --- */}
-// 			<div className="hidden md:flex w-full bg-[#f5f5f5] border-b border-gray-200 h-9">
-// 				<div className="container mx-auto flex h-full items-center justify-end px-4 sm:px-8">
-// 					<div className="flex items-center gap-4 text-xs font-medium text-gray-600">
-// 						<Link href="/help" className="hover:text-black transition-colors">
-// 							Help
-// 						</Link>
-// 						<span className="h-3 w-px bg-gray-300"></span>
+        <header className="group fixed left-0 top-0 z-50 w-full">
 
-// 						{session?.user ? (
-// 							<UserDropdown user={session.user} />
-// 						) : (
-// 							<div className="flex items-center gap-4">
-// 								<Link
-// 									href="/login"
-// 									className="hover:text-black transition-colors"
-// 								>
-// 									Sign In
-// 								</Link>
-// 							</div>
-// 						)}
-// 					</div>
-// 				</div>
-// 			</div>
+            {/* Shield: Dropdown text move blow this getting invisible into*/}
+            <div className="absolute inset-0 w-full h-full bg-white/80 backdrop-blur-md transition-all group-has-[[data-state=open]]:bg-white group-has-[[data-state=open]]:duration-300 group-has-[[data-state=open]]:delay-0 duration-[1500ms] delay-[200ms] ease-in"/>
+        
+            {/* 1. THE PAGE BLUR OVERLAY: Fades in ONLY when the group has an open menu*/}
+            <div className="absolute top-full left-0 w-screen h-[100vh] bg-black/50 -z-30 opacity-0 pointer-events-none transition-opacity duration-500 group-has-[[data-state=open]]:opacity-100" />
+           
+           {/* Main Header */}
+            <div className="relative w-full max-w-[1920px] mx-auto">
 
-// 			{/* --- MAIN HEADER --- */}
-// 			<header className="w-full border-b border-gray-200">
-// 				<div className="container mx-auto flex h-[60px] items-center justify-between px-4 sm:px-8">
-// 					<div className="flex w-32 items-center justify-start">
-// 						<Logo />
-// 					</div>
+                {/* Eybrow Nav (Help & user Account) */}
+                <div className="hidden md:flex gap-2 justify-end items-center h-8 px-[2vw] font-[500] text-sm bg-transparent">
 
-// 					<CartSync />
+                    <a href="/help">Help</a>
 
-// 					<div className="hidden flex-1 justify-center md:flex px-8">
-// 						<Navbar />
-// 					</div>
+                    <span>|</span>
 
-// 					<div className="flex w-auto items-center justify-end gap-3 sm:gap-5">
-// 						<div className="items-center  sm:flex">
-// 							<SearchBar />
-// 						</div>
-// 						<CartDrawer />
-// 						<div className="md:hidden flex items-center">
-// 							<MobileNav />
-// 						</div>
-// 					</div>
-// 				</div>
-// 			</header>
-// 		</div>
-// 	);
-// }
+                    <a href="/profile" className="flex gap-4 items-center">
+                    <span> Sign In</span>
+                    {/* <span>Hi, Manoj</span> */}
+                    <UserAccountIcon />
+                    </a>
+
+                </div>
+
+                {/* Desktop Nevigation */}
+                <div className="grid grid-cols-[1fr_auto_1fr] px-[2vw] min-h-16 md:h-16 items-center"> 
+
+                    {/* Site Logo */}
+                    <div className="flex justify-start items-center">
+                        <PremiumStickerLogo />
+                    </div>
+
+                    {/* Desktop Nevigation */}
+                    <div className="flex gap-6 justify-center items-center">
+                        {DesktopNav}
+                    </div>
+
+                    {/* Action Group */}
+                    <div className="flex justify-end items-center gap-6">
+                        <div className="group/search  bg-white hover:bg-white/80 rounded-full pl-2 pr-5 py-1 cursor-pointer">
+                            <div className="flex justify-center items-center gap-3 ">
+                                <DoodleStickerSearch className="hover:text-black hover:translate-y-0" /> 
+                                <span className="font-[500] text-sm">Search...</span> 
+                            </div>
+                        </div>
+                        <DoddleStickerCart />
+                    </div>
+                    
+                </div> 
+            </div>
+         </header>
+    )
+}

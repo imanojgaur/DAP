@@ -75,7 +75,7 @@ function NavigationMenuTrigger({
 		>
 			{children}{" "}
 			<ChevronDownIcon
-				className="relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
+				className="hidden relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
 				aria-hidden="true"
 			/>
 		</NavigationMenuPrimitive.Trigger>
@@ -106,14 +106,16 @@ function NavigationMenuViewport({
 	return (
 		<div
 			className={cn(
-				"absolute top-full left-1/2 -translate-x-1/2 isolate z-50 flex justify-center w-screen",
+				"absolute top-full left-1/2 -translate-x-1/2 isolate -z-20 flex justify-center w-screen",
 			)}
 		>
 			<NavigationMenuPrimitive.Viewport
 				data-slot="navigation-menu-viewport"
 				className={cn(
-					// Make sure this string ends cleanly at zoom-in-90
-					"origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden border-b border-gray-100 bg-white text-popover-foreground shadow-xl data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90",
+					"origin-top relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden border-b border-gray-100 bg-white text-popover-foreground shadow-xl",
+					"data-[state=open]:animate-in data-[state=open]:slide-in-from-top-100",
+					" data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top-100",
+					"transition-all ease-in-out duration-500",
 					className,
 				)}
 				{...props}

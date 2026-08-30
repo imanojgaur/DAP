@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Button } from "../ui/button";
 
 export interface OverlayTextProps {
 	title: string;
@@ -102,5 +103,13 @@ export function ProductInfo ({
 		     	{actionsSlot}
 			</div>}
 		</div>
+	)
+}
+
+export function AddToCartButton () {
+	return (
+		<Button size="xs" variant="outline">
+			Add To Cart
+		</Button>
 	)
 }

@@ -1,4 +1,4 @@
-import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import { AddToCartButton, OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
@@ -24,8 +24,8 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getHomeCategories, getHomeProduct } from "@/data";
-import { convertIntoRupee } from "@/utilities";
+import { getHomeCategories, getHomeProduct } from "@/data/home";
+import { convertIntoRupee } from "@/utilities/price";
 
 interface CategoryConfig {
 	title: string;
@@ -40,13 +40,13 @@ type FeatureProductConfig = Omit<ProductInfoProps, 'className' | 'actionsSlot'> 
 
 export default async function HomePage() {
 	// HANDLE CATEGORY DATA AND PASS SAFELY
+
 	//Categories fetch db
 	const categorySluges = baseCategoryConfig.map((confiObj) => confiObj.slug);
 	const categoriesdbData = await getHomeCategories(categorySluges);
 
 	// category config Object creation
 	// -> Create Base Config Obj with images data
-
 	const baseCatConfigWithImg = baseCategoryConfig.map((obj) => {
 		const imagesArr = images.find(
 			(imgArrItem) => obj.title === imgArrItem[0].alt,
@@ -58,6 +58,7 @@ export default async function HomePage() {
 		};
 	});
 
+	// Create final category rendering object 
 	const categoryConfig: CategoryConfig[] = baseCatConfigWithImg.map(
 		(baseObj) => {
 			const matchDBResult =
@@ -77,7 +78,7 @@ export default async function HomePage() {
 
 	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
 	const featProducts = await getHomeProduct("home");
-	const featProductConfig: FeatureProductConfig [] = featProducts.map((item)=>{
+	const featProductConfig: FeatureProductConfig [] = featProducts.length > 0? featProducts.map((item)=>{
 		const currPricePaise = item.price
 		const realPricePaise = item.compareAtPrice
 
@@ -93,7 +94,7 @@ export default async function HomePage() {
 			price: currPriceRupee, 
 			compareAtPrice: realPriceRupee, 
 			endpoint: item.slug,  
-			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item.stockQuantity? "In Stock": null}`, `Ship In ${24} hours`],
+			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item?.stockQuantity > 10 ? "In Stock": `Hurry up ${item.stockQuantity} Left` }`, `Ship In ${24} hours`],
 			images: item.images.map((image): ImageLayoutProps => {
 				return { 
 					...image, 
@@ -101,7 +102,8 @@ export default async function HomePage() {
 					alt: item.name, 
 				}})
 		} 
-	})
+	}) 
+	: []; // if db return empty array
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -143,7 +145,7 @@ export default async function HomePage() {
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
-			<SectionWrapper headerData={featHeader} >
+			{featProducts.length > 0  && <SectionWrapper headerData={featHeader} >
 				<HomeCarousel>
 					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
 						{featProductConfig?.map((card)=>(
@@ -162,6 +164,7 @@ export default async function HomePage() {
 									body={card.body}
 									price={card.price}
 									compareAtPrice={card.compareAtPrice}
+									actionsSlot={<AddToCartButton />}
 									className=""
 								/>
 							    }
@@ -172,7 +175,8 @@ export default async function HomePage() {
 					<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
 					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
 				</HomeCarousel>
-			</SectionWrapper>
+			</SectionWrapper>}
+
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper headerData={edtheader} metaData={edtMetaData}>
 				<EditorialLayout EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA} />

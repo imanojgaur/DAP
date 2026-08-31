@@ -42,7 +42,7 @@ export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
                     </div>
 
                     {/* Desktop Nevigation */}
-                    <div className="flex gap-6 justify-center items-center">
+                    <div className="hidden md:flex gap-6 justify-center items-center">
                         {DesktopNav}
                     </div>
 

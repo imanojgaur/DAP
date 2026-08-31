@@ -1,4 +1,5 @@
-import { AddToCartButton, OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import { AddToCartButton } from "@/components/home/cart-control";
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";

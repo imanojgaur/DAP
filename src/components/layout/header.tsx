@@ -1,13 +1,10 @@
-'use client'
-
 import {  PremiumStickerLogo } from "../shared/shared-icon"
-import { Button } from "../ui/button";
-import { DoddleStickerCart, DoodleStickerSearch, UserAccountIcon } from "./layout-icon";
-import { useCart } from "@/store/cart-store";
+import { HeaderCartTrigger } from "./cart";
+import { UserAccountIcon } from "./layout-icon";
+import { Search } from "./search-bar";
 
 export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
-    const cartProduct = useCart((state) => state.productCount)
-    const decrement = useCart((state) => state.removeProduct)
+
     return (
 
         <header className="group fixed left-0 top-0 z-50 w-full">
@@ -51,32 +48,8 @@ export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
 
                     {/* Action Group */}
                     <div className="flex justify-end items-center gap-6">
-                        <div className="group/search  bg-white hover:bg-white/80 rounded-full pl-2 pr-5 py-1 cursor-pointer">
-                            <div className="flex justify-center items-center gap-3 ">
-                                <DoodleStickerSearch className="hover:text-black hover:translate-y-0" /> 
-                                <span className="font-[500] text-sm">Search...</span> 
-                            </div>
-                        </div>
-          
-                        <div className="relative inline-flex items-center justify-center">
-                            {/* The Cart Button (Scales everything together) */}
-                            <button 
-                                type="button" 
-                                onClick={decrement} 
-                                className="group relative z-10 flex items-center justify-center text-gray-800 transition-all duration-300 ease-out hover:scale-110 hover:text-emerald-500"
-                            >
-                                {/* 1. The Cart Icon */}
-                                <DoddleStickerCart />
-                                
-                                {/* 2. The Giant Embedded Number */}
-                                {/* absolute inset-0 forces it to map exactly to the button's edges */}
-                                <span className="absolute inset-0 z-20 flex items-center justify-center pt-2 pointer-events-none">
-                                    <span className="text-2xl font-black text-white/90 drop-shadow-[0_2px_5px_rgba(0,0,0,0.6)]">
-                                        {cartProduct}
-                                    </span>
-                                </span>
-                            </button>
-                        </div>
+                       <Search />
+                       <HeaderCartTrigger />
                     </div>
                     
                 </div> 

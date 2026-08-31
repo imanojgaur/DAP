@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/button";
-import { useCart } from "@/store/cart-store";
 
 export interface OverlayTextProps {
 	title: string;
@@ -86,7 +84,7 @@ export function ProductInfo ({
 				{/* Display body: ratings reviews ... */}
 				<div className="flex items-center flex-wrap gap-1 text-sm text-gray-500">
 					{body?.map((item, index) => (
-					<React.Fragment key={index}>
+					<React.Fragment key={item}>
 						{index > 0 && <span className="font-bold">·</span>}
 						<span className="text-gray-500">{item}</span> 	
 					</React.Fragment>
@@ -106,22 +104,5 @@ export function ProductInfo ({
 		     	{actionsSlot}
 			</div>}
 		</div>
-	)
-}
-
-export function AddToCartButton () {
-
-	const increment = useCart((state) => state.addProduct)
-	const countState = useCart((state) => state.productCount)
-	console.log(countState)
-
-	return (
-		<Button 
-		size="xs" 
-		variant="outline"
-		onClick={increment}
-		>
-			Add To Cart
-		</Button>
 	)
 }

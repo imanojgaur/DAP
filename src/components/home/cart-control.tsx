@@ -6,8 +6,6 @@ import { Button } from "../ui/button"
 export function AddToCartButton () {
 
 	const increment = useCart((state) => state.addProduct)
-	const countState = useCart((state) => state.productCount)
-	console.log(countState)
 
 	return (
 		<Button 

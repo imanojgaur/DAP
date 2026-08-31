@@ -1,6 +1,9 @@
+'use client'
+
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
+import { useCart } from "@/store/cart-store";
 
 export interface OverlayTextProps {
 	title: string;
@@ -107,8 +110,17 @@ export function ProductInfo ({
 }
 
 export function AddToCartButton () {
+
+	const increment = useCart((state) => state.addProduct)
+	const countState = useCart((state) => state.productCount)
+	console.log(countState)
+
 	return (
-		<Button size="xs" variant="outline">
+		<Button 
+		size="xs" 
+		variant="outline"
+		onClick={increment}
+		>
 			Add To Cart
 		</Button>
 	)

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCart } from "@/store/cart-store";
-import { DoddleStickerCart } from "./layout-icon";
+import { DoddleStickerCart } from "./cart-icon";
 
 export function HeaderCartTrigger() {
     const cartProduct = useCart((state) => state.productCount)

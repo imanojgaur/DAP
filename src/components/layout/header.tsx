@@ -1,5 +1,5 @@
 import {  PremiumStickerLogo } from "../shared/shared-icon"
-import { HeaderCartTrigger } from "./cart";
+import { HeaderCartTrigger } from "../cart/cart";
 import { UserAccountIcon } from "./layout-icon";
 import { Search } from "./search-bar";
 

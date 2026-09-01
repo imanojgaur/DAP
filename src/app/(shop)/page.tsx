@@ -1,7 +1,7 @@
-import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
-import { AddToCartButton } from "@/components/home/cart-control";
-import { HomeCarousel } from "@/components/home/carousel-wrapper";
+import { AddToCartButton } from "@/components/cart/cart-control";
 import { EditorialLayout } from "@/components/home/editorial-section";
+import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import { HomeCarousel } from "@/components/home/carousel-wrapper";
 import { HomeHero } from "@/components/home/hero";
 // import { getHomeCategories } from "@/data-sql"
 import {

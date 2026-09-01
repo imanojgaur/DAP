@@ -31,11 +31,12 @@ A full-stack, data-driven e-commerce platform architected for SSR performance an
 
 **Database Architecture: [`Prisma & PostgreSQL`](https://github.com/imanojgaur/DAP/blob/main/prisma/schema.prisma)**
 - Designed a relational schema for multi-tier categories and product variations.
-- Handled complex hierarchical data and user reviews efficiently.
 
-**Secure Checkout & Authentication**
-- Leveraged Auth.js (Google OAuth 2.0) for seamless user session management.
+**Secure Checkout**
 - Implemented Razorpay with client-side tokenization for secure payments.
+
+**Authentication**
+- Leveraged Auth.js (Google OAuth 2.0) for seamless user session management.
 
 **Automated ETL Pipelines ([`Playwright`](https://github.com/imanojgaur/DAP/blob/main/etl/extract/scripts/e2-product-page.ts), [`Cloudinary`](https://github.com/imanojgaur/DAP/blob/main/etl/transform/script/t1-cloud-sync-e1.ts) & [`Supabase`](https://github.com/imanojgaur/DAP/blob/main/etl/load/seed-product-t1.ts) )**
 - Engineered a scraping pipeline to extract and transform initial store data.
@@ -75,8 +76,8 @@ cp .env.example .env.local
 Push the schema to your database and generate the Prisma Client:
 
 ```
-npx prisma db push
-npx prisma generate
+pnpm dlx prisma db push
+pnpm dlx prisma generate
 ```
 
 **5. Start the development server**

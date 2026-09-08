@@ -2,14 +2,39 @@
 
 import { create } from 'zustand'
 
+export interface item {
+    id: string,
+    title: string, 
+    price: number,
+    comparPriceAt: number, 
+    href: string, 
+    imgSrc?: string, 
+}
+
 interface Store {
-    productCount: number, 
-    addProduct: () => void, 
-    removeProduct: () => void, 
- }
+    items: item [],
+    productCount: number,
+    isDrawerOpen: boolean, 
+    setDrawerOpen: (isOpen: boolean) => void, 
+    addProduct: (item: item) => void, 
+    removeProduct: (id: string) => void, 
+}
 
 export const useCart = create<Store>((set) => ({
-    productCount: 0, 
-    addProduct: () => set((state)=> ({productCount: state.productCount + 1})), 
-    removeProduct: () => set((state)=>({productCount: state.productCount - 1}))
+    items: [],
+    productCount: 0,
+
+    isDrawerOpen: false, 
+    setDrawerOpen: (isOpen) => set(() => ({isDrawerOpen: isOpen})), 
+
+    addProduct: (item) => set((state)=> ({
+        items: [...state.items, item], 
+        isDrawerOpen: true, 
+        productCount: state.items.length + 1
+    })), 
+    
+    removeProduct: (id) => set((state)=>({
+        items: state.items.filter((item) => item.id === id), 
+        productCount: state.productCount - 1
+    }))
 }))

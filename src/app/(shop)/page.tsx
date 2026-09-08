@@ -77,23 +77,23 @@ export default async function HomePage() {
 		},
 	);
 
-	// HANDLE FEATURED PRODUCT DATA AND PASS SAFELY
+	// HANDLE FEATURED PRODUCT DATA 
 	const featProducts = await getHomeProduct("home");
 	const featProductConfig: FeatureProductConfig [] = featProducts.length > 0? featProducts.map((item)=>{
 		const currPricePaise = item.price
-		const realPricePaise = item.compareAtPrice
-
-		const finalComparePrice = (realPricePaise === currPricePaise)
-		    ? realPricePaise + 5000
-		    : realPricePaise
-
 		const currPriceRupee = convertIntoRupee(currPricePaise);
-		const realPriceRupee = finalComparePrice? convertIntoRupee(finalComparePrice): null
+		
+		const realPricePaise = item.compareAtPrice
+		const finalComparePrice = realPricePaise
+		    ? ((realPricePaise === currPricePaise)
+			    ? convertIntoRupee(realPricePaise + 5000)
+				: realPricePaise)
+		    : convertIntoRupee(currPricePaise + 5000)
 		
 	    return {
 			...item,
 			price: currPriceRupee, 
-			compareAtPrice: realPriceRupee, 
+			compareAtPrice: finalComparePrice, 
 			endpoint: item.slug,  
 			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item?.stockQuantity > 10 ? "In Stock": `Hurry up ${item.stockQuantity} Left` }`, `Ship In ${24} hours`],
 			images: item.images.map((image): ImageLayoutProps => {
@@ -149,29 +149,37 @@ export default async function HomePage() {
 			{featProducts.length > 0  && <SectionWrapper headerData={featHeader} >
 				<HomeCarousel>
 					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
-						{featProductConfig?.map((card)=>(
-							<CarouselItem 
-							key={card.name}
-							className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
-							>
-								<ImageCover key={card.name}
-								endPoint={`/products/${card.endpoint}`} 
-								className={'aspect-[4/5]'}
-								imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
-								productFragment={
-								<ProductInfo  
-									name={card.name}
-									endpoint={card.endpoint}
-									body={card.body}
-									price={card.price}
-									compareAtPrice={card.compareAtPrice}
-									actionsSlot={<AddToCartButton />}
-									className=""
-								/>
-							    }
-								/>
-							</CarouselItem>
-						))}
+						{featProductConfig?.map((card)=> {
+						    
+							//Passing primary image src to ProductInfo -> AddToCartButton -> Zustand Store "Items Array"
+							const primaryImg = card.images.find((image) => image.isPrimary === true)
+							const imgSrc = primaryImg?.sourceType === "cloudinary" ? primaryImg.publicId: undefined; 
+
+						    return (
+								<CarouselItem 
+								key={card.name}
+								className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
+								>
+									<ImageCover key={card.name}
+									endPoint={`/products/${card.endpoint}`} 
+									className={'aspect-[4/5]'}
+									imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
+									productFragment={
+										<ProductInfo  
+											id={card.id}
+											name={card.name}
+											endpoint={card.endpoint}
+											body={card.body}
+											price={card.price}
+											compareAtPrice={card.compareAtPrice}
+											imgSrc={imgSrc}
+											className=""
+									    />
+									}
+									/>
+								</CarouselItem>
+							)}
+						)}
 					</CarouselContent>
 					<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
 					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>

@@ -48,9 +48,9 @@ export function HeaderCartTrigger() {
                 <div className="flex-1 overflow-y-auto py-4 no-scrollbar">
                     {addedItem.length > 0 ? (
                         <div className="flex flex-col gap-2">
-                            {addedItem.map((item) => (
+                            {addedItem.map((item, index) => (
                                 <CartCard 
-                                    key={item.id}
+                                    key={`item.id+${index}`}
                                     id={item.id} 
                                     href={item.href} 
                                     imgSrc={item.imgSrc} 

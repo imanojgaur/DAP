@@ -6,7 +6,7 @@ import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, 
 import { DoddleStickerCart } from "./cart-icon";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Plus, Minus, Trash2 } from "lucide-react";
 
 // ==========================================
 // 1. ACTION TRIGGERS
@@ -149,7 +149,10 @@ function CartCard({ href, imgSrc, title, price, comparPriceAt }: item) {
                             <span className="text-xs line-through text-muted-foreground">₹ {comparPriceAt}</span>
                         )}
                     </div>
+					<CartAddRemoveItemButtons />
                 </div>
+
+
             </Link>
         </SheetClose>
     )
@@ -202,3 +205,12 @@ function CartSheetFooter() {
     );
 }
 
+function CartAddRemoveItemButtons() {
+	return (
+		<div className="flex items-center justify-start gap-2 mt-auto">
+			<Minus/> 
+			<Plus/> 
+			<Trash2/>
+		</div>
+	)
+}

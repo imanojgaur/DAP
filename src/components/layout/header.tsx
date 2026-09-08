@@ -1,5 +1,5 @@
 import {  PremiumStickerLogo } from "../shared/shared-icon"
-import { HeaderCartTrigger } from "../cart/cart";
+import { AddToCartDrawer, HeaderCartTrigger } from "../cart/cart-control";
 import { UserAccountIcon } from "./layout-icon";
 import { Search } from "./search-bar";
 
@@ -50,6 +50,7 @@ export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
                     <div className="flex justify-end items-center gap-6">
                        <Search />
                        <HeaderCartTrigger />
+                       <AddToCartDrawer />
                     </div>
                     
                 </div> 

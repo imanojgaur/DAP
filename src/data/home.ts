@@ -18,7 +18,6 @@ export async function getHomeCategories(slug: string[]) {
 		},
 	});
 }
-// no prisma aliasing allowed: {rename _count: product_count}
 
 export async function getHomeProduct(homeCategory: "home") {
 	return await prisma.product.findMany({

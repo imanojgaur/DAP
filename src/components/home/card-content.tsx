@@ -1,7 +1,6 @@
-'use client'
-
 import Link from "next/link";
 import React from "react";
+import { AddToCartButton } from "../cart/cart-control";
 
 export interface OverlayTextProps {
 	title: string;
@@ -10,12 +9,13 @@ export interface OverlayTextProps {
 }
 
 export interface ProductInfoProps {
+	id: string, 
     name: string,
 	endpoint: string,
+	imgSrc?: string, 
     body: any[],
 	price: number,
-	compareAtPrice: number | null,
-	actionsSlot?: React.ReactNode
+	compareAtPrice: number,
 	className?: string, 
 }
 
@@ -62,12 +62,13 @@ export function OverlayText({
 }
 
 export function ProductInfo ({
+	id,
 	name,
 	endpoint,
+	imgSrc, 
 	body, 
 	price,
 	compareAtPrice,
-	actionsSlot,
 	className,
 }:ProductInfoProps){
 	return (
@@ -100,9 +101,14 @@ export function ProductInfo ({
 			</Link>
 
 			{/* action buttons */}
-			{actionsSlot && <div className="mt-3">
-		     	{actionsSlot}
-			</div>}
+			<AddToCartButton 
+			id={id}
+			title={name}
+			price={price}
+			comparPriceAt={compareAtPrice}
+			href={endpoint}
+			imgSrc={imgSrc}
+			/>
 		</div>
 	)
 }

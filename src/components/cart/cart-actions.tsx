@@ -9,14 +9,9 @@ import { Plus, Minus, Trash2 } from "lucide-react";
 // ==========================================
 
 export function AddToCartButton(productInfo: ProductInfo) {
-    const addProductToCart = useCart((state) => state.addProduct)
-    // const mutatingProductInfo = productInfo
+    const addProductToCart = useCart((state) => state.addNewItem)
 
-    // const extinsibleProductInfo = {...productInfo}
-    
-    // productInfo represents the entire props object here, which perfectly matches the Zustand store item!
     return (
-        // <Button onClick={() => addProductToCart({...productInfo})}>
         <Button onClick={() => addProductToCart(productInfo)}>
             Add To Cart 
         </Button>
@@ -24,12 +19,40 @@ export function AddToCartButton(productInfo: ProductInfo) {
 }
 
 export function CartAddRemoveItemButtons({productId}:{productId: string}) {
-    // const addItemCount = useCart((state) => state.items.find())
+    const incrementItemCount = useCart((state) => state.increaseQuantity)
+    const decrementItemCount = useCart((state) => state.decreaseQuantity)
+    const removeItem = useCart((state) => state.removeItem)
+
+    const itemCount = useCart((state) => state.items.find((item) => item.id === productId)?.itemCount)
+    
 	return (
 		<div className="flex items-center justify-start gap-2 mt-auto">
-			<Minus/> 
-			<Plus/> 
-			<Trash2/>
+            <button 
+            type="button" 
+            onClick={() => incrementItemCount(productId)} 
+            className="">
+	    		<Plus/> 
+            </button>
+
+            <span
+            className="text-sm font-medium text-center">
+                {itemCount}
+            </span>
+
+            <button 
+            type="button" 
+            onClick={() => decrementItemCount(productId)} 
+            className="">
+			    <Minus/> 
+            </button>
+
+            <button 
+            type="button" 
+            onClick={() => removeItem(productId)}
+            className=""
+            >
+		    	<Trash2/>
+            </button>
 		</div>
 	)
 }

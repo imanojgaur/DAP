@@ -36,11 +36,10 @@ export const CartCard = React.memo(function CartCardBase ({item} : {item: Produc
                             <span className="text-xs line-through text-muted-foreground">₹ {item.comparPriceAt}</span>
                         )}
                     </div>
-					<CartAddRemoveItemButtons productId = {item.id} />
-                </div>
-
-
+                </div> 
             </Link>
+
+				<CartAddRemoveItemButtons productId = {item.id} />
         </SheetClose>
     )
 })

@@ -1,7 +1,11 @@
 import {  PremiumStickerLogo } from "../shared/shared-icon"
-import { AddToCartDrawer, HeaderCartTrigger } from "../cart/cart-control";
 import { UserAccountIcon } from "./layout-icon";
 import { Search } from "./search-bar";
+import dynamic from 'next/dynamic'
+
+// browser load drawers parellet to other chunks
+const AddToCartDrawer = dynamic(() => import('../cart/cart-drawer').then(mod => mod.AddToCartDrawer))
+const HeaderCartTrigger = dynamic(() => import('../cart/cart-drawer').then(mod => mod.HeaderCartTrigger))
 
 export function Header({DesktopNav}:{DesktopNav:React.ReactNode}){
 

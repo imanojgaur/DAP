@@ -2,21 +2,24 @@
 
 import { create } from 'zustand'
 
-export interface item {
+interface Item {
     id: string,
     title: string, 
     price: number,
     comparPriceAt: number, 
     href: string, 
     imgSrc?: string, 
+    itemCount: number, 
 }
 
+export type ProductInfo = Omit<Item, "itemCount">
+
 interface Store {
-    items: item [],
+    items: Item [],
     productCount: number,
     isDrawerOpen: boolean, 
     setDrawerOpen: (isOpen: boolean) => void, 
-    addProduct: (item: item) => void, 
+    addProduct: (productInfo: ProductInfo) => void, 
     removeProduct: (id: string) => void, 
 }
 
@@ -27,11 +30,20 @@ export const useCart = create<Store>((set) => ({
     isDrawerOpen: false, 
     setDrawerOpen: (isOpen) => set(() => ({isDrawerOpen: isOpen})), 
 
-    addProduct: (item) => set((state)=> ({
-        items: [...state.items, item], 
+    addProduct: (productInfo) => set((state)=> {
+        const oldItems = state.items.filter((oldItem) => oldItem.id !== productInfo.id )
+        const existingItem = state.items.find((oldItem) => oldItem.id === productInfo.id)
+
+        return ({ 
+        items: [
+            ...oldItems, 
+            existingItem // if item already exists
+            ? {...existingItem, itemCount: existingItem.itemCount + 1} 
+            : {...productInfo, itemCount: 1}
+        ], 
         isDrawerOpen: true, 
         productCount: state.items.length + 1
-    })), 
+    })}), 
     
     removeProduct: (id) => set((state)=>({
         items: state.items.filter((item) => item.id === id), 

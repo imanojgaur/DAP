@@ -66,7 +66,7 @@ export function HeaderCartTrigger() {
 export function AddToCartDrawer() {
     const isOpen = useCart((state) => state.isDrawerOpen)
     const setOpen = useCart((state) => state.setDrawerOpen)
-    const lastItem = useCart((state) => state.items[state.items.length - 1])
+    const lastItem = useCart((state) => state.items[0])
     
     return (
         <Sheet open={isOpen} onOpenChange={setOpen}>

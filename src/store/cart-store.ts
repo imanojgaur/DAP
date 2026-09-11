@@ -12,14 +12,14 @@ interface Item {
     itemCount: number, 
 }
 
-export type ProductInfo = Omit<Item, "itemCount">
+export type ReceivedItemInfo = Omit<Item, "itemCount">
 
 interface Store {
     items: Item [],
     productCount: number,
     isDrawerOpen: boolean, 
     setDrawerOpen: (isOpen: boolean) => void, 
-    addNewItem: (productInfo: ProductInfo) => void, 
+    addNewItem: (receivedItem: ReceivedItemInfo) => void, 
     removeItem: (id: string) => void, 
     increaseQuantity: (id: string) => void, 
     decreaseQuantity: (id: string) => void, 
@@ -32,16 +32,30 @@ export const useCart = create<Store>((set) => ({
     isDrawerOpen: false, 
     setDrawerOpen: (isOpen) => set(() => ({isDrawerOpen: isOpen})), 
 
-    addNewItem: (productInfo) => set((state)=> {
+    addNewItem: (receivedItem) => set((state)=> {
+        const existingItem = state.items.find((item) => item.id === receivedItem.id)
+        const oldItems = state.items.filter((item) => receivedItem.id !== item.id )
+        
         return ({ 
-        items: [...state.items, {...productInfo, itemCount: 1}], 
+        items: existingItem
+            ? [{
+                ...existingItem, 
+                itemCount: existingItem.itemCount + 1
+                }, 
+                ...oldItems, 
+            ] : [{
+                    ...receivedItem, 
+                    itemCount: 1
+                }, 
+                ...oldItems
+            ], 
         productCount: state.productCount + 1, 
         isDrawerOpen: true, 
     })}), 
     
     removeItem: (id) => set((state) => (
         {
-            items: state.items.filter((item) => item.id === id), 
+            items: state.items.filter((item) => item.id !== id), 
             productCount: state.productCount - 1
         }
     )), 
@@ -61,10 +75,15 @@ export const useCart = create<Store>((set) => ({
         {
             items: state.items.map((item) => (
                 item.id === id
-                ? {...item, itemCount: item.itemCount - 1}
+                ? {
+                    ...item, 
+                    itemCount: item.itemCount > 1
+                        ? item.itemCount - 1
+                        : item.itemCount
+                }
                 : item
             )),
             productCount: state.productCount - 1
-        }
-    ))
+        })
+    )
 }))

@@ -83,7 +83,9 @@ export const useCart = create<Store>((set) => ({
                 }
                 : item
             )),
-            productCount: state.productCount - 1
+            productCount: (state.productCount > 1)
+                ? state.productCount - 1
+                : state.productCount
         })
     )
 }))

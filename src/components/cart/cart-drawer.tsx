@@ -14,6 +14,7 @@ import { CartCard, CartSheetFooter } from "./shared";
 //===============================================================
 export function HeaderCartTrigger() {
     const addedItem = useCart((state) => state.items)
+    const totalItems = useCart((state) => state.productCount)
     
     return (
         <Sheet>
@@ -27,9 +28,9 @@ export function HeaderCartTrigger() {
                 {/* IMPROVED HEADER: Clean border, flex-between layout, and dynamic item count badge */}
                 <SheetHeader className="flex flex-row justify-between items-center pb-4 pr-15 border-b border-border mt-2">
                     <SheetTitle className="text-xl font-semibold m-0">Your Cart</SheetTitle>
-                    {addedItem.length > 0 && (
+                    {totalItems > 0 && (
                         <span className="bg-muted text-muted-foreground text-md font-medium px-2.5 py-1 rounded-md m-0">
-                            {addedItem.length} {addedItem.length === 1 ? 'Item' : 'Items'}
+                            {totalItems} {totalItems === 1 ? 'Item' : 'Items'}
                         </span>
                     )}
                 </SheetHeader>

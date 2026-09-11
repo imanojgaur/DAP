@@ -53,12 +53,14 @@ export const useCart = create<Store>((set) => ({
         isDrawerOpen: true, 
     })}), 
     
-    removeItem: (id) => set((state) => (
+    removeItem: (id) => set((state) => {
+        const something = (state.items.find((item) => item.id === id)?.itemCount) 
+        if (!something) return state; //Guard: user mobile lag clicking trash aggressively causing app break 
+        return (
         {
             items: state.items.filter((item) => item.id !== id), 
-            productCount: state.productCount - 1
-        }
-    )), 
+            productCount: state.productCount - something
+        })}), 
 
     increaseQuantity: (id) => set((state) => (
         { 

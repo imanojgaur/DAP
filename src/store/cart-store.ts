@@ -54,12 +54,12 @@ export const useCart = create<Store>((set) => ({
     })}), 
     
     removeItem: (id) => set((state) => {
-        const something = (state.items.find((item) => item.id === id)?.itemCount) 
-        if (!something) return state; //Guard: user mobile lag clicking trash aggressively causing app break 
+        const removeItemCount = (state.items.find((item) => item.id === id)?.itemCount) 
+        if (!removeItemCount) return state; //Guard: user mobile lag clicking trash aggressively causing app break 
         return (
         {
             items: state.items.filter((item) => item.id !== id), 
-            productCount: state.productCount - something
+            productCount: state.productCount - removeItemCount
         })}), 
 
     increaseQuantity: (id) => set((state) => (
@@ -73,21 +73,18 @@ export const useCart = create<Store>((set) => ({
         }
     )),
 
-    decreaseQuantity: (id) => set((state) => (
+    decreaseQuantity: (id) => set((state) => {
+        const targetItem = state.items.find((item) => item.id === id)
+        if(!targetItem || targetItem.itemCount === 1) return state; 
+
+        return (
         {
             items: state.items.map((item) => (
                 item.id === id
-                ? {
-                    ...item, 
-                    itemCount: item.itemCount > 1
-                        ? item.itemCount - 1
-                        : item.itemCount
-                }
+                ? {...item, itemCount: item.itemCount - 1}
                 : item
             )),
-            productCount: (state.productCount > 1)
-                ? state.productCount - 1
-                : state.productCount
-        })
+            productCount:  state.productCount - 1
+        })}
     )
 }))

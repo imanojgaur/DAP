@@ -3,6 +3,7 @@
 import { type ReceivedItemInfo, useCart } from "@/store/cart-store"
 import { Button } from "../ui/button"
 import { Plus, Minus, Trash2 } from "lucide-react";
+import { cn } from "@/utilities/utils";
 
 // ==========================================
 // 1. ACTION TRIGGERS
@@ -18,7 +19,13 @@ export function AddToCartButton(productInfo: ReceivedItemInfo) {
     )
 }
 
-export function CartQuantityControle({productId}:{productId: string}) {
+export function CartQuantityControle({
+    productId,
+    className, 
+}:{
+    productId: string,
+    className?: string, 
+}) {
     const incrementItemCount = useCart((state) => state.increaseQuantity)
     const decrementItemCount = useCart((state) => state.decreaseQuantity)
     const removeItem = useCart((state) => state.removeItem)
@@ -26,30 +33,32 @@ export function CartQuantityControle({productId}:{productId: string}) {
     const itemCount = useCart((state) => state.items.find((item) => item.id === productId)?.itemCount)
     
 	return (
-		<div className="flex items-center justify-start gap-2 mt-auto">
+		<div className={cn(`flex items-center justify-start gap-2 mt-auto`, `${className}`)}>
             <button 
             type="button" 
-            onClick={() => incrementItemCount(productId)} 
-            className="">
-	    		<Plus size={16}/> 
+            disabled={itemCount === 1}
+            onClick={() => decrementItemCount(productId)} 
+            className={`flex items-center justify-center p-1.5 text-muted-foreground hover:text-forground hover:bg-muted disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:opacity-40 rounded-l-md transition-colors duration-300 ease-out cursor-pointer`}
+            >
+			    <Minus size={16} strokeWidth={3}/> 
             </button>
 
             <span
-            className="text-sm font-medium text-center">
+            className="p-1 w-6 h-full text-sm text-center text-foreground font-semibold muted-background rounded-md ">
                 {itemCount || 0}
             </span>
 
             <button 
             type="button" 
-            onClick={() => decrementItemCount(productId)} 
-            className="">
-			    <Minus size={16}/> 
+            onClick={() => incrementItemCount(productId)} 
+            className="flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors rounded-md cursor-pointer ">
+	    		<Plus size={16} strokeWidth={3}/>
             </button>
 
             <button 
             type="button" 
             onClick={() => removeItem(productId)}
-            className="text-red-500"
+            className="flex items-center justify-center p-1.5 text-muted-foreground hover:text-red-500 border-border hover:bg-red-50 dark:hover:bg-red-950/50 rounded-md transition-colors ease-out duration-300 cursor-pointer"
             >
 		    	<Trash2 size={16}/>
             </button>

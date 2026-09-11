@@ -1,23 +1,23 @@
 'use client'
 
-import { type ProductInfo, useCart } from "@/store/cart-store"
+import { type ReceivedItemInfo, useCart } from "@/store/cart-store"
 import { Button } from "../ui/button"
 import { SheetClose, SheetFooter } from "../ui/sheet"
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import React from 'react';
-import { CartAddRemoveItemButtons } from './cart-actions'
+import { CartQuantityControle } from './cart-actions'
 
 // ==========================================
 // REUSABLE UI COMPONENTS
 // ==========================================
 
-export const CartCard = React.memo(function CartCardBase ({item} : {item: ProductInfo}) {
+export const CartCard = React.memo(function CartCardBase ({item} : {item: ReceivedItemInfo}) {
     return (
-        <SheetClose asChild>
-            <Link href={item.href} className="flex justify-start w-full gap-4 px-4 py-4 hover:bg-muted/50 transition-colors rounded-md">
-                {item.imgSrc && 
-                    <div className="relative h-28 w-24 shrink-0 overflow-hidden rounded-md border">
+        <div className="flex justify-start w-full gap-4 px-4 py-4 hover:bg-muted/50 transition-colors rounded-md shadow-md"> 
+            <SheetClose asChild>
+                <Link href={item.href} className="relative h-28 w-24 shrink-0 overflow-hidden rounded-md border">
+                    {item.imgSrc && 
                         <CldImage 
                             src={item.imgSrc} 
                             alt={item.title}
@@ -26,21 +26,25 @@ export const CartCard = React.memo(function CartCardBase ({item} : {item: Produc
                             className="object-cover"
                             sizes="96px"
                         />
-                    </div>
-                }
-                <div className="flex flex-col flex-1 min-w-0 py-2">
-                    <h4 className="line-clamp-2 font-medium text-sm text-foreground">{item.title}</h4> 
-                    <div className="flex items-center justify-start gap-2 mt-auto">
-                        <span className="font-semibold text-sm">₹ {item.price}</span>
-                        {item.comparPriceAt && (
-                            <span className="text-xs line-through text-muted-foreground">₹ {item.comparPriceAt}</span>
-                        )}
-                    </div>
-                </div> 
-            </Link>
+                    }
+                </Link>
+            </SheetClose>
+            <div className="flex flex-col flex-1 min-w-0">
+                <SheetClose asChild> 
+                    <Link href={item.href} className="flex flex-col gap-1.5 py-2">
+                        <h4 className="line-clamp-2 font-medium text-sm text-foreground text-start">{item.title}</h4> 
+                        <div className="flex items-center justify-start gap-2">
+                            <span className="font-semibold text-sm">₹ {item.price}</span>
+                            {item.comparPriceAt && (
+                                <span className="text-xs line-through text-muted-foreground">₹ {item.comparPriceAt}</span>
+                            )}
+                        </div>
+                    </Link>
+                </SheetClose>
 
-				<CartAddRemoveItemButtons productId = {item.id} />
-        </SheetClose>
+                <CartQuantityControle productId = {item.id} className=""/>
+           </div>
+        </div> 
     )
 })
 
@@ -54,7 +58,7 @@ export function CartSheetFooter() {
 
     return (
         // 1. Reduced pt-6 to pt-4, and gap-4 to gap-3 to save vertical space
-        <SheetFooter className="mt-auto flex flex-col pt-4 border-t border-border gap-3 sm:flex-col">
+        <SheetFooter className="mt-auto flex flex-col pt-4 border-t border-border gap-3 sm:flex-col shadow-md border-b">
             
             {/* THE PREMIUM COMPACT BLOCK */}
             <div className="flex flex-col w-full gap-1">

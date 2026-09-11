@@ -1,6 +1,6 @@
 'use client'
 
-import { type ProductInfo, useCart } from "@/store/cart-store"
+import { type ReceivedItemInfo, useCart } from "@/store/cart-store"
 import { Button } from "../ui/button"
 import { Plus, Minus, Trash2 } from "lucide-react";
 
@@ -8,7 +8,7 @@ import { Plus, Minus, Trash2 } from "lucide-react";
 // 1. ACTION TRIGGERS
 // ==========================================
 
-export function AddToCartButton(productInfo: ProductInfo) {
+export function AddToCartButton(productInfo: ReceivedItemInfo) {
     const addProductToCart = useCart((state) => state.addNewItem)
 
     return (
@@ -18,7 +18,7 @@ export function AddToCartButton(productInfo: ProductInfo) {
     )
 }
 
-export function CartAddRemoveItemButtons({productId}:{productId: string}) {
+export function CartQuantityControle({productId}:{productId: string}) {
     const incrementItemCount = useCart((state) => state.increaseQuantity)
     const decrementItemCount = useCart((state) => state.decreaseQuantity)
     const removeItem = useCart((state) => state.removeItem)
@@ -31,27 +31,27 @@ export function CartAddRemoveItemButtons({productId}:{productId: string}) {
             type="button" 
             onClick={() => incrementItemCount(productId)} 
             className="">
-	    		<Plus/> 
+	    		<Plus size={16}/> 
             </button>
 
             <span
             className="text-sm font-medium text-center">
-                {itemCount}
+                {itemCount || 0}
             </span>
 
             <button 
             type="button" 
             onClick={() => decrementItemCount(productId)} 
             className="">
-			    <Minus/> 
+			    <Minus size={16}/> 
             </button>
 
             <button 
             type="button" 
             onClick={() => removeItem(productId)}
-            className=""
+            className="text-red-500"
             >
-		    	<Trash2/>
+		    	<Trash2 size={16}/>
             </button>
 		</div>
 	)

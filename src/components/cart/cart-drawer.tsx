@@ -25,15 +25,24 @@ import { CartCard, CartSheetFooter, RecentlyAddedItem } from "./shared";
 export function HeaderCartTrigger() {
 	const addedItems = useCart((state) => state.items);
 	const totalItems = useCart((state) => state.productCount);
+	const productCount = useCart((state) => state.productCount)
 
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
 				<button
 					type="button"
-					className="relative p-2 hover:bg-muted rounded-full transition-colors"
+					// 1. Give the button a standard touch target (p-2) and subtle background hover
+					className="group/button relative p-2 flex items-center justify-center rounded-full hover:bg-muted/50 transition-colors group"
 				>
-					<DoddleStickerCart />
+					<DoddleStickerCart className="w-10 h-10 hover:-translate-y-0 hover:text-black" />
+					
+					{/* 2. The Notification Badge */}
+					{productCount > 0 && (
+						<span className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground shadow-sm ring-2 ring-background transition-transform">
+							{productCount}
+						</span>
+					)}
 				</button>
 			</SheetTrigger>
 

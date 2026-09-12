@@ -12,6 +12,7 @@ import type { ReceivedItemInfo } from "@/store/cart-store";
 import { Button } from "../ui/button";
 import { SheetClose, SheetFooter } from "../ui/sheet";
 import { CartQuantityControl } from "./cart-control";
+import { cn } from "@/utilities/utils";
 
 // ============================================================================
 // 1. STANDARD CART CARD
@@ -21,11 +22,13 @@ import { CartQuantityControl } from "./cart-control";
 
 export const CartCard = React.memo(function CartCardBase({
 	item,
+	className
 }: {
 	item: ReceivedItemInfo;
+	className?: string; 
 }) {
 	return (
-		<div className="flex justify-start w-full gap-4 px-4 py-4 hover:bg-muted/50 transition-colors rounded-md shadow-md">
+		<div className={cn(`flex justify-start w-full gap-4 px-4 py-4 hover:bg-muted/50 transition-colors rounded-md shadow-md ${className}`)}>
 			{/* --- Product Image (Clickable) --- */}
 			<SheetClose asChild>
 				<Link
@@ -78,11 +81,13 @@ export const CartCard = React.memo(function CartCardBase({
 
 export const RecentlyAddedItem = React.memo(function RecentlyAddedItem({
 	item,
+	className, 
 }: {
 	item: ReceivedItemInfo;
+	className?: string; 
 }) {
 	return (
-		<div className="relative mb-6 rounded-lg border-2 border-primary/20 bg-primary/5 overflow-hidden shadow-sm">
+		<div className={cn(`relative mb-6 rounded-lg border-2 border-primary/20 bg-primary/5 overflow-hidden shadow-sm ${className}`)}>
 			{/* The Badge */}
 			<div className="absolute top-0 left-0 z-10 rounded-br-lg bg-primary px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">
 				Recently Added

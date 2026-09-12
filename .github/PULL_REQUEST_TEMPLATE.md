@@ -7,6 +7,12 @@
 * 
 * 
 * 
+
+📚 Documentation & Setup
+Added .env.example to streamline local development setup.
+
+Restructured README.md with project overview and placeholders for future video demos.
+
 ### **🗺️ Reviewer Guide (Key Files)**
 <!-- Don't list every file. Just tell the reviewer where to start and what the big files do. -->
 <!-- eg -->

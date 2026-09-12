@@ -105,7 +105,7 @@ export const RecentlyAddedItem = React.memo(function RecentlyAddedItem({
 export function CartSheetFooter() {
 	const addedItems = useCart((state) => state.items);
 
-	// Calculates the base total (WARNING: See bug notes below)
+	// Calculates the base total 
 	const totalPrice = addedItems.reduce(
 		(acc, item) => acc + item.price * item.itemCount,
 		0,

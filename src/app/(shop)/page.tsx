@@ -1,4 +1,3 @@
-import { AddToCartButton } from "@/components/cart/cart-control";
 import {
 	OverlayText,
 	ProductInfo,

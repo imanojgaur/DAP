@@ -48,6 +48,23 @@ export const CartCard = React.memo(function CartCardBase ({item} : {item: Receiv
     )
 })
 
+
+export const RecentlyAddedItem = React.memo(function RecentlyAddedItem({ item }: {item: ReceivedItemInfo}) {
+    return (
+        <div className="relative mb-6 rounded-lg border-2 border-primary/20 bg-primary/5 overflow-hidden shadow-sm">
+            {/* The Badge */}
+            <div className="absolute top-0 left-0 z-10 rounded-br-lg bg-primary px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">
+                Recently Added
+            </div>
+            
+            {/* We push the cart card down slightly so the badge doesn't overlap the image */}
+            <div className="pt-3">
+                <CartCard item={item} />
+            </div>
+        </div>
+    )
+}) 
+
 //--------------------------------------------------------------------------------------------------//
 
 export function CartSheetFooter() {

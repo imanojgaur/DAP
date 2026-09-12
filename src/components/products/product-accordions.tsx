@@ -10,7 +10,7 @@
 // import { Button } from "@/components/ui/button";
 
 // export function ProductAccordion({
-	
+
 // 	return (
 // <Accordion type="single" collapsible className="w-full">
 // 	{/* DESCRIPTION */}

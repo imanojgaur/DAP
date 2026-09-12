@@ -10,7 +10,6 @@
 
 // export default async function Page({
 
-
 // 	return (
 // // Added pb-24 so the MobileCartBar doesn't cover your lowest content
 // <main className="relative pb-24 md:pb-0">

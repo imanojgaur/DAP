@@ -2,9 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { logoConfig } from "@/config/nav-config";
 
-export function Logo(props:{className?:string}) {
+export function Logo(props: { className?: string }) {
 	return (
-		<Link href={logoConfig.href} className={`flex items-center ${props?.className}`}>
+		<Link
+			href={logoConfig.href}
+			className={`flex items-center ${props?.className}`}
+		>
 			<Image
 				src={logoConfig.svg}
 				alt={logoConfig.alt}

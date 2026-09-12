@@ -80,7 +80,9 @@ export function ImageCover({
 					)}
 				</div>
 			</div>
-			{productFragment && <div className="mt-2 px-2 grow">{productFragment}</div>}
+			{productFragment && (
+				<div className="mt-2 px-2 grow">{productFragment}</div>
+			)}
 		</>
 	);
 }

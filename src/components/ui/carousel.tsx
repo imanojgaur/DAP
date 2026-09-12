@@ -152,7 +152,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-function 	CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 	const { orientation } = useCarousel();
 
 	return (
@@ -161,7 +161,7 @@ function 	CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 			aria-roledescription="slide"
 			data-slot="carousel-item"
 			className={cn(
-				"min-w-0 shrink-0 grow-0 basis-full will-change-transform", // will-change-transform: give gpu control for pixcel printing instead of cpu calculating where to put what or when to stop start scroll 
+				"min-w-0 shrink-0 grow-0 basis-full will-change-transform", // will-change-transform: give gpu control for pixcel printing instead of cpu calculating where to put what or when to stop start scroll
 				orientation === "horizontal" ? "pl-4" : "pt-4",
 				className,
 			)}

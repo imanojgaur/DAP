@@ -13,7 +13,7 @@
 // 			<div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[150] animate-in fade-in duration-500" />
 
 // 			<div
-// 				className="fixed z-[200] w-full bg-white shadow-2xl transition-all duration-500 ease-out 
+// 				className="fixed z-[200] w-full bg-white shadow-2xl transition-all duration-500 ease-out
 //                 /* MOBILE: Center Card */
 //                 bottom-0 left-0 rounded-t-[40px] p-10 pb-12 animate-in slide-in-from-bottom-full
 //                 /* DESKTOP: Center Screen */

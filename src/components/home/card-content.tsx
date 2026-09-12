@@ -9,14 +9,14 @@ export interface OverlayTextProps {
 }
 
 export interface ProductInfoProps {
-	id: string, 
-    name: string,
-	endpoint: string,
-	imgSrc?: string, 
-    body: any[],
-	price: number,
-	compareAtPrice: number,
-	className?: string, 
+	id: string;
+	name: string;
+	endpoint: string;
+	imgSrc?: string;
+	body: any[];
+	price: number;
+	compareAtPrice: number;
+	className?: string;
 }
 
 export function OverlayText({
@@ -61,54 +61,63 @@ export function OverlayText({
 	);
 }
 
-export function ProductInfo ({
+export function ProductInfo({
 	id,
 	name,
 	endpoint,
-	imgSrc, 
-	body, 
+	imgSrc,
+	body,
 	price,
 	compareAtPrice,
 	className,
-}:ProductInfoProps){
+}: ProductInfoProps) {
 	return (
 		<div className={`${className} group`}>
-
 			{/* image heading */}
-		    <Link href={endpoint} className="relative block pb-1">
-				<h3 className="font-bold line-clamp-2 text-emerald-400 md:text-gray-900 md:group-hover:text-emerald-500 transition-all duration-300 ease-out">{name}</h3>
-			    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover:w-full"/>
+			<Link href={endpoint} className="relative block pb-1">
+				<h3 className="font-bold line-clamp-2 text-emerald-400 md:text-gray-900 md:group-hover:text-emerald-500 transition-all duration-300 ease-out">
+					{name}
+				</h3>
+				<span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover:w-full" />
 			</Link>
-		
-			<Link href={endpoint} className="flex flex-col gap-1 mt-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md">
-				
+
+			<Link
+				href={endpoint}
+				className="flex flex-col gap-1 mt-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-md"
+			>
 				{/* Display body: ratings reviews ... */}
 				<div className="flex items-center flex-wrap gap-1 text-sm text-gray-500">
 					{body?.map((item, index) => (
-					<React.Fragment key={item}>
-						{index > 0 && <span className="font-bold">·</span>}
-						<span className="text-gray-500">{item}</span> 	
-					</React.Fragment>
+						<React.Fragment key={item}>
+							{index > 0 && <span className="font-bold">·</span>}
+							<span className="text-gray-500">{item}</span>
+						</React.Fragment>
 					))}
 				</div>
-				
+
 				{/* Price Section */}
 				<div className="flex items-center mt-0.5 gap-4">
-					<span className="bg-gray-100 px-2.5 py-1.5 font-bold text-gray-500 rounded-full">₹{price}</span>
+					<span className="bg-gray-100 px-2.5 py-1.5 font-bold text-gray-500 rounded-full">
+						₹{price}
+					</span>
 					<span className="font-bold">·</span>
-					{compareAtPrice && <span className="text-gray-500 line-through">₹{compareAtPrice}</span>}
+					{compareAtPrice && (
+						<span className="text-gray-500 line-through">
+							₹{compareAtPrice}
+						</span>
+					)}
 				</div>
 			</Link>
 
 			{/* action buttons */}
-			<AddToCartButton 
-			id={id}
-			title={name}
-			price={price}
-			comparPriceAt={compareAtPrice}
-			href={endpoint}
-			imgSrc={imgSrc}
+			<AddToCartButton
+				id={id}
+				title={name}
+				price={price}
+				comparPriceAt={compareAtPrice}
+				href={endpoint}
+				imgSrc={imgSrc}
 			/>
 		</div>
-	)
+	);
 }

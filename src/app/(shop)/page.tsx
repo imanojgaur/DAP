@@ -1,16 +1,20 @@
 import { AddToCartButton } from "@/components/cart/cart-control";
-import { EditorialLayout } from "@/components/home/editorial-section";
-import { OverlayText, ProductInfo, type ProductInfoProps } from "@/components/home/card-content";
+import {
+	OverlayText,
+	ProductInfo,
+	type ProductInfoProps,
+} from "@/components/home/card-content";
 import { HomeCarousel } from "@/components/home/carousel-wrapper";
+import { EditorialLayout } from "@/components/home/editorial-section";
 import { HomeHero } from "@/components/home/hero";
 // import { getHomeCategories } from "@/data-sql"
 import {
 	baseCategoryConfig,
 	catHeader,
-	featHeader, 
 	EDITORIAL_CARDS_DATA,
 	edtheader,
 	edtMetaData,
+	featHeader,
 	images,
 } from "@/components/home/home.confi";
 import { ImageCover } from "@/components/home/image-cover";
@@ -37,7 +41,10 @@ interface CategoryConfig {
 	className?: string;
 }
 
-type FeatureProductConfig = Omit<ProductInfoProps, 'className' | 'actionsSlot'> & {images: ImageLayoutProps[]}
+type FeatureProductConfig = Omit<
+	ProductInfoProps,
+	"className" | "actionsSlot"
+> & { images: ImageLayoutProps[] };
 
 export default async function HomePage() {
 	// HANDLE CATEGORY DATA AND PASS SAFELY
@@ -59,7 +66,7 @@ export default async function HomePage() {
 		};
 	});
 
-	// Create final category rendering object 
+	// Create final category rendering object
 	const categoryConfig: CategoryConfig[] = baseCatConfigWithImg.map(
 		(baseObj) => {
 			const matchDBResult =
@@ -77,34 +84,42 @@ export default async function HomePage() {
 		},
 	);
 
-	// HANDLE FEATURED PRODUCT DATA 
+	// HANDLE FEATURED PRODUCT DATA
 	const featProducts = await getHomeProduct("home");
-	const featProductConfig: FeatureProductConfig [] = featProducts.length > 0? featProducts.map((item)=>{
-		const currPricePaise = item.price
-		const currPriceRupee = convertIntoRupee(currPricePaise);
-		
-		const realPricePaise = item.compareAtPrice
-		const finalComparePrice = realPricePaise
-		    ? ((realPricePaise === currPricePaise)
-			    ? convertIntoRupee(realPricePaise + 5000)
-				: realPricePaise)
-		    : convertIntoRupee(currPricePaise + 5000)
-		
-	    return {
-			...item,
-			price: currPriceRupee, 
-			compareAtPrice: finalComparePrice, 
-			endpoint: item.slug,  
-			body: [`★${item.averageRating}`, `${item.totalReviews} Review`, `${item?.stockQuantity > 10 ? "In Stock": `Hurry up ${item.stockQuantity} Left` }`, `Ship In ${24} hours`],
-			images: item.images.map((image): ImageLayoutProps => {
-				return { 
-					...image, 
-					sourceType: 'cloudinary', 
-					alt: item.name, 
-				}})
-		} 
-	}) 
-	: []; // if db return empty array
+	const featProductConfig: FeatureProductConfig[] =
+		featProducts.length > 0
+			? featProducts.map((item) => {
+					const currPricePaise = item.price;
+					const currPriceRupee = convertIntoRupee(currPricePaise);
+
+					const realPricePaise = item.compareAtPrice;
+					const finalComparePrice = realPricePaise
+						? realPricePaise === currPricePaise
+							? convertIntoRupee(realPricePaise + 5000)
+							: realPricePaise
+						: convertIntoRupee(currPricePaise + 5000);
+
+					return {
+						...item,
+						price: currPriceRupee,
+						compareAtPrice: finalComparePrice,
+						endpoint: item.slug,
+						body: [
+							`★${item.averageRating}`,
+							`${item.totalReviews} Review`,
+							`${item?.stockQuantity > 10 ? "In Stock" : `Hurry up ${item.stockQuantity} Left`}`,
+							`Ship In ${24} hours`,
+						],
+						images: item.images.map((image): ImageLayoutProps => {
+							return {
+								...image,
+								sourceType: "cloudinary",
+								alt: item.name,
+							};
+						}),
+					};
+				})
+			: []; // if db return empty array
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -133,9 +148,7 @@ export default async function HomePage() {
 											callToActionText={card.callToActionText}
 										/>
 									}
-									imgScroller={
-										<DynamicHorizontalImgRaw images={card.images} />
-									}
+									imgScroller={<DynamicHorizontalImgRaw images={card.images} />}
 								/>
 							</CarouselItem>
 						))}
@@ -146,45 +159,54 @@ export default async function HomePage() {
 			</SectionWrapper>
 
 			{/* 3. Product Discovery Section */}
-			{featProducts.length > 0  && <SectionWrapper headerData={featHeader} >
-				<HomeCarousel>
-					<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
-						{featProductConfig?.map((card)=> {
-						    
-							//Passing primary image src to ProductInfo -> AddToCartButton -> Zustand Store "Items Array"
-							const primaryImg = card.images.find((image) => image.isPrimary === true)
-							const imgSrc = primaryImg?.sourceType === "cloudinary" ? primaryImg.publicId: undefined; 
+			{featProducts.length > 0 && (
+				<SectionWrapper headerData={featHeader}>
+					<HomeCarousel>
+						<CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
+							{featProductConfig?.map((card) => {
+								//Passing primary image src to ProductInfo -> AddToCartButton -> Zustand Store "Items Array"
+								const primaryImg = card.images.find(
+									(image) => image.isPrimary === true,
+								);
+								const imgSrc =
+									primaryImg?.sourceType === "cloudinary"
+										? primaryImg.publicId
+										: undefined;
 
-						    return (
-								<CarouselItem 
-								key={card.name}
-								className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
-								>
-									<ImageCover key={card.name}
-									endPoint={`/products/${card.endpoint}`} 
-									className={'aspect-[4/5]'}
-									imgScroller={<DynamicHorizontalImgRaw images={card.images}/>}
-									productFragment={
-										<ProductInfo  
-											id={card.id}
-											name={card.name}
-											endpoint={card.endpoint}
-											body={card.body}
-											price={card.price}
-											compareAtPrice={card.compareAtPrice}
-											imgSrc={imgSrc}
-											className=""
-									    />
-									}
-									/>
-								</CarouselItem>
-							)}
-						)}
-					</CarouselContent>
-					<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
-					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none"/>
-				</HomeCarousel>
-			</SectionWrapper>}
+								return (
+									<CarouselItem
+										key={card.name}
+										className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
+									>
+										<ImageCover
+											key={card.name}
+											endPoint={`/products/${card.endpoint}`}
+											className={"aspect-[4/5]"}
+											imgScroller={
+												<DynamicHorizontalImgRaw images={card.images} />
+											}
+											productFragment={
+												<ProductInfo
+													id={card.id}
+													name={card.name}
+													endpoint={card.endpoint}
+													body={card.body}
+													price={card.price}
+													compareAtPrice={card.compareAtPrice}
+													imgSrc={imgSrc}
+													className=""
+												/>
+											}
+										/>
+									</CarouselItem>
+								);
+							})}
+						</CarouselContent>
+						<CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+						<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+					</HomeCarousel>
+				</SectionWrapper>
+			)}
 
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper headerData={edtheader} metaData={edtMetaData}>

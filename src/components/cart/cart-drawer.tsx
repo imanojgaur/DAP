@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../u
 import { DoddleStickerCart } from "./cart-icon";
 import { CheckCircle2 } from "lucide-react";
 import { CartCard, CartSheetFooter } from "./shared";
+import { RecentlyAddedItem } from "./shared";
 
 //------------------------------//
 // (CONTROLLED BY GLOBAL STATE) //
@@ -67,7 +68,8 @@ export function HeaderCartTrigger() {
 export function AddToCartDrawer() {
     const isOpen = useCart((state) => state.isDrawerOpen)
     const setOpen = useCart((state) => state.setDrawerOpen)
-    const lastItem = useCart((state) => state.items[0])
+    const items = useCart((state) => state.items)
+    const lastAddedItem = useCart((state) => state.lastAddedItem)
     
     return (
         <Sheet open={isOpen} onOpenChange={setOpen}>
@@ -82,12 +84,18 @@ export function AddToCartDrawer() {
                     </div>
                 </SheetHeader>
 
-                {/* flex-1 wrapper forces the footer down */}
-                <div className="flex-1 overflow-y-auto">
-                    {lastItem ? (
-                        <CartCard 
-                        item={lastItem}
-                        />
+                <div className="flex-1 overflow-y-auto px-4 py-2">
+                    {items && items.length > 0 ? (
+                        <div className="flex flex-col gap-1">
+                            {items.map((item) => (
+                                
+                                (item.id === lastAddedItem) ? (
+                                    <RecentlyAddedItem key={item.id} item={item} />
+                                ) : (
+                                    <CartCard key={item.id} item={item} />
+                                )
+                            ))}
+                        </div>
                     ) : (
                         <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
                             No items added recently.

@@ -19,6 +19,7 @@ interface StoreState {
     items: Item [],
     productCount: number,
     isDrawerOpen: boolean, 
+    lastAddedItem: string, 
 }
 
 interface StoreActions {
@@ -39,6 +40,8 @@ export const useCart = create<CartStore>()(
         isDrawerOpen: false, 
         setDrawerOpen: (isOpen) => set(() => ({isDrawerOpen: isOpen})), 
 
+        lastAddedItem: "", 
+
         addNewItem: (receivedItem) => set((state)=> {
             const existingItem = state.items.find((item) => item.id === receivedItem.id)
             const oldItems = state.items.filter((item) => receivedItem.id !== item.id )
@@ -58,6 +61,7 @@ export const useCart = create<CartStore>()(
                 ], 
             productCount: state.productCount + 1, 
             isDrawerOpen: true, 
+            lastAddedItem: receivedItem.id
         })}), 
         
         removeItem: (id) => set((state) => {
@@ -91,7 +95,7 @@ export const useCart = create<CartStore>()(
                     ? {...item, itemCount: item.itemCount - 1}
                     : item
                 )),
-                productCount:  state.productCount - 1
+                productCount:  state.productCount - 1,
             })}
         )
     }),

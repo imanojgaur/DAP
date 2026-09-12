@@ -19,7 +19,7 @@ export function AddToCartButton(productInfo: ReceivedItemInfo) {
     )
 }
 
-export function CartQuantityControle({
+export function CartQuantityControl({
     productId,
     className, 
 }:{

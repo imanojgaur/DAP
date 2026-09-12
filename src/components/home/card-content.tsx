@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { AddToCartButton } from "../cart/cart-actions";
+import { AddToCartButton } from "../cart/cart-control";
 
 export interface OverlayTextProps {
 	title: string;

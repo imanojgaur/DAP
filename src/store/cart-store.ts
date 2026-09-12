@@ -99,6 +99,8 @@ export const useCart = create<CartStore>()(
             })}
         )
     }),
+
+    //persist items into local user storage
     {
         name: "cart-store", 
         partialize: (state) => ({

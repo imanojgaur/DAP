@@ -29,7 +29,7 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getHomeCategories, getHomeProduct } from "@/data/home";
-import { convertIntoRupee } from "@/utilities/price";
+import { convertIntoRupee } from "@/utils/price";
 
 interface CategoryConfig {
 	title: string;

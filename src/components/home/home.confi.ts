@@ -1,4 +1,4 @@
-import { currentYear } from "@/utilities/date";
+import { currentYear } from "@/utils/date";
 import type { EDITORIAL_CARDS_PROPS } from "./editorial-section";
 import type { ImageLayoutProps } from "./img-layout";
 import type { HeaderData, MetaDataItem } from "./section-wrapper";

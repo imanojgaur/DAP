@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/config/constants/routes";
-import { currentYear } from "@/utilities/date";
+import { currentYear } from "@/utils/date";
 
 // Array of premium editorial slides
 const HERO_SLIDES = [

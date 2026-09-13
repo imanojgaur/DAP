@@ -12,7 +12,7 @@ import type { ReceivedItemInfo } from "@/store/cart-store";
 import { Button } from "../ui/button";
 import { SheetClose, SheetFooter } from "../ui/sheet";
 import { CartQuantityControl } from "./cart-control";
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
 
 // ============================================================================
 // 1. STANDARD CART CARD

@@ -2,7 +2,7 @@
 
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { type ReceivedItemInfo, useCart } from "@/store/cart-store";
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
 import { Button } from "../ui/button";
 
 // ==========================================

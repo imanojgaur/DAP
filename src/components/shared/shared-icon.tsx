@@ -1,4 +1,4 @@
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
 
 // Logo Options
 // 1. The Heritage / Traditional Option

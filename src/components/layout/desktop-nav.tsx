@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { navConfig } from "@/config/nav-config";
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
 import {
 	NavigationMenu,
 	NavigationMenuContent,

@@ -1,4 +1,4 @@
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
 
 // Cart Icons
 export const DoddleStickerCart = ({ className }: { className?: string }) => {

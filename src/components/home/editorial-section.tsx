@@ -1,3 +1,4 @@
+import { cn } from "cn"
 import Image from "next/image";
 import Link from "next/link";
 
@@ -49,21 +50,14 @@ export function EditorialLayout({
 	);
 	return (
 		<div className="w-full">
-			<div className="flex md:hidden flex-row overflow-x-auto gap-1 snap-x snap-mandatory no-scrollbar pb-6 md:pt-6 px-2 w-full">
-				{heroMobileCard && (
-					<EditorialHero
-						key={heroMobileCard.id}
-						{...heroMobileCard}
-						layoutClasses={`${heroMobileCard.layoutClasses || ""} w-[85vw] shrink-0 snap-center rounded-sm min-h-full`}
-					/>
-				)}
+			<div className="flex sm:hidden flex-row overflow-x-auto gap-4 snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-5 w-full">
 
-				<div key={"Mobile Editorial"} className="flex flex-col">
+				{/* <div key={"Mobile Editorial"} className="flex flex-col"> */}
 					{minimalistMobileCard && (
 						<Minimalist
 							key={minimalistMobileCard.id}
 							{...minimalistMobileCard}
-							layoutClasses={`${minimalistMobileCard.layoutClasses || ""} w-[60vw] shrink-0 snap-center rounded-sm min-h-[50vh]`}
+							layoutClasses={`${minimalistMobileCard.layoutClasses || ""} w-[85vw] items-center justify-center text-center shrink-0 snap-center rounded-full min-h-[35vh] md:min-h-[50vh]`}
 						/>
 					)}
 
@@ -71,12 +65,21 @@ export function EditorialLayout({
 						<GuaranteeCard
 							key={ledGlowMobileCard.id}
 							{...ledGlowMobileCard}
-							layoutClasses={`${ledGlowMobileCard.layoutClasses || ""} w-[60vw] shrink-0 snap-center rounded-sm min-h-[50vh]`}
+							layoutClasses={`${ledGlowMobileCard.layoutClasses || ""} w-[85vw] text-center md:text-start shrink-0 snap-center rounded-full min-h-[35vh] md:min-h-[50vh]`}
 						/>
 					)}
-				</div>
+				{/* </div> */}
 				{/*gap right edge */}
 				<div className="w-2 shrink-0"></div>
+			</div>
+			<div className="pl-7">
+				{heroMobileCard && (
+					<EditorialHero
+					key={heroMobileCard.id}
+					{...heroMobileCard}
+					layoutClasses={`${heroMobileCard.layoutClasses || ""} sm:hidden w-[85vw] pr-0 rounded-md min-h-[50vh] md:min-h-full`}
+					/>
+				)}
 			</div>
 
 			{/* 
@@ -84,7 +87,7 @@ export function EditorialLayout({
                - Added 'grid-rows-2' to strictly enforce vertical gap
                - Added 'gap-6' which gives exactly 24px space everywhere 
             */}
-			<div className="hidden md:grid grid-cols-3 grid-rows-2 gap-0 w-full">
+			<div className="hidden sm:grid grid-cols-3 grid-rows-2 gap-0 w-full">
 				{EDITORIAL_CARDS_DATA.map((card) => {
 					if (card.type === "hero") {
 						return (
@@ -124,11 +127,11 @@ export function EditorialHero(card: EditorialHeroProps) {
 	return (
 		<div
 			key={card.id}
-			className={`group relative overflow-hidden rounded-sm md:rounded-none p-6 md:p-12 flex flex-col justify-between border border-gray-200 ${card.layoutClasses}`}
+			className={cn(`group relative overflow-hidden rounded-sm md:rounded-none p-6 md:p-12 flex flex-col justify-between border border-gray-200, ${card.layoutClasses}`)}
 		>
 			<div className="absolute inset-0 z-0">
 				<Image
-					src="/home/hero/hero-1.avif"
+					src="/home/hero/hero-3.avif"
 					alt="Greenhouse"
 					fill
 					className="object-cover group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
@@ -180,9 +183,9 @@ export function Minimalist(card: MinimalistProps) {
 	return (
 		<div
 			key={card.id}
-			className={`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center transition-all duration-500 bg-gray-100 hover:bg-gray-200 text-black ${card.layoutClasses}`}
+			className={cn(`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center transition-all duration-500 bg-gray-100 hover:bg-gray-200 text-black, ${card.layoutClasses}`)}
 		>
-			<h3 className="text-6xl md:text-8xl font-black tracking-tighter mb-1 text-black group-hover:scale-105 transition-transform duration-500 origin-left">
+			<h3 className="text-6xl text-center md:text-8xl font-black tracking-tighter mb-1 text-black group-hover:scale-105 transition-transform duration-500 origin-left">
 				{card.title}
 			</h3>
 			<h4 className="text-sm md:text-base font-bold uppercase tracking-widest text-gray-500 mb-3">
@@ -199,7 +202,7 @@ export function GuaranteeCard(card: GuaranteeCardProps) {
 	return (
 		<div
 			key={card.id}
-			className={`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center relative overflow-hidden transition-all duration-700 bg-emerald-950/80 border border-emerald-500/50 ${card.layoutClasses}`}
+			className={cn(`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center relative overflow-hidden transition-all duration-700 bg-emerald-950/80 border border-emerald-500/50, ${card.layoutClasses}`)}
 		>
 			<div
 				className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500"

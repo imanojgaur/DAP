@@ -185,7 +185,7 @@ export function Minimalist(card: MinimalistProps) {
 			key={card.id}
 			className={cn(`group rounded-sm md:rounded-none p-6 md:p-8 flex flex-col justify-center transition-all duration-500 bg-gray-100 hover:bg-gray-200 text-black, ${card.layoutClasses}`)}
 		>
-			<h3 className="text-6xl text-center md:text-8xl font-black tracking-tighter mb-1 text-black group-hover:scale-105 transition-transform duration-500 origin-left">
+			<h3 className="text-6xl md:text-8xl font-black tracking-tighter mb-1 text-black group-hover:scale-105 transition-transform duration-500 origin-left">
 				{card.title}
 			</h3>
 			<h4 className="text-sm md:text-base font-bold uppercase tracking-widest text-gray-500 mb-3">
@@ -215,7 +215,7 @@ export function GuaranteeCard(card: GuaranteeCardProps) {
 
 			<div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-400/30 rounded-full blur-3xl group-hover:bg-emerald-400/50 transition-colors duration-700" />
 
-			<div className="relative z-10 text-emerald-400 mb-2 group-hover:-translate-y-1 transition-transform duration-500">
+			<div className="relative z-10 text-emerald-400 flex items-center justify-center md:justify-start md:items-start md:text-start mb-2 group-hover:-translate-y-1 transition-transform duration-500">
 				<svg
 					aria-hidden="true"
 					className="w-8 h-8 md:w-10 md:h-10"

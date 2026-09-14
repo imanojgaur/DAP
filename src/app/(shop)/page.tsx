@@ -152,8 +152,8 @@ export default async function HomePage() {
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious className="md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
-					<CarouselNext className="md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+					<CarouselPrevious className="hidde md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+					<CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
 				</HomeCarousel>
 			</SectionWrapper>
 
@@ -175,7 +175,7 @@ export default async function HomePage() {
 								return (
 									<CarouselItem
 										key={card.name}
-										className="pl-4 md:pl-8 basis-[100%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
+										className="pl-4 md:pl-8 basis-[80%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
 									>
 										<ImageCover
 											key={card.name}

@@ -4,6 +4,17 @@ import type { ImageLayoutProps } from "./img-layout";
 import type { HeaderData, MetaDataItem } from "./section-wrapper";
 
 // 1. Category Belt logic
+// Category Base Configuration
+export const baseCategoryConfig = [
+	{ title: "Deal Of The Day", slug: "deal-of-the-day" },
+	{ title: "Best Seller", slug: "plants-1" },
+	{ title: "Mood Boosting", slug: "mood-improving-plants" },
+	{ title: "Air Purifying", slug: "air-purifying-plants" },
+	{ title: "Balcony Plants", slug: "balcony-plants" },
+	{ title: "Vastu", slug: "vastu-plants" },
+	{ title: "Indoor Collection", slug: "indoor-plants" },
+];
+
 // cat img config
 export const images: ImageLayoutProps[][] = [
 	[
@@ -154,16 +165,6 @@ export const images: ImageLayoutProps[][] = [
 	],
 ];
 
-// Category Base Configuration
-export const baseCategoryConfig = [
-	{ title: "Deal Of The Day", slug: "deal-of-the-day" },
-	{ title: "Best Seller", slug: "plants-1" },
-	{ title: "Mood Boosting", slug: "mood-improving-plants" },
-	{ title: "Air Purifying", slug: "air-purifying-plants" },
-	{ title: "Balcony Plants", slug: "balcony-plants" },
-	{ title: "Vastu", slug: "vastu-plants" },
-	{ title: "Indoor Collection", slug: "indoor-plants" },
-];
 
 // category Header Data
 export const catHeader: HeaderData = {

@@ -67,38 +67,38 @@ export function transformCategories(catArr: FetchedCategoryArray): CategoryUICon
 export function transformFeatProducts(featArr: FetchedProductArray): FeatureProductUIConfig[] {
     if (featArr.length === 0) return [] // Safe fallback if DB returns empty
        
-            return featArr.map((item) => {
-                    const currPricePaise = item.price;
-                    const currPriceRupee = convertIntoRupee(currPricePaise);
+    return featArr.map((item) => {
+        const currPricePaise = item.price;
+        const currPriceRupee = convertIntoRupee(currPricePaise);
 
-                    const realPricePaise = item.compareAtPrice;
-                    // Logic: Ensure compare price is always logically higher than current price for UI psychology
-                    // or inflate artificially by INR 500
-                    const finalComparePrice = realPricePaise
-                        ? realPricePaise === currPricePaise
-                            ? convertIntoRupee(realPricePaise + 50000)
-                            : realPricePaise
-                        : convertIntoRupee(currPricePaise + 50000);
+        const realPricePaise = item.compareAtPrice;
+        // Logic: Ensure compare price is always logically higher than current price for UI psychology
+        // or inflate artificially by INR 500
+        const finalComparePrice = realPricePaise
+            ? realPricePaise === currPricePaise
+                ? convertIntoRupee(realPricePaise + 50000)
+                : realPricePaise
+            : convertIntoRupee(currPricePaise + 50000);
 
-                    return {
-                        ...item,
-                        price: currPriceRupee,
-                        compareAtPrice: finalComparePrice,
-                        endpoint: item.slug,
-                        body: [
-                            `★${item.averageRating}`,
-                            `${item.totalReviews} Review`,
-                            `${item?.stockQuantity > 10 ? "In Stock" : `Hurry up ${item.stockQuantity} Left`}`,
-                            `Ship In ${24} hours`,
-                        ],
-                        // Map database image objects to Cloudinary layout props
-                        images: item.images.map((image): ImageLayoutProps => {
-                            return {
-                                ...image,
-                                sourceType: "cloudinary",
-                                alt: item.name,
-                            };
-                        }),
-                    };
-                })
-            }
+        return {
+            ...item,
+            price: currPriceRupee,
+            compareAtPrice: finalComparePrice,
+            endpoint: item.slug,
+            body: [
+                `★${item.averageRating}`,
+                `${item.totalReviews} Review`,
+                `${item?.stockQuantity > 10 ? "In Stock" : `Hurry up ${item.stockQuantity} Left`}`,
+                `Ship In ${24} hours`,
+            ],
+            // Map database image objects to Cloudinary layout props
+            images: item.images.map((image): ImageLayoutProps => {
+                return {
+                    ...image,
+                    sourceType: "cloudinary",
+                    alt: item.name,
+                };
+            }),
+        };
+    })
+}

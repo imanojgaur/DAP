@@ -201,8 +201,6 @@ export const EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[] = [
 	{
 		id: "manifesto",
 		type: "hero",
-		layoutClasses:
-			"md:min-w-0 col-span-2 row-span-2 md:col-span-2 md:row-span-2 min-h-[450px] md:min-h-full",
 		title: "FARM TO DOOR. NO MIDDLEMAN.",
 		subtitle: "Direct from Source",
 		description:
@@ -213,8 +211,6 @@ export const EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[] = [
 	{
 		id: "metrics",
 		type: "minimalist",
-		layoutClasses:
-			"md:min-w-0 col-span-1 row-span-1 md:col-span-1 bg-gray-100 hover:bg-gray-200 text-black",
 		title: "0%",
 		subtitle: "Retail Markups",
 		description:
@@ -223,8 +219,6 @@ export const EDITORIAL_CARDS_DATA: EDITORIAL_CARDS_PROPS[] = [
 	{
 		id: "guarantee",
 		type: "led-glow",
-		layoutClasses:
-			"md:min-w-0 col-span-1 row-span-1 md:col-span-1 bg-emerald-950/80 border border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.15)] hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]",
 		title: "30-Day",
 		subtitle: "Ironclad Guarantee",
 		description:

@@ -2,7 +2,7 @@
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { Carousel } from "@/components/ui/carousel";
 
-export function HomeCarousel({ children }: { children: React.ReactNode }) {
+export function CarouselWrapper({ children }: { children: React.ReactNode }) {
 	return (
 		<Carousel
 			className="w-full h-full relative"

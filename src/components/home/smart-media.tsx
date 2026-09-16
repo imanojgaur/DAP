@@ -1,3 +1,9 @@
+//=========================================================================
+// Engine decide which image server to use 
+//=========================================================================
+// Note: No layout or related configuration is handled here
+//-------------------------------------------------------------------------
+
 "use client";
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";

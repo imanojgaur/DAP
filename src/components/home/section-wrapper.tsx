@@ -15,18 +15,20 @@ export interface HeaderData {
 	subtitle?: string;
 	hideSubtitleOnMobile?: boolean;
 	hideSubtitleOnDesktop?: boolean;
-	headerLayoutClass?: string;
-	bodyLayoutClass?: string;
 }
 
 export function SectionWrapper({
 	children,
 	headerData,
 	metaData = [],
+	headerLayoutClass, 
+	bodyLayoutClass
 }: {
 	children?: React.ReactNode;
 	headerData?: HeaderData;
 	metaData?: MetaDataItem[];
+	headerLayoutClass?: string;
+	bodyLayoutClass?: string;
 }) {
 	const hasMetaData = metaData && metaData.length > 0;
 
@@ -58,12 +60,12 @@ export function SectionWrapper({
 
 	return (
 		<section
-			className={`relative w-full max-w-[1600px] ${headerData?.bodyLayoutClass}`}
+			className={`relative w-full max-w-[1600px] ${bodyLayoutClass}`}
 		>
 			<div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-3xl opacity-50 -z-10 pointer-events-none" />
 
 			<div
-				className={`group flex flex-col md:flex-row md:items-end justify-between md:mb-3 pb-4 cursor-default ${headerData?.headerLayoutClass}`}
+				className={`group flex flex-col md:flex-row md:items-end justify-between md:mb-3 pb-4 cursor-default ${headerLayoutClass}`}
 			>
 				<div className="flex flex-col max-w-2xl">
 					{/* BUG FIX 2: Removed '!', it should only render on LEFT if hasMetaData is TRUE */}
@@ -94,10 +96,10 @@ export function SectionWrapper({
 					className={`
                     flex transition-transform duration-1000 delay-300 ease-out group-hover:delay-0 group-hover:duration-500 group-hover:-translate-x-2
                     ${
-											hasMetaData
-												? "flex-row justify-between w-full mt-2 pt-2  border-gray-200 md:flex-col md:items-end md:w-auto md:mt-0 md:pt-0 md:border-none gap-2 md:gap-1.5"
-												: "flex-col items-start md:items-end mt-4 md:mt-0 gap-1.5"
-										}
+						hasMetaData
+							? "flex-row justify-between w-full mt-2 pt-2  border-gray-200 md:flex-col md:items-end md:w-auto md:mt-0 md:pt-0 md:border-none gap-2 md:gap-1.5"
+							: "flex-col items-start md:items-end mt-4 md:mt-0 gap-1.5"
+					}
                 `}
 				>
 					{hasMetaData

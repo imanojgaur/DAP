@@ -13,8 +13,6 @@ export const catHeader: HeaderData = {
     subtitle: "Rare & Handpicked Botanicals",
     hideSubtitleOnMobile: true,
     hideSubtitleOnDesktop: true,
-    bodyLayoutClass: "mb-5 md:mb-0 mt-6",
-    headerLayoutClass: "px-5 md:px-8 md:pt-6",
 };
 
 export const baseCategoryConfig = [
@@ -191,8 +189,6 @@ export const images: ImageLayoutProps[][] = [
 export const featHeader: HeaderData = {
     title: "Featured Products",
     description: "Rare finds and everyday favorites",
-    bodyLayoutClass: "mb-5 md:mb-0 mt-8 md:mt-6",
-    headerLayoutClass: "px-5 md:px-8 md:pt-6",
 };
 
 // ============================================================================
@@ -201,8 +197,6 @@ export const featHeader: HeaderData = {
 
 export const edtheader: HeaderData = {
     title: "The Promise",
-    bodyLayoutClass: "mt-8 md:mt-0 pt-4 md:pt-7 md:px-7 md:pb-11",
-    headerLayoutClass: "px-5 md:px-0",
 };
 
 export const edtMetaData: MetaDataItem[] = [

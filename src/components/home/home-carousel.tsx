@@ -38,7 +38,11 @@ export async function CategoryCarousel ({catDBRes}: {catDBRes: Promise<FetchedCa
     return (
         <>
             {/* 2. Navigation Section */}
-            <SectionWrapper headerData={catHeader}>
+            <SectionWrapper 
+                headerData={catHeader}
+                bodyLayoutClass= "mb-5 md:mb-0 mt-6"
+                headerLayoutClass = "px-5 md:px-8 md:pt-6"
+            >
                 <CarouselWrapper>
                     {/* overscroll-x-none: let the embela do its native physics, disably windows/mac native edge bounce effect */}
                     {/* slect none is not accidental text highlights: that might conflict with scroll*/}
@@ -78,7 +82,11 @@ export async function FeatProductCarousel ({featDbRes}: {featDbRes: Promise<Fetc
         <>
             {/* 3. Product Discovery Section */}
             {featProductConfig.length > 0 && (
-                <SectionWrapper headerData={featHeader}>
+                <SectionWrapper 
+                    headerData={featHeader}
+                    bodyLayoutClass="mb-5 md:mb-0 mt-8 md:mt-6"
+                    headerLayoutClass="px-5 md:px-8 md:pt-6"
+                >
                     <CarouselWrapper>
                         <CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
                             {featProductConfig?.map((card) => {

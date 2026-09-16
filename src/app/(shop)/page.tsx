@@ -1,15 +1,15 @@
+import { Suspense } from "react";
 // ============================================================================
 // IMPORTS (Grouped by domain, inlined per standard print-width rules)
 // ============================================================================
 import { getCategories, getFeatureProducts } from "@/data/home";
-import { baseCategoryConfig, EDITORIAL_CARDS_DATA, edtheader, edtMetaData } from "@/components/home/home.confi";
+import { baseCategoryConfig, catHeader, EDITORIAL_CARDS_DATA, edtheader, edtMetaData, featHeader} from "@/components/home/home.confi";
 
 import { HomeHero } from "@/components/home/hero";
 import { SectionWrapper } from "@/components/home/section-wrapper";
 import { EditorialLayout } from "@/components/home/editorial-section";
 import { CategoryCarousel, FeatProductCarousel } from "@/components/home/home-carousel";
-import { Suspense } from "react";
-
+import { CategoryCarouselSkeleton, ProductCarouselSkeleton } from "@/components/home/carousel-skeleton"; 
 
 // ============================================================================
 // MAIN SERVER COMPONENT
@@ -34,14 +34,26 @@ export default async function HomePage() {
 			<HomeHero />
 
 			{/* 2. Category Carousel */}
-			<Suspense fallback={<CarouselSkeleton />}> 
-				<CategoryCarousel catDBRes={categoriesDbPromise} />
-			</ Suspense>
+			<SectionWrapper 
+				headerData={catHeader}
+				className= "mb-5 md:mb-0 mt-6 max-w-[1600px]"
+				headerClassName = "px-5 md:px-8 md:pt-6"
+			>
+				<Suspense fallback={<CategoryCarouselSkeleton />}> 
+					<CategoryCarousel catDBRes={categoriesDbPromise} />
+				</ Suspense>
+			</SectionWrapper>
 
 			{/* 3. Feature Products Carousel */}
-			<Suspense fallback={<CarouselSkeleton />}>
-				<FeatProductCarousel featDbRes={featProductsDbPromise} />
-			</Suspense>
+			<SectionWrapper 
+				headerData={featHeader}
+				className="mb-5 md:mb-0 mt-8 md:mt-6 max-w-[1600px]"
+				headerClassName="px-5 md:px-8 md:pt-6"
+			>
+				<Suspense fallback={<ProductCarouselSkeleton />}>
+					<FeatProductCarousel featDbRes={featProductsDbPromise} />
+				</Suspense>
+			</SectionWrapper>
 
 			{/* 4. Brand Trust / Editorial Section */}
 			<SectionWrapper 

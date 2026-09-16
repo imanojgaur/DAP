@@ -1,7 +1,5 @@
-import { catHeader, featHeader } from "./home.confi"
 import { transformCategories, transformFeatProducts } from "./transform-data"
 
-import { SectionWrapper } from "./section-wrapper"
 import { ImageCover } from "./image-cover"
 import { OverlayText, ProductInfo } from "./card-content"
 import { DynamicHorizontalImgRaw } from "./img-layout"
@@ -16,6 +14,7 @@ import {
 import type { ProductInfoProps } from "./card-content"
 import type { ImageLayoutProps } from "./img-layout"
 import type { FetchedCategoryArray, FetchedProductArray } from "@/data/home"
+import { cn } from "cn"
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -33,46 +32,50 @@ export type FeatureProductConfig = Omit<ProductInfoProps, "className" | "actions
     images: ImageLayoutProps[] 
 };
 
+// ============================================================================
+// 1. THE SINGLE SOURCE OF TRUTH (Synchronization Dictionary)
+// Note: Import this into your skeleton so they never desync real UI card
+// ============================================================================
+export const SHARED_LAYOUT = {
+    categoryItem: "pl-4 md:pl-8 basis-[50%] sm:basis-[30%] lg:basis-[25%] flex flex-col",
+    productItem: "pl-4 md:pl-8 basis-[80%] sm:basis-[30%] lg:basis-[23%] flex flex-col",
+    carouselContent: "flex ml-0 pr-4 md:pr-8 md:pt-6 md:pb-2 overscroll-x-none select-none touch-action-pan-y",
+    cartegoryImgAspectClass:"h-70 md:h-auto md:aspect-[1/1]", 
+    productImgAspectClass:"aspect-[4/5]", 
+};
+
 export async function CategoryCarousel ({catDBRes}: {catDBRes: Promise<FetchedCategoryArray>}) {
     const catConfig: CategoryConfig[] = transformCategories(await catDBRes); 
     return (
-        <>
-            {/* 2. Navigation Section */}
-            <SectionWrapper 
-                headerData={catHeader}
-                className= "mb-5 md:mb-0 mt-6 max-w-[1600px]"
-                headerClassName = "px-5 md:px-8 md:pt-6"
-            >
-                <CarouselWrapper>
-                    {/* overscroll-x-none: let the embela do its native physics, disably windows/mac native edge bounce effect */}
-                    {/* slect none is not accidental text highlights: that might conflict with scroll*/}
-                    <CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-6 md:pb-2 overscroll-x-none select-none touch-action-pan-y">
-                        {catConfig?.map((card) => (
-                            <CarouselItem
-                                key={card.title}
-                                className="pl-4 md:pl-8 basis-[50%] sm:basis-[30%] lg:basis-[25%] flex flex-col"
-                            >
-                                <ImageCover
-                                    key={card.title}
-                                    endPoint={`/collectons/${card.slug}`}
-                                    className={"h-70 md:h-auto md:aspect-[1/1]"}
-                                    overlayContent={
-                                        <OverlayText
-                                            title={card.title}
-                                            subtitle={card.subtitle}
-                                            callToActionText={card.callToActionText}
-                                        />
-                                    }
-                                    imgScroller={<DynamicHorizontalImgRaw images={card.images} />}
+        <CarouselWrapper>
+            {/* overscroll-x-none: let the embela do its native physics, disably windows/mac native edge bounce effect */}
+            {/* slect none is not accidental text highlights: that might conflict with scroll*/}
+            <CarouselContent className={cn(`${SHARED_LAYOUT.carouselContent}`)}>
+                {catConfig?.map((card) => (
+                    <CarouselItem
+                        key={card.title}
+                        className={cn(`${SHARED_LAYOUT.categoryItem}`)}
+                    >
+                        <ImageCover
+                            key={card.title}
+                            endPoint={`/collectons/${card.slug}`}
+                            className={cn(`${SHARED_LAYOUT.cartegoryImgAspectClass}`)}
+                            overlayContent={
+                                <OverlayText
+                                    title={card.title}
+                                    subtitle={card.subtitle}
+                                    callToActionText={card.callToActionText}
                                 />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 md:flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
-                    <CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  md:flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
-                </CarouselWrapper>
-            </SectionWrapper>
-        </>
+                            }
+                            imgScroller={<DynamicHorizontalImgRaw images={card.images} />}
+                        />
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 md:flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+            <CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  md:flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+        </CarouselWrapper>
+        
     )
 }
 
@@ -80,58 +83,51 @@ export async function FeatProductCarousel ({featDbRes}: {featDbRes: Promise<Fetc
     const featProductConfig: FeatureProductConfig[] = transformFeatProducts(await featDbRes);
     return (
         <>
-            {/* 3. Product Discovery Section */}
             {featProductConfig.length > 0 && (
-                <SectionWrapper 
-                    headerData={featHeader}
-                    className="mb-5 md:mb-0 mt-8 md:mt-6 max-w-[1600px]"
-                    headerClassName="px-5 md:px-8 md:pt-6"
-                >
-                    <CarouselWrapper>
-                        <CarouselContent className="flex ml-0 pr-4 md:pr-8 md:pt-7 overscroll-x-none select-none touch-action-pan-y">
-                            {featProductConfig?.map((card) => {
-                                //Passing primary image src to ProductInfo -> AddToCartButton -> Zustand Store "Items Array"
-                                const primaryImg = card.images.find(
-                                    (image) => image.isPrimary === true,
-                                );
-                                const imgSrc =
-                                    primaryImg?.sourceType === "cloudinary"
-                                        ? primaryImg.publicId
-                                        : undefined;
+                <CarouselWrapper>
+                    <CarouselContent className={cn(`${SHARED_LAYOUT.carouselContent}`)}>
+                        {featProductConfig?.map((card) => {
+                            //Passing primary image src to ProductInfo -> AddToCartButton -> Zustand Store "Items Array"
+                            const primaryImg = card.images.find(
+                                (image) => image.isPrimary === true,
+                            );
+                            const imgSrc =
+                                primaryImg?.sourceType === "cloudinary"
+                                    ? primaryImg.publicId
+                                    : undefined;
 
-                                return (
-                                    <CarouselItem
+                            return (
+                                <CarouselItem
+                                    key={card.name}
+                                    className={cn(`${SHARED_LAYOUT.productItem}`)}
+                                >
+                                    <ImageCover
                                         key={card.name}
-                                        className="pl-4 md:pl-8 basis-[80%] sm:basis-[30%] lg:basis-[23%] flex flex-col"
-                                    >
-                                        <ImageCover
-                                            key={card.name}
-                                            endPoint={`/products/${card.endpoint}`}
-                                            className={"aspect-[4/5]"}
-                                            imgScroller={
-                                                <DynamicHorizontalImgRaw images={card.images} />
-                                            }
-                                            productFragment={
-                                                <ProductInfo
-                                                    id={card.id}
-                                                    name={card.name}
-                                                    endpoint={card.endpoint}
-                                                    body={card.body}
-                                                    price={card.price}
-                                                    compareAtPrice={card.compareAtPrice}
-                                                    imgSrc={imgSrc}
-                                                    className=""
-                                                />
-                                            }
-                                        />
-                                    </CarouselItem>
-                                );
-                            })}
-                        </CarouselContent>
-                        <CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
-                        <CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
-                    </CarouselWrapper>
-                </SectionWrapper>
+                                        endPoint={`/products/${card.endpoint}`}
+                                        className={cn(`${SHARED_LAYOUT.productImgAspectClass}`)}
+                                        imgScroller={
+                                            <DynamicHorizontalImgRaw images={card.images} />
+                                        }
+                                        productFragment={
+                                            <ProductInfo
+                                                id={card.id}
+                                                name={card.name}
+                                                endpoint={card.endpoint}
+                                                body={card.body}
+                                                price={card.price}
+                                                compareAtPrice={card.compareAtPrice}
+                                                imgSrc={imgSrc}
+                                                className=""
+                                            />
+                                        }
+                                    />
+                                </CarouselItem>
+                            );
+                        })}
+                    </CarouselContent>
+                    <CarouselPrevious className="hidden md:absolute z-20 top-1/2 left-8 -translate-y-1/2 flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+                    <CarouselNext className="hidden md:absolute z-20 top-1/2 right-8 -translate-y-1/2  flex justify-center items-center disabled:hidden disabled:pointer-events-none" />
+                </CarouselWrapper>
             )}
         </>
     )

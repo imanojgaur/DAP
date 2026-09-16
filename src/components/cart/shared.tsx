@@ -10,9 +10,9 @@ import type { ReceivedItemInfo } from "@/store/cart-store";
 
 // UI Components
 import { Button } from "../ui/button";
-import { SheetClose, SheetFooter } from "../ui/sheet";
 import { CartQuantityControl } from "./cart-control";
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
+import { DrawerClose, DrawerFooter } from "../ui/drawer";
 
 // ============================================================================
 // 1. STANDARD CART CARD
@@ -30,7 +30,7 @@ export const CartCard = React.memo(function CartCardBase({
 	return (
 		<div className={cn(`flex justify-start w-full gap-4 px-4 py-4 hover:bg-muted/50 transition-colors rounded-md shadow-md ${className}`)}>
 			{/* --- Product Image (Clickable) --- */}
-			<SheetClose asChild>
+			<DrawerClose asChild>
 				<Link
 					href={item.href}
 					className="relative h-28 w-24 shrink-0 overflow-hidden rounded-md border"
@@ -46,11 +46,11 @@ export const CartCard = React.memo(function CartCardBase({
 						/>
 					)}
 				</Link>
-			</SheetClose>
+			</DrawerClose>
 
 			{/* --- Product Details & Controls --- */}
 			<div className="flex flex-col flex-1 min-w-0">
-				<SheetClose asChild>
+				<DrawerClose asChild>
 					<Link href={item.href} className="flex flex-col gap-1.5 py-2">
 						<h4 className="line-clamp-2 font-medium text-sm text-foreground text-start">
 							{item.title}
@@ -64,7 +64,7 @@ export const CartCard = React.memo(function CartCardBase({
 							)}
 						</div>
 					</Link>
-				</SheetClose>
+				</DrawerClose>
 
 				{/* Quantity increment/decrement buttons */}
 				<CartQuantityControl productId={item.id} className="" />
@@ -107,7 +107,7 @@ export const RecentlyAddedItem = React.memo(function RecentlyAddedItem({
 // Sticks to the bottom of the cart drawer. Calculates the total price of all
 // items currently in the Zustand store.
 
-export function CartSheetFooter() {
+export function CartDrawerFooter() {
 	const addedItems = useCart((state) => state.items);
 
 	// Calculates the base total 
@@ -119,7 +119,7 @@ export function CartSheetFooter() {
 	if (addedItems.length === 0) return null;
 
 	return (
-		<SheetFooter className="mt-auto flex flex-col pt-4 border-t border-border gap-3 sm:flex-col shadow-md border-b">
+		<DrawerFooter className="mt-auto flex flex-col pt-4 border-t border-border gap-3 sm:flex-col shadow-md border-b">
 			{/* --- Premium Compact Summary Block --- */}
 			<div className="flex flex-col w-full gap-1">
 				<div className="flex items-baseline justify-between w-full">
@@ -138,17 +138,17 @@ export function CartSheetFooter() {
 
 			{/* --- Call To Action Buttons --- */}
 			<div className="flex flex-col gap-2 w-full mt-1">
-				<SheetClose asChild>
+				<DrawerClose asChild>
 					<Button variant="outline" className="w-full" asChild>
 						<Link href="/cart">View Cart</Link>
 					</Button>
-				</SheetClose>
-				<SheetClose asChild>
+				</DrawerClose>
+				<DrawerClose asChild>
 					<Button className="w-full" asChild>
 						<Link href="/checkout">Proceed To Checkout</Link>
 					</Button>
-				</SheetClose>
+				</DrawerClose>
 			</div>
-		</SheetFooter>
+		</DrawerFooter>
 	);
 }

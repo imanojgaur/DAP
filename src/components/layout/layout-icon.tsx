@@ -1,4 +1,4 @@
-import { cn } from "@/utilities/utils";
+import { cn } from "cn"
 
 // Search Icons
 export const DoodleStickerSearch = ({ className }: { className?: string }) => {

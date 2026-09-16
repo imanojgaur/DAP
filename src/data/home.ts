@@ -1,6 +1,6 @@
 import prisma from "@/lib/backend/prisma";
 
-export async function getHomeCategories(slug: string[]) {
+export async function getCategories(slug: string[]) {
 	return await prisma.category.findMany({
 		where: {
 			slug: {
@@ -19,7 +19,7 @@ export async function getHomeCategories(slug: string[]) {
 	});
 }
 
-export async function getHomeProduct(homeCategory: "home") {
+export async function getFeatureProducts(homeCategory: "home") {
 	return await prisma.product.findMany({
 		where: {
 			categories: {
@@ -49,3 +49,17 @@ export async function getHomeProduct(homeCategory: "home") {
 		take: 20,
 	});
 }
+
+//===========================================================================
+// Export types
+//===========================================================================
+// for home categories 
+//---------------------------------------------------------------------------
+export type FetchedCategoryArray = Awaited<ReturnType<typeof getCategories>>;
+export type FetchedCategory = FetchedCategoryArray[0]
+
+//---------------------------------------------------------------------------
+// for home featured products
+//---------------------------------------------------------------------------
+export type FetchedProductArray = Awaited<ReturnType<typeof getFeatureProducts>>
+export type FetchProduct = FetchedProductArray[0]

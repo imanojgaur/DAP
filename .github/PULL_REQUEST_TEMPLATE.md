@@ -3,10 +3,35 @@
 
 ## 🚀 What Changed (crisp)
 <!-- Bullet points of the literal files or logic you touched -->
-### **Features Added**
-* 
-* 
-* 
+### ✨**Features Added** or 
+<!-- (Things the user will notice) -->
+- Added user authentication routing structure.
+- Implemented "Add to Cart" state persistence.
+### 🛠️ Refactoring & Tech Debt
+<!-- (Things only developers care about) -->
+- Unified editorial layout into responsive grid. (This is where your change goes!)
+- Decoupled Tailwind layout classes from data configuration (home.confi.ts).
+- Abstracted carousel skeletons into a single shared dictionary to prevent DOM desyncs.
+### ⚡Performance 
+- Implemented parallel data fetching for carousels to improve First Contentful Paint.
+- Leveraged native image lazy-loading to eliminate unnecessary network requests.
+### 🐛 Bug Fixes
+<!-- (Things that were broken and are now fixed) -->
+Fixed 2px layout shift on the category carousel header.
+### 🏗️ Infrastructure & Architecture
+<!-- (Foundational setup, routing, and core configuration) -->
+- Initialized `(auth)` route group to isolate authentication layouts from the main store.
+- Configured secure API route structure for future NextAuth/provider integration.
+- Set up foundational Shadcn UI drawer components for the upcoming login flow.
+Resolved mobile padding bleed issue...
+### 🧹 Chores & Maintenance
+<!-- (Tooling, dependency updates, and configuration changes) -->
+- Migrated from custom `cn` utility file to the standard `shadcn` package.
+- Updated package dependencies for UI components.
+### 📚 Documentation & Setup
+- Added .env.example to streamline local development setup.
+- Restructured README.md with project overview and placeholders for future video demos.
+
 ### **🗺️ Reviewer Guide (Key Files)**
 <!-- Don't list every file. Just tell the reviewer where to start and what the big files do. -->
 <!-- eg -->

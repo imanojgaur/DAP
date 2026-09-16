@@ -7,14 +7,14 @@ import { useCart } from "@/store/cart-store";
 
 // UI Components
 import {
-	Sheet,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "../ui/sheet";
+	Drawer,
+	DrawerContent,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from "../ui/drawer";
 import { DoddleStickerCart } from "./cart-icon";
-import { CartCard, CartSheetFooter, RecentlyAddedItem } from "./shared";
+import { CartCard, CartDrawerFooter, RecentlyAddedItem } from "./shared";
 
 // ============================================================================
 // 1. HEADER CART TRIGGER (Standard Cart View)
@@ -28,8 +28,8 @@ export function HeaderCartTrigger() {
 	const productCount = useCart((state) => state.productCount)
 
 	return (
-		<Sheet>
-			<SheetTrigger asChild>
+		<Drawer direction="right">
+			<DrawerTrigger asChild>
 				<button
 					type="button"
 					// 1. Give the button a standard touch target (p-2) and subtle background hover
@@ -44,20 +44,20 @@ export function HeaderCartTrigger() {
 						</span>
 					)}
 				</button>
-			</SheetTrigger>
+			</DrawerTrigger>
 
-			<SheetContent className="flex flex-col w-full sm:max-w-md">
+			<DrawerContent className="flex flex-col w-full sm:max-w-md">
 				{/* --- Header Section --- */}
-				<SheetHeader className="flex flex-row justify-between items-center pb-4 pr-15 border-b border-border mt-2">
-					<SheetTitle className="text-xl font-semibold m-0">
+				<DrawerHeader className="flex flex-row justify-between items-center pb-4 pr-15 border-b border-border mt-2">
+					<DrawerTitle className="text-xl font-semibold m-0">
 						Your Cart
-					</SheetTitle>
+					</DrawerTitle>
 					{totalItems > 0 && (
 						<span className="bg-muted text-muted-foreground text-md font-medium px-2.5 py-1 rounded-md m-0">
 							{totalItems} {totalItems === 1 ? "Item" : "Items"}
 						</span>
 					)}
-				</SheetHeader>
+				</DrawerHeader>
 
 				{/* --- Scrollable Cart Items Section --- */}
 				<div className="flex-1 overflow-y-auto py-4 no-scrollbar">
@@ -77,9 +77,9 @@ export function HeaderCartTrigger() {
 				</div>
 
 				{/* --- Footer Section --- */}
-				<CartSheetFooter />
-			</SheetContent>
-		</Sheet>
+				<CartDrawerFooter />
+			</DrawerContent>
+		</Drawer>
 	);
 }
 
@@ -97,17 +97,17 @@ export function AddToCartDrawer() {
 	const lastAddedItem = useCart((state) => state.lastAddedItem);
 
 	return (
-		<Sheet open={isOpen} onOpenChange={setOpen}>
-			<SheetContent className="flex flex-col">
+		<Drawer open={isOpen} onOpenChange={setOpen} direction="right">
+			<DrawerContent className="flex flex-col">
 				{/* --- Success Header Section --- */}
-				<SheetHeader className="mb-4 px-4 pt-4 sm:px-0 sm:pt-0">
+				<DrawerHeader className="mb-4 px-4 pt-4 sm:px-0 sm:pt-0">
 					<div className="flex items-center justify-center gap-2 bg-green-50 border border-green-200 rounded-lg p-3 dark:bg-green-500/10 dark:border-green-500/20">
 						<CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400 shrink-0" />
-						<SheetTitle className="text-green-800 dark:text-green-400 text-sm font-medium m-0">
+						<DrawerTitle className="text-green-800 dark:text-green-400 text-sm font-medium m-0">
 							Successfully added to cart!
-						</SheetTitle>
+						</DrawerTitle>
 					</div>
-				</SheetHeader>
+				</DrawerHeader>
 
 				{/* --- Scrollable Cart Items Section (With Highlight Logic) --- */}
 				<div className="flex-1 overflow-y-auto px-4 py-2">
@@ -131,8 +131,8 @@ export function AddToCartDrawer() {
 				</div>
 
 				{/* --- Footer Section --- */}
-				<CartSheetFooter />
-			</SheetContent>
-		</Sheet>
+				<CartDrawerFooter />
+			</DrawerContent>
+		</Drawer>
 	);
 }

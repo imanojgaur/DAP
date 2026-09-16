@@ -40,7 +40,7 @@ export async function CategoryCarousel ({catDBRes}: {catDBRes: Promise<FetchedCa
             {/* 2. Navigation Section */}
             <SectionWrapper 
                 headerData={catHeader}
-                className= "mb-5 md:mb-0 mt-6"
+                className= "mb-5 md:mb-0 mt-6 max-w-[1600px]"
                 headerClassName = "px-5 md:px-8 md:pt-6"
             >
                 <CarouselWrapper>
@@ -84,7 +84,7 @@ export async function FeatProductCarousel ({featDbRes}: {featDbRes: Promise<Fetc
             {featProductConfig.length > 0 && (
                 <SectionWrapper 
                     headerData={featHeader}
-                    className="mb-5 md:mb-0 mt-8 md:mt-6"
+                    className="mb-5 md:mb-0 mt-8 md:mt-6 max-w-[1600px]"
                     headerClassName="px-5 md:px-8 md:pt-6"
                 >
                     <CarouselWrapper>

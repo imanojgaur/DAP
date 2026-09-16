@@ -13,7 +13,7 @@ export interface ProductInfoProps {
 	name: string;
 	endpoint: string;
 	imgSrc?: string;
-	body: any[];
+	body: string[];
 	price: number;
 	compareAtPrice: number;
 	className?: string;
@@ -78,7 +78,7 @@ export function ProductInfo({
 				<h3 className="font-bold line-clamp-2 text-emerald-400 md:text-gray-900 md:group-hover:text-emerald-500 transition-all duration-300 ease-out">
 					{name}
 				</h3>
-				<span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover:w-full" />
+				<span className="absolute left-0 bottom-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 ease-out group-hover:w-full group-hover:px-1" />
 			</Link>
 
 			<Link

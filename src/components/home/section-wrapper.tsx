@@ -1,3 +1,5 @@
+import { cn } from "cn";
+
 export type MetaDataEffect = "default" | "emerald-text" | "emerald-badge";
 
 export interface MetaDataItem {
@@ -21,14 +23,14 @@ export function SectionWrapper({
 	children,
 	headerData,
 	metaData = [],
-	headerLayoutClass, 
-	bodyLayoutClass
+	className, 
+	headerClassName
 }: {
 	children?: React.ReactNode;
 	headerData?: HeaderData;
 	metaData?: MetaDataItem[];
-	headerLayoutClass?: string;
-	bodyLayoutClass?: string;
+	className?: string;
+	headerClassName?: string;
 }) {
 	const hasMetaData = metaData && metaData.length > 0;
 
@@ -60,12 +62,16 @@ export function SectionWrapper({
 
 	return (
 		<section
-			className={`relative w-full max-w-[1600px] ${bodyLayoutClass}`}
+			className={cn(`relative w-full max-w-[1600px], 
+				${className}` //react default for root element of component 
+			)}
 		>
 			<div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-3xl opacity-50 -z-10 pointer-events-none" />
 
 			<div
-				className={`group flex flex-col md:flex-row md:items-end justify-between md:mb-3 pb-4 cursor-default ${headerLayoutClass}`}
+				className={cn(`group flex flex-col md:flex-row md:items-end justify-between md:mb-3 pb-4 cursor-default,
+					 ${headerClassName}`
+					)}
 			>
 				<div className="flex flex-col max-w-2xl">
 					{/* BUG FIX 2: Removed '!', it should only render on LEFT if hasMetaData is TRUE */}

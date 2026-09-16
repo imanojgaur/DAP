@@ -47,8 +47,8 @@ export default async function HomePage() {
 			<SectionWrapper 
 				headerData={edtheader} 
 				metaData={edtMetaData}
-				bodyLayoutClass="mt-8 md:mt-0 pt-4 md:pt-7 md:px-7 md:pb-11"
-   				headerLayoutClass="px-5 md:px-0"
+				className="mt-8 md:mt-0 pt-4 md:pt-7 md:px-7 md:pb-11"
+   				headerClassName="px-5 md:px-0"
 			>
 				<EditorialLayout EDITORIAL_CARDS_DATA={EDITORIAL_CARDS_DATA} />
 			</SectionWrapper>

@@ -24,6 +24,10 @@ Fixed 2px layout shift on the category carousel header.
 - Configured secure API route structure for future NextAuth/provider integration.
 - Set up foundational Shadcn UI drawer components for the upcoming login flow.
 Resolved mobile padding bleed issue...
+### 🧹 Chores & Maintenance
+<!-- (Tooling, dependency updates, and configuration changes) -->
+- Migrated from custom `cn` utility file to the standard `shadcn` package.
+- Updated package dependencies for UI components.
 ### 📚 Documentation & Setup
 - Added .env.example to streamline local development setup.
 - Restructured README.md with project overview and placeholders for future video demos.

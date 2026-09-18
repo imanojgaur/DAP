@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import { CartQuantityControl } from "./cart-control";
 import { cn } from "cn"
 import { DrawerClose, DrawerFooter } from "../ui/drawer";
+import { LoginDrawerDialogDemo } from "../auth/login/global-login";
 
 // ============================================================================
 // 1. STANDARD CART CARD
@@ -144,9 +145,10 @@ export function CartDrawerFooter() {
 					</Button>
 				</DrawerClose>
 				<DrawerClose asChild>
-					<Button className="w-full" asChild>
+					{/* <Button className="w-full" asChild>
 						<Link href="/checkout">Proceed To Checkout</Link>
-					</Button>
+					</Button> */}
+					<LoginDrawerDialogDemo />
 				</DrawerClose>
 			</div>
 		</DrawerFooter>

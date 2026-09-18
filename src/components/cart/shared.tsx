@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "@/store/cart-store";
 
 // Store & Types
@@ -110,6 +110,7 @@ export const RecentlyAddedItem = React.memo(function RecentlyAddedItem({
 
 export function CartDrawerFooter() {
 	const addedItems = useCart((state) => state.items);
+	const [isLoginOpen, setLoginOpen] = useState(false);
 
 	// Calculates the base total 
 	const totalPrice = addedItems.reduce(
@@ -144,12 +145,15 @@ export function CartDrawerFooter() {
 						<Link href="/cart">View Cart</Link>
 					</Button>
 				</DrawerClose>
-				<DrawerClose asChild>
-					{/* <Button className="w-full" asChild>
-						<Link href="/checkout">Proceed To Checkout</Link>
-					</Button> */}
-					<LoginDrawerDialogDemo />
-				</DrawerClose>
+				{/* <DrawerClose asChild> */}
+					<Button className="w-full" 
+					onClick={()=>setLoginOpen(true)}
+					>
+						Proceed To Pay 
+					</Button>
+				{/* </DrawerClose> */}
+
+					<LoginDrawerDialogDemo open={isLoginOpen} onOpenChange={setLoginOpen}/>
 			</div>
 		</DrawerFooter>
 	);

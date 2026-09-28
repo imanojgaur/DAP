@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
-import React, { useState } from "react";
+import React from "react";
 import { useCart } from "@/store/cart-store";
 
 // Store & Types
@@ -13,7 +13,6 @@ import { Button } from "../ui/button";
 import { CartQuantityControl } from "./cart-control";
 import { cn } from "cn"
 import { DrawerClose, DrawerFooter } from "../ui/drawer";
-import { LoginDrawerDialogDemo } from "../auth/login/global-login";
 
 // ============================================================================
 // 1. STANDARD CART CARD
@@ -110,8 +109,7 @@ export const RecentlyAddedItem = React.memo(function RecentlyAddedItem({
 
 export function CartDrawerFooter() {
 	const addedItems = useCart((state) => state.items);
-	const [isLoginOpen, setLoginOpen] = useState(false);
-
+	
 	// Calculates the base total 
 	const totalPrice = addedItems.reduce(
 		(acc, item) => acc + item.price * item.itemCount,
@@ -145,15 +143,15 @@ export function CartDrawerFooter() {
 						<Link href="/cart">View Cart</Link>
 					</Button>
 				</DrawerClose>
-				{/* <DrawerClose asChild> */}
+				<DrawerClose asChild>
 					<Button className="w-full" 
-					onClick={()=>setLoginOpen(true)}
+					asChild
 					>
-						Proceed To Pay 
+						<Link href={"/address"}>
+						    Proceed To Pay 
+						</Link>
 					</Button>
-				{/* </DrawerClose> */}
-
-					<LoginDrawerDialogDemo open={isLoginOpen} onOpenChange={setLoginOpen}/>
+				</DrawerClose>
 			</div>
 		</DrawerFooter>
 	);

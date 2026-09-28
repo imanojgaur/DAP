@@ -1,18 +1,9 @@
-import { config } from "dotenv";
-
-config({ path: ".env.local" });
-
 import { PrismaPg } from "@prisma/adapter-pg";
+import { env } from "@/env";
 import { PrismaClient } from "../generated/prisma/client";
 
-if (!process.env.DIRECT_URL) {
-	throw new Error(
-		"CRITICAL: DIRECT_URL is undefined. Ensure your .env file exists and the path is correct.",
-	);
-}
-
 const adapter = new PrismaPg({
-	connectionString: process.env.DIRECT_URL,
+	connectionString: env.DIRECT_URL,
 });
 
 const prisma = new PrismaClient({

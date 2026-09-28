@@ -21,7 +21,7 @@ export const env = createEnv({
     EMAIL_SERVER_PASSWORD: z.string().startsWith("re_", "RESEND: Password invalid"),
     EMAIL_SERVER_HOST: z.string().min(1, "RESEND: Host missing"),
     EMAIL_SERVER_PORT: z.string().min(1, "RESEND: Port missing"),
-    EMAIL_FROM: z.string().email().startsWith("onboarding@resend.dev", "Resend: Onboarding email is missing"),
+    EMAIL_FROM: z.email().startsWith("onboarding@resend.dev", "Resend: Onboarding email is missing"),
 
     // 4. Payments (Razorpay Server Secrets)
     RAZORPAY_KEY_SECRET: z.string().min(1, "RAZORPAY: Razorpay secret is required"),

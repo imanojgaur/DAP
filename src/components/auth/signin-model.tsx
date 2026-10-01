@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "../ui/phone-input";
 
-
 export function SignupForm({
   className, 
   defaultCountryCode
@@ -36,7 +35,7 @@ export function SignupForm({
             id="form-name"
             type="text"
             value={userName}
-            onChange={setUserName}
+            onChange={(e)=>{setUserName(e.target.value)}}
             placeholder="Evil Rabbit"
             required
           />
@@ -71,7 +70,7 @@ export function SignupForm({
           name="email"
           type="email" 
           value={email}
-          onChange={setEmail}
+          onChange={(e)=>setEmail(e.target.value)}
           placeholder="john@example.com" 
           />
           <Button type="button" className="hover:underline"
@@ -90,7 +89,7 @@ export function SignupForm({
           id="password"
           type="password"
           value={password}
-          onChange={setPassword}
+          onChange={(e)=>setPassword(e.target.value)}
           placeholder="password"
           minLength={8}
           required
@@ -103,7 +102,7 @@ export function SignupForm({
           id="confirm-password"
           type="password"
           value={confirmPassword}
-          onChange={setConfirmPassword}
+          onChange={(e)=>setConfirmPassword(e.target.value)}
           placeholder="password"
           minLength={8}
           required
